@@ -80,8 +80,11 @@ class DivSelector {
       this.retractButton.display = "none";
       
 
-      /** Title for sent, inbox and draft */
+      /** Title for sent, inbox and draft (Listview)*/
       this.inboxTitle = document.querySelector("#inbox_list h1");
+
+      /** Title for sent, inbox and draft (single message) */
+      this.msgTitle = document.querySelector("#inbox_msg h1");
   
       this.fab = [
         this.sendFAB,
@@ -152,6 +155,7 @@ class DivSelector {
       this.listState = "inbox";
       this.retractButton.display = "none";
       this.inboxTitle.innerHTML = "Inbox";
+      this.msgTitle.innerHTML = "Mail From";
       this.changeDivTo("inbox_list");
     }
   
@@ -159,6 +163,7 @@ class DivSelector {
       this.onFABRemoveAll();
       this.listState = "sent";
       this.inboxTitle.innerHTML = "Sent Items";
+      this.msgTitle.innerHTML = "Mail To";
       this.changeDivTo("inbox_list");
     }
   
@@ -166,6 +171,7 @@ class DivSelector {
       this.onFABRemoveAll();
       this.listState = "draft";
       this.inboxTitle.innerHTML = "Draft";
+      this.msgTitle.innerHTML = "";
       this.changeDivTo("inbox_list");
     }
   
