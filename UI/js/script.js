@@ -99,10 +99,6 @@ class DivSelector {
 
     
     
-    /** For demo */
-    document.getElementById('signin').addEventListener("click", () => { window.location = "../html/page.html"; });
-
-    /**end demo */
     
 
     this.editDPTab.addEventListener("click", () => this.onEditDpClicked());
@@ -133,12 +129,12 @@ class DivSelector {
 
   onLogOutClicked() {
 
-    window.location = "../html/index.html";
+    window.location = "../index.html";
   }
 
   onEditDpClicked() {
     this.onFABRemoveAll();
-    console.log('clicked');
+    
     this.saveFAB.classList.remove("no-display");
     this.changeDivTo("user_profile");
   }
