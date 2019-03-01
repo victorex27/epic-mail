@@ -97,18 +97,41 @@ class DivSelector {
       this.createFAB
     ];
 
+    
+
+    
+
     this.editDPTab.addEventListener("click", () => this.onEditDpClicked());
     this.logoutTab.addEventListener("click", () => this.onLogOutClicked());
     this.changePasswordTab.addEventListener("click", () =>
       this.onChangePassWordClicked()
     );
+
+  
+
+    if (window.matchMedia("(max-width: 700px)").matches) {
+      
+      
+      this.editDPlink = document.getElementById('editDPlink');
+    this.passwordlink = document.getElementById('passwordlink');
+    this.logoutlink = document.getElementById('logoutlink');
+    this.editDPlink.addEventListener("click", () => this.onEditDpClicked());
+    this.logoutlink.addEventListener("click", () => this.onLogOutClicked());
+    this.passwordlink.addEventListener("click", () =>
+      this.onChangePassWordClicked()
+    );
+    }
+
+    
+    
+    
   }
 
   onLogOutClicked() {}
 
   onEditDpClicked() {
     this.onFABRemoveAll();
-
+    console.log('clicked');
     this.saveFAB.classList.remove("no-display");
     this.changeDivTo("user_profile");
   }
