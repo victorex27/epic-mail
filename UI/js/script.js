@@ -183,6 +183,8 @@ class DivSelector {
   onComposeGroupClicked() {
     this.onFABRemoveAll();
     this.emailField.classList.add("no-display");
+    this.sendFAB.classList.remove("no-display");
+    this.saveFAB.classList.remove("no-display");
     document.getElementById("group-name-label").classList.remove("no-display");
     
     this.changeDivTo("compose");
