@@ -74,6 +74,14 @@ class DivSelector {
       this.plusFAB.addEventListener("click", () =>
         this.onViewAddUserToGroupClicked()
       );
+
+      /** Retract button in sent items list view */
+      this.retractButton = document.querySelector('button.retract');
+      this.retractButton.display = "none";
+      
+
+      /** Title for sent, inbox and draft */
+      this.inboxTitle = document.querySelector("#inbox_list h1");
   
       this.fab = [
         this.sendFAB,
@@ -142,21 +150,22 @@ class DivSelector {
     onInboxClicked() {
       this.onFABRemoveAll();
       this.listState = "inbox";
-      document.querySelector("#inbox_list h1").innerHTML = "Inbox";
+      this.retractButton.display = "none";
+      this.inboxTitle.innerHTML = "Inbox";
       this.changeDivTo("inbox_list");
     }
   
     onSentClicked() {
       this.onFABRemoveAll();
       this.listState = "sent";
-      document.querySelector("#inbox_list h1").innerHTML = "Sent Items";
+      this.inboxTitle.innerHTML = "Sent Items";
       this.changeDivTo("inbox_list");
     }
   
     onDraftClicked() {
       this.onFABRemoveAll();
       this.listState = "draft";
-      document.querySelector("#inbox_list h1").innerHTML = "Draft";
+      this.inboxTitle.innerHTML = "Draft";
       this.changeDivTo("inbox_list");
     }
   
