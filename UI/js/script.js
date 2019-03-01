@@ -141,9 +141,7 @@ class DivSelector {
       this.onFABRemoveAll();
   
       document.getElementById("group-name-label").classList.add("no-display");
-      document
-        .getElementById("list_of_group_members")
-        .classList.add("no-display");
+      
   
       this.sendFAB.classList.remove("no-display");
       this.saveFAB.classList.remove("no-display");
