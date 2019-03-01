@@ -28,7 +28,7 @@
 
     </header>
 
-    <section><li class="page-title"><img src="img/logo.png" class="logo-small">Title</li>
+    <section><li class="page-title"><img src="../img/logo.png" class="logo-small">Title</li>
         <button id="menu_button" > <span class="menu"></span> </button>
     </section>
 
@@ -51,8 +51,60 @@
                 
             </div></aside>
 
-    <main></main>
+    <main>
+<!-- Compose image div-->
+<div id="compose" class="compose-div no-display">
+        <h1>Compose</h1>
+    <form class="flex-column-nowrap">
+        <label id="group-name-label">Name of Group</label><!-- This is shown when the users accesses the control from groups tab-->
+        <input class="margin-bottom-10" type="email" name="email" id="email" placeholder="email">
+        <input class="margin-bottom-10" type="text" name="subject" id="subject" placeholder="subject">
+        <textarea name="message" id="message" placeholder="Message"></textarea>
+        
+        <!-- For names of users in group-->
+        <div id="list_of_group_members">
+            
+            <ul class="flex-column-wrap">
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+                <li><img src="" class="dp"><span>aobikobe@gmail.com</span></li>
+            </ul>
+        </div>
 
+    </form>
+    <nav class="pagination"></nav>
+</div>
+
+<div  id="floating-button" class="floating-button">
+        <ul>
+            <li tooltip="Send" id="send" class="no-display"><button ><span class="send"></span></button></li>
+            <li tooltip="Delete" id="delete" class="no-display"><button><span class="delete"></span></button></li>
+            <li tooltip="Save  " id="save" class="no-display"><button><span class="save"></span></button></li>
+        
+            <li tooltip="Retract" id="retract" class="no-display"><button><span class="undo"></span></button></li>
+            <li tooltip="Add    " id="plus" class="no-display"><button><span class="plus"></span></button></li>
+            <li tooltip="Create" id="create" class="no-display"><button><span class="create"></span></button></li>
+        </ul>
+    </div>
+
+    </main>
+
+    <script type="text/javascript" src="../js/script.js"></script>
 </body>
 
 </html>
