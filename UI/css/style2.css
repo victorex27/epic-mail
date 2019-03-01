@@ -1,0 +1,600 @@
+@import url("general.css");
+body {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "aside main";
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 200px 1fr;
+}
+
+header {
+  grid-area: header;
+  background: url(../img/header.jpg);
+  background-color: rgb(84, 0, 50);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 15px;
+  background-position: 300px, 800px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
+header > div.logo {
+  flex: 1 0 80%;
+}
+
+header > div.dp {
+  margin-top: 80px;
+  flex: 1 0 auto;
+}
+
+aside {
+  grid-area: aside;
+}
+
+main {
+  grid-area: main;
+  padding: 5px;
+  border: 1px solid rgba(110, 208, 253, 0.3);
+
+  -webkit-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
+  -moz-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
+  box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
+}
+
+.flex-row-nowrap {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.flex-column-nowrap {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.flex-column-wrap {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.flex-1-0-100 {
+  flex: 1 0 100%;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.padding-25 {
+  padding: 25px;
+}
+
+main > .listview > a > ul > li.img_list {
+  flex: 0 0 20px;
+  margin-right: 5px;
+}
+main > .listview > a > ul > li.img_detail {
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+main > .listview > a {
+  display: block;
+  height: 50px;
+  width: auto;
+  padding: 5px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(110, 208, 253, 0.3);
+}
+
+main > .listview > a > ul {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+main > .listview > a > ul > li > span {
+  color: rgb(10, 10, 10);
+}
+
+.listview > a > li {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.listview > a {
+  display: block;
+  height: 35px;
+  width: auto;
+  padding: 5px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(110, 208, 253, 0.3);
+}
+
+.unread {
+  background-color: rgba(110, 208, 253, 0.3);
+}
+
+.listview > a > li > span {
+  color: rgb(10, 10, 10);
+}
+
+.admin_group {
+  flex: 0 0 100px;
+}
+
+/* Compose message div */
+.compose-div input[type="text"],
+.compose-div input[type="email"] {
+  width: 60%;
+}
+
+.compose-div textarea {
+  width: 60%;
+  height: 100px;
+}
+
+.compose-div ul {
+  height: 100px;
+  overflow: hidden;
+}
+
+#inbox_msg div {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#inbox_msg div > span.title {
+  flex: 2 0 20%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#inbox_msg div > span.message {
+  flex: 1 0 auto;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+}
+
+/* floating-button */
+
+.floating-button {
+  position: absolute;
+  bottom: 20px;
+  right: 170px;
+  z-index: 1;
+}
+
+.inner-nav {
+  position: relative;
+  background-color: white;
+  height: 40px;
+  top: 0px;
+  right: 0px;
+  z-index: 1000;
+}
+
+.floating-button button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: transparent;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(84, 0, 50);
+  box-shadow: 0px 5px 11px -2px rgba(0, 0, 0, 0.18),
+    0px 4px 12px -7px rgba(0, 0, 0, 0.15);
+}
+
+.round-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: transparent;
+}
+
+.logo-small,
+.page-title {
+  visibility: hidden;
+}
+
+/* icons */
+
+span.send::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/send.ico);
+  background-size: cover;
+}
+
+span.delete::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Delete.ico);
+  background-size: cover;
+}
+
+span.save::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Save.ico);
+  background-size: cover;
+}
+
+span.undo::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Undo.ico);
+  background-size: cover;
+}
+
+span.undo-alt::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Undo_1.ico);
+  background-size: cover;
+}
+
+span.plus::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Plus.ico);
+  background-size: cover;
+}
+
+span.create::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Create_New.ico);
+  background-size: cover;
+}
+
+span.compose::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Pencil.ico);
+  background-size: cover;
+}
+
+span.inbox::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/_Message_Filled.ico);
+  background-size: cover;
+}
+
+span.sent::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Sent.ico);
+  background-size: cover;
+}
+
+span.draft::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Back_to_Draft.ico);
+  background-size: cover;
+}
+
+span.group::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/User_Group_Man_Man.ico);
+  background-size: cover;
+}
+
+span.lock::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Lock_1.ico);
+  background-size: cover;
+}
+
+span.minus::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Minus.ico);
+  background-size: cover;
+}
+
+span.plus-alt::after {
+  content: "";
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background: url(../img/Plus_1.ico);
+  background-size: cover;
+}
+
+button#menu_button {
+  display: none;
+}
+
+/*tool tip*/
+[tooltip]:before {
+  bottom: 0px;
+  font-family: arial;
+  font-weight: 600;
+  border-radius: 2px;
+  background: #585858;
+  color: #fff;
+  content: attr(tooltip);
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  padding: 5px 7px;
+  margin-right: 0px;
+  position: relative;
+  z-index: 1000;
+  left: 80%;
+  white-space: nowrap;
+}
+
+[tooltip]:hover:before,
+[tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Navigation*/
+
+aside > .listview > a {
+  height: 100%;
+  color: rgba(84, 0, 50, 0.7);
+  border-bottom: 2px solid rgba(110, 208, 253, 0.3);
+}
+
+div.listview > a.active,
+div.listview > a:hover {
+  background-color: rgba(224, 193, 212, 0.6);
+  color: white;
+}
+
+aside {
+  border-right: 1px solid rgba(110, 208, 253, 0.3);
+  padding: 5px;
+}
+
+aside > .listview > a > li {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+
+  color: rgb(84, 0, 50);
+}
+
+aside > .listview > a > li > .notification {
+  font-size: 0.73em;
+  color: rgba(84, 0, 50, 0.6);
+}
+
+.received,
+.sent {
+  margin: 10px;
+  padding: 5px;
+}
+
+img {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Responsive design*/
+@media screen and (max-width: 778px) {
+  body {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  header {
+    display: none;
+  }
+
+  section {
+    display: flex;
+    flex: 0 0 100%;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    grid-area: section;
+    background-color: rgb(84, 0, 50);
+    border-top: 5px solid white;
+    border-bottom: 5px solid white;
+  }
+
+  section li.page-title {
+    flex: 0 0 auto;
+    margin-right: auto;
+    color: white;
+    font-size: 2em;
+    padding: 5px;
+  }
+
+  section button {
+    flex: 0 0 auto;
+  }
+
+  /*
+    
+    section .admin_group{
+    
+        font-size: 2.2em;
+        display: inline-block;
+        text-align: center;
+        padding:15px 5px;
+        border:2px solid white;
+        
+    }
+    
+    .admin_group > a{
+        display:block;
+        color:white;
+        height: 100%;
+    }
+    
+    */
+
+  button#menu_button {
+    display: block;
+  }
+
+  /* left tab*/
+  aside {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 7;
+    width: 90%;
+    height: 90vh;
+    background-color: rgb(84, 0, 50);
+  }
+
+  .listview > a {
+    display: block;
+    border-bottom: 2px solid white;
+  }
+
+  .listview > a > li > span {
+    color: white;
+  }
+
+  span.compose::after {
+    background: url(../img/Pencil_2.ico);
+    background-size: cover;
+  }
+
+  span.inbox::after {
+    background: url(../img/_Message_Filled_1.ico);
+    background-size: cover;
+  }
+
+  span.draft::after {
+    background: url(../img/Back_to_Draft_1.ico);
+    background-size: cover;
+  }
+
+  span.group::after {
+    background: url(../img/User_Group_Man_Man_1.ico);
+    background-size: cover;
+  }
+
+  span.lock::after {
+    background: url(../img/Lock_2.ico);
+    background-size: cover;
+  }
+
+  span.menu::after {
+    content: "";
+    font-size: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    background: url(../img/Menu_1.ico);
+    background-size: cover;
+  }
+
+  main {
+    flex: 8 0 100%;
+  }
+
+  main > .listview > a {
+    display: block;
+    height: 120px;
+  }
+
+  main > .listview > a > ul > li.img_detail {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+  }
+  main > .listview > a > ul > li.img_detail > span {
+    padding: 3px;
+  }
+
+  .logo-small,
+  .page-title {
+    visibility: visible;
+  }
+
+  .floating-button {
+    position: absolute;
+    bottom: 20px;
+    right: 120px;
+    z-index: 1;
+  }
+}
