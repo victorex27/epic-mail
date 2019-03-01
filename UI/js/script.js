@@ -98,7 +98,11 @@ class DivSelector {
     ];
 
     
+    
+    /** For demo */
+    document.getElementById('signin').addEventListener("click", () => { window.location = "../html/page.html"; });
 
+    /**end demo */
     
 
     this.editDPTab.addEventListener("click", () => this.onEditDpClicked());
@@ -127,7 +131,10 @@ class DivSelector {
     
   }
 
-  onLogOutClicked() {}
+  onLogOutClicked() {
+
+    window.location = "../html/index.html";
+  }
 
   onEditDpClicked() {
     this.onFABRemoveAll();
