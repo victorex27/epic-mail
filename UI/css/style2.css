@@ -30,13 +30,20 @@ header > div.dp {
   flex: 1 0 auto;
 }
 
+.dp img{
+
+  margin-right:10px;
+}
+
 aside {
   grid-area: aside;
 }
 
 main {
+  box-sizing: border-box;
   grid-area: main;
-  padding: 5px;
+  padding: 5px 25px 5px 6px;
+  
   border: 1px solid rgba(110, 208, 253, 0.3);
 
   -webkit-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
@@ -177,11 +184,21 @@ main > .listview > a > ul > li > span {
 
 .inner-nav {
   position: relative;
-  background-color: white;
+  background-color: transparent;
   height: 40px;
-  top: 0px;
-  right: 0px;
-  z-index: 1000;
+  top: 30px;
+  right: 60px;
+  z-index: 10;
+}
+
+.transparent-button {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 2px;
+  color: rgb(84, 0, 50);
+  padding: 4px 8px;
+  text-decoration: none;
+  margin: 4px 2px;
 }
 
 .floating-button button {
@@ -433,6 +450,7 @@ aside > .listview > a > li {
   color: rgb(84, 0, 50);
 }
 
+
 aside > .listview > a > li > .notification {
   font-size: 0.73em;
   color: rgba(84, 0, 50, 0.6);
@@ -486,26 +504,8 @@ img {
     flex: 0 0 auto;
   }
 
-  /*
-    
-    section .admin_group{
-    
-        font-size: 2.2em;
-        display: inline-block;
-        text-align: center;
-        padding:15px 5px;
-        border:2px solid white;
-        
-    }
-    
-    .admin_group > a{
-        display:block;
-        color:white;
-        height: 100%;
-    }
-    
-    */
-
+  
+  
   button#menu_button {
     display: block;
   }
