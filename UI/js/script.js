@@ -116,7 +116,9 @@ class DivSelector {
   onChangePassWordClicked() {
     this.onFABRemoveAll();
 
+    this.saveFAB.classList.remove("no-display");
     this.changeDivTo("change_password");
+
   }
 
   onMenuBarClicked() {
