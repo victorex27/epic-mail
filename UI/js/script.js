@@ -94,7 +94,7 @@ class DivSelector {
       this.deleteFAB,
       this.retractFAB,
       this.plusFAB,
-      this.createFAB
+      this.createFAB,
     ];
 
     
@@ -103,8 +103,7 @@ class DivSelector {
 
     this.editDPTab.addEventListener("click", () => this.onEditDpClicked());
     this.logoutTab.addEventListener("click", () => this.onLogOutClicked());
-    this.changePasswordTab.addEventListener("click", () =>
-      this.onChangePassWordClicked()
+    this.changePasswordTab.addEventListener("click", () => this.onChangePassWordClicked()
     );
 
   
