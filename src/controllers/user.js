@@ -1,12 +1,6 @@
 import UserModel from '../models/user';
 
 const User = {
-  /**
-   *
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} User object
-   */
   create(req, res) {
     const newUser = UserModel.create(req.body);
     if (!req.body.email || !req.body.firstName || !req.body.lastName) {
