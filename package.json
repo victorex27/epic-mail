@@ -21,7 +21,7 @@
   "scripts": {
     "lint": "eslint",
     "start": "node server.js",
-    "test": "mocha --require @babel/register"
+    "test": "mocha test --require @babel/register"
   },
   "repository": {
     "type": "git",
