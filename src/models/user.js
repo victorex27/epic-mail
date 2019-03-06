@@ -76,5 +76,20 @@ class User {
     }
     return user;
   }
+
+  login(data) {
+    const errorMessage = { error: '' };
+    if (!data.email || !data.password) {
+      errorMessage.error = 'Invalid parameter';
+      return errorMessage;
+    }
+    const user = this.users.find(u => (u.email === data.email && u.password === data.password));
+
+    if (!user) {
+      errorMessage.error = 'User does not exists';
+      return errorMessage;
+    }
+    return user;
+  }
 }
 export default new User();
