@@ -1,7 +1,8 @@
 import { expect } from 'chai';
+import Message from '../src/models/message';
 
 describe('Message', () => {
-  describe('post()', () => {
+  describe('post(data)', () => {
     it('should return a message body', () => {
       const data = {
         from: 'aobikobe@gmail.com',
@@ -19,20 +20,8 @@ describe('Message', () => {
       expect(messageBody).to.have.property('status').to.be.a('string');
     });
   });
-  describe('post()', () => {
-    it('should return One or more fields are missing for missing fields', () => {
-      const data = {
-        from: '',
-        to: 'aob@gmail.com',
-        subject: 'How do you do',
-        message: 'this is going to be a sweet test',
-      };
 
-      const messageBody = Message.post(data);
-      expect(messageBody).to.have.property('error').to.be.a('string').equal('should return One or more fields are missing');
-    });
-  });
-  describe('post()', () => {
+  describe('post(data)', () => {
     it('should return Incorrect receiver Id', () => {
       const data = {
         from: 'aobikobe@gmail.com',
@@ -45,11 +34,11 @@ describe('Message', () => {
       expect(messageBody).to.have.property('error').to.be.a('string').equal('Incorrect receiver Id');
     });
   });
-  describe('post()', () => {
+  describe('post(data)', () => {
     it('should return Incorrect sender Id', () => {
       const data = {
         from: 'xyz@gmail.com',
-        to: 'xyz1@gmail.com',
+        to: 'aobikobe@gmail.com',
         subject: 'How do you do',
         message: 'this is going to be a sweet test',
       };
@@ -58,11 +47,11 @@ describe('Message', () => {
       expect(messageBody).to.have.property('error').to.be.a('string').equal('Incorrect sender Id');
     });
   });
-  describe('post()', () => {
+  describe('post(data)', () => {
     it('should return Sender id and receiver id can not be the same', () => {
       const data = {
-        from: 'xyz@gmail.com',
-        to: 'xyz@gmail.com',
+        from: 'aobikobe@gmail.com',
+        to: 'aobikobe@gmail.com',
         subject: 'How do you do',
         message: 'this is going to be a sweet test',
       };
@@ -75,15 +64,19 @@ describe('Message', () => {
     it('should return all sent messages for a valid user with sent items', () => {
       const email = 'aobikobe@gmail.com';
       const sent = Message.getAllSentMessages(email);
+
+
       expect(sent).to.be.a('array');
-      expect(sent).to.have.property('id').to.be.a('number');
-      expect(sent).to.have.property('createdOn');
-      expect(sent).to.have.property('subject').to.be.a('string');
-      expect(sent).to.have.property('message').to.be.a('message');
-      expect(sent).to.have.property('senderId').to.be.a('number');
-      expect(sent).to.have.property('receiverId').to.be.a('number');
-      expect(sent).to.have.property('parentMessageId').to.be.a('number');
-      expect(sent).to.have.property('status').to.be.a('string');
+      sent.forEach((member) => {
+        expect(member).to.have.property('createdOn');
+        expect(member).to.have.property('subject').to.be.a('string');
+        expect(member).to.have.property('message').to.be.a('string');
+        expect(member).to.have.property('senderId').to.be.a('number');
+        expect(member).to.have.property('receiverId').to.be.a('number');
+        expect(member).to.have.property('parentMessageId').to.be.a('number');
+        expect(member).to.have.property('status').to.be.a('string');
+        expect(member).to.have.property('id').to.be.a('number');
+      });
     });
   });
 
@@ -94,11 +87,12 @@ describe('Message', () => {
       expect(sent).to.have.property('error').to.be.a('string').equal('Unkwnown user');
     });
   });
-  describe('getAllSentMessages(\'aobikobe@gmail.com\')', () => {
+  describe('getAllSentMessages(\'arinze@gmail.com\')', () => {
     it('should return empty for user with no sent items', () => {
-      const email = 'aob@gmail.com';
+      const email = 'arinze@gmail.com';
       const sent = Message.getAllSentMessages(email);
-      expect(sent).equal({});
+
+      expect(sent).to.deep.equal({});
     });
   });
   describe('getInbox(\'aobikobe@gmail.com\')', () => {
@@ -106,28 +100,32 @@ describe('Message', () => {
       const email = 'aobikobe@gmail.com';
       const inbox = Message.getInbox(email);
       expect(inbox).to.be.a('array');
-      expect(inbox).to.have.property('id').to.be.a('number');
-      expect(inbox).to.have.property('createdOn');
-      expect(inbox).to.have.property('subject').to.be.a('string');
-      expect(inbox).to.have.property('message').to.be.a('message');
-      expect(inbox).to.have.property('senderId').to.be.a('number');
-      expect(inbox).to.have.property('receiverId').to.be.a('number');
-      expect(inbox).to.have.property('parentMessageId').to.be.a('number');
-      expect(inbox).to.have.property('status').to.be.a('string');
+
+      inbox.forEach((member) => {
+        expect(member).to.have.property('createdOn');
+        expect(member).to.have.property('subject').to.be.a('string');
+        expect(member).to.have.property('message').to.be.a('string');
+        expect(member).to.have.property('senderId').to.be.a('number');
+        expect(member).to.have.property('receiverId').to.be.a('number');
+        expect(member).to.have.property('parentMessageId').to.be.a('number');
+        expect(member).to.have.property('status').to.be.a('string');
+        expect(member).to.have.property('id').to.be.a('number');
+      });
     });
   });
   describe('getInbox()', () => {
     it('sholud return Unkwnown user for incorrect email address', () => {
-      const email = 'xyz@gmail.com';
-      const inbox = Message.getAllinboxMessages(email);
+      const email = 'xy99z@gmail.com';
+      const inbox = Message.getInbox(email);
+
       expect(inbox).to.have.property('error').to.be.a('string').equal('Unkwnown user');
     });
   });
   describe('getInbox()', () => {
     it('should return empty for user with no received emails', () => {
-      const email = 'aob@gmail.com';
-      const inbox = Message.getAllinboxMessages(email);
-      expect(inbox).equal({});
+      const email = 'ao@gmail.com';
+      const inbox = Message.getInbox(email);
+      expect(inbox).to.deep.equal({});
     });
   });
 
@@ -136,14 +134,17 @@ describe('Message', () => {
       const email = 'aobikobe@gmail.com';
       const unread = Message.getUnreadInbox(email);
       expect(unread).to.be.a('array');
-      expect(unread).to.have.property('id').to.be.a('number');
-      expect(unread).to.have.property('createdOn');
-      expect(unread).to.have.property('subject').to.be.a('string');
-      expect(unread).to.have.property('message').to.be.a('message');
-      expect(unread).to.have.property('senderId').to.be.a('number');
-      expect(unread).to.have.property('receiverId').to.be.a('number');
-      expect(unread).to.have.property('parentMessageId').to.be.a('number');
-      expect(unread).to.have.property('status').to.be.a('string');
+
+      unread.forEach((member) => {
+        expect(member).to.have.property('createdOn');
+        expect(member).to.have.property('subject').to.be.a('string');
+        expect(member).to.have.property('message').to.be.a('string');
+        expect(member).to.have.property('senderId').to.be.a('number');
+        expect(member).to.have.property('receiverId').to.be.a('number');
+        expect(member).to.have.property('parentMessageId').to.be.a('number');
+        expect(member).to.have.property('status').to.be.a('string');
+        expect(member).to.have.property('id').to.be.a('number');
+      });
     });
   });
   describe('getUnreadInbox(\'\')', () => {
@@ -153,23 +154,24 @@ describe('Message', () => {
       expect(unread).to.have.property('error').to.be.a('string').equal('Unkwnown user');
     });
   });
-  describe('getUnreadInbox(\'aob@gmail.com\')', () => {
+  describe('getUnreadInbox(\'ao@gmail.com\')', () => {
     it('should return empty for user with no unread received emails', () => {
-      const email = 'aob@gmail.com';
+      const email = 'ao@gmail.com';
       const unread = Message.getUnreadInbox(email);
-      expect(unread).equal({});
+      expect(unread).to.deep.equal({});
     });
   });
 
   describe('getMessageById(1)', () => {
-    it('should return a message with id 1', () => {
+    it('should return a message ', () => {
       const id = 1;
       const message = Message.getMessageById(id);
-      expect(message).to.be.a('array');
+
+      expect(message).to.be.a('object');
       expect(message).to.have.property('id').to.be.a('number');
       expect(message).to.have.property('createdOn');
       expect(message).to.have.property('subject').to.be.a('string');
-      expect(message).to.have.property('message').to.be.a('message');
+      expect(message).to.have.property('message').to.be.a('string');
       expect(message).to.have.property('senderId').to.be.a('number');
       expect(message).to.have.property('receiverId').to.be.a('number');
       expect(message).to.have.property('parentMessageId').to.be.a('number');
@@ -181,6 +183,20 @@ describe('Message', () => {
       const id = '';
       const message = Message.getMessageById(id);
       expect(message).to.have.property('error').to.be.a('string').equal('Invalid number');
+    });
+  });
+  describe('deleteMessage(1)', () => {
+    it('should return The deleted message', () => {
+      const id = 1;
+      const message = Message.deleteMessage(id);
+      expect(message).to.have.property('message').to.be.a('string');
+    });
+  });
+  describe('deleteMessage(\'\')', () => {
+    it('should return Invalid Message id', () => {
+      const id = '';
+      const message = Message.deleteMessage(id);
+      expect(message).to.have.property('error').to.be.a('string').equal('Invalid Message id');
     });
   });
 });

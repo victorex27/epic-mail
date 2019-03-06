@@ -6,7 +6,7 @@ describe('User', () => {
   describe('create()', () => {
     it('should return a new User Object', (done) => {
       const data = {
-        email: 'aob@gmail.com',
+        email: 'aobx@gmail.com',
         firstName: 'Amaobi',
         lastName: 'Obikobe',
         password: 'paswword',

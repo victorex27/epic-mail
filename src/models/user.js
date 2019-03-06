@@ -1,14 +1,39 @@
 class User {
   constructor() {
     this.users = [];
-    const existingUser = {
+    const existingUser1 = {
       id: 1,
       email: 'aobikobe@gmail.com',
       firstName: 'Amaobi',
       lastName: 'Obikobe',
       password: 'password',
     };
-    this.users.push(existingUser);
+    const existingUser2 = {
+      id: 2,
+      email: 'aob@gmail.com',
+      firstName: 'Amaobi',
+      lastName: 'Obikobe',
+      password: 'password',
+    };
+    const existingUser3 = {
+      id: 3,
+      email: 'arinze@gmail.com',
+      firstName: 'Amaobi',
+      lastName: 'Obikobe',
+      password: 'password',
+    };
+    const existingUser4 = {
+      id: 4,
+      email: 'ao@gmail.com',
+      firstName: 'Amaobi',
+      lastName: 'Obikobe',
+      password: 'password',
+    };
+    this.users.push(existingUser1);
+    this.users.push(existingUser2);
+    this.users.push(existingUser3);
+    this.users.push(existingUser4);
+    this.lastInsertId = 5;
   }
 
 
@@ -23,9 +48,10 @@ class User {
       errorMessage.error = 'User already exists';
       return errorMessage;
     }
-
+    const newId = this.lastInsertId + 1;
+    this.lastInsertId += 1;
     const newUser = {
-      id: 2,
+      id: newId,
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
