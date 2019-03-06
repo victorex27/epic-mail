@@ -80,7 +80,7 @@ describe('Message', () => {
     });
   });
 
-  describe('getAllSentMessages()', () => {
+  describe('getAllSentMessages(\'xyz@gmail.com\')', () => {
     it('sholud return Unkwnown user for incorrect email address', () => {
       const email = 'xyz@gmail.com';
       const sent = Message.getAllSentMessages(email);
@@ -113,7 +113,7 @@ describe('Message', () => {
       });
     });
   });
-  describe('getInbox()', () => {
+  describe('getInbox(\'xy99z@gmail.com\')', () => {
     it('sholud return Unkwnown user for incorrect email address', () => {
       const email = 'xy99z@gmail.com';
       const inbox = Message.getInbox(email);
@@ -121,7 +121,7 @@ describe('Message', () => {
       expect(inbox).to.have.property('error').to.be.a('string').equal('Unkwnown user');
     });
   });
-  describe('getInbox()', () => {
+  describe('getInbox(\'ao@gmail.com\')', () => {
     it('should return empty for user with no received emails', () => {
       const email = 'ao@gmail.com';
       const inbox = Message.getInbox(email);
