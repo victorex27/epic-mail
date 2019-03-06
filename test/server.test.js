@@ -185,3 +185,37 @@ describe('GET /api/v1/messages/sent', () => {
     });
   });
 });
+
+describe('GET /api/v1/messages/unread', () => {
+  describe('When a user tries to retrieve an unread message with a valid account', () => {
+    it('should return an object with the status and data', (done) => {
+      const data = {
+        email: 'aobikobe@gmail.com',
+      };
+
+      chai.request(server)
+        .get('/api/v1/messages/unread')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').equal(200);
+          expect(res.body).to.have.property('data').to.be.a('array');
+          done();
+        });
+    });
+  });
+  describe('When a user tries to retrieve an unread message with an invalid account', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        email: '123@gmail.com',
+      };
+      chai.request(server)
+        .get('/api/v1/messages/unread')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
