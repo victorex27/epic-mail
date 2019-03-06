@@ -22,7 +22,9 @@
   },
   "scripts": {
     "lint": "eslint",
-    "start": "node src/server.js",
+    "start": "node --exec babel-node src/server.js",
+    "build": "babel src --out-dir dist",
+    "serve": "node dist/server.js",
     "test": "mocha test --require @babel/register"
   },
   "repository": {
