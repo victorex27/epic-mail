@@ -108,6 +108,29 @@ function () {
 
       return user;
     }
+  }, {
+    key: "login",
+    value: function login(data) {
+      var errorMessage = {
+        error: ''
+      };
+
+      if (!data.email || !data.password) {
+        errorMessage.error = 'Invalid parameter';
+        return errorMessage;
+      }
+
+      var user = this.users.find(function (u) {
+        return u.email === data.email && u.password === data.password;
+      });
+
+      if (!user) {
+        errorMessage.error = 'User does not exists';
+        return errorMessage;
+      }
+
+      return user;
+    }
   }]);
 
   return User;
