@@ -76,3 +76,44 @@ describe('POST /api/v1/auth/login', () => {
     });
   });
 });
+
+describe('POST /api/v1/messages', () => {
+  describe('When a user tries to send a message with a valid account', () => {
+    it('should return an object with the status and data', (done) => {
+      const data = {
+        from: 'aobikobe@gmail.com',
+        to: 'aob@gmail.com',
+        subject: 'How do you do',
+        message: 'this is going to be a sweet test',
+      };
+
+      chai.request(server)
+        .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('data').to.be.a('array');
+          done();
+        });
+    });
+  });
+  describe('When a user tries to send a message with a valid account', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        from: 'aobikobe@gmail.com',
+        to: 'xyz1@gmail.com',
+        subject: 'How do you do',
+        message: 'this is going to be a sweet test',
+      };
+
+      chai.request(server)
+        .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
