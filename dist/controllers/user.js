@@ -14,8 +14,8 @@ var User = {
     var newUser = _user.default.create(req.body);
 
     if (!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password || newUser.error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(403).json({
+        status: 403,
         error: newUser.error
       });
     }
@@ -31,8 +31,8 @@ var User = {
     var newUser = _user.default.login(req.body);
 
     if (!req.body.email || !req.body.password || newUser.error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(401).json({
+        status: 401,
         error: newUser.error
       });
     }

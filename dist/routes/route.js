@@ -21,5 +21,6 @@ router.get('/messages', _message.default.getInbox);
 router.get('/messages/sent', _message.default.getAllSentMessages);
 router.get('/messages/unread', _message.default.getUnreadInbox);
 router.get('/messages/:id', _message.default.getMessageById);
+router.delete('/messages/:id', _message.default.deleteMessage);
 var _default = router;
 exports.default = _default;

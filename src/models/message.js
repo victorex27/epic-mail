@@ -177,7 +177,7 @@ class Message {
   }
 
   deleteMessage(id) {
-    const errorMessage = { error: '' };
+    const errorMessage = { error: 'Invalid operation' };
     const message = this.getMessageById(id);
     if (message.error) {
       errorMessage.error = 'Invalid Message id';
@@ -187,11 +187,10 @@ class Message {
     const result = { message: '' };
     result.message = message[0].message;
 
-    const index = this.messages.indexOf(message);
+    const index = this.messages.indexOf(message[0]);
     if (index > -1) {
       this.messages.splice(index, 1);
     }
-
     return result;
   }
 }

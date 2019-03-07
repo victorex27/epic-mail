@@ -14,6 +14,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express.default)();
 app.use(_express.default.json());
 app.use('/api/v1', _route.default);
+app.get('*', function (req, res) {
+  return res.status(404).json({
+    status: 404,
+    error: 'resource not found'
+  });
+});
 var server = app.listen(3000);
 console.log('app running on port ', 3000);
 var _default = server;
