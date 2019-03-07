@@ -29,8 +29,8 @@ var Message = {
     var newMessage = _message.default.getInbox(req.body);
 
     if (newMessage.error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: newMessage.error
       });
     }
@@ -44,8 +44,8 @@ var Message = {
     var newMessage = _message.default.getAllSentMessages(req.body);
 
     if (newMessage.error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: newMessage.error
       });
     }
@@ -59,8 +59,8 @@ var Message = {
     var newMessage = _message.default.getUnreadInbox(req.body);
 
     if (newMessage.error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: newMessage.error
       });
     }
@@ -73,11 +73,9 @@ var Message = {
   getMessageById: function getMessageById(req, res) {
     var newMessage = _message.default.getMessageById(req.params.id);
 
-    console.log(newMessage.error);
-
     if (newMessage.error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: newMessage.error
       });
     }
@@ -85,6 +83,21 @@ var Message = {
     return res.status(200).json({
       status: 200,
       data: newMessage
+    });
+  },
+  deleteMessage: function deleteMessage(req, res) {
+    var newMessage = _message.default.deleteMessage(req.params.id);
+
+    if (newMessage.error) {
+      return res.status(404).json({
+        status: 404,
+        error: newMessage.error
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      data: [newMessage]
     });
   }
 };

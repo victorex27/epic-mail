@@ -11,5 +11,6 @@ router.get('/messages', Message.getInbox);
 router.get('/messages/sent', Message.getAllSentMessages);
 router.get('/messages/unread', Message.getUnreadInbox);
 router.get('/messages/:id', Message.getMessageById);
+router.delete('/messages/:id', Message.deleteMessage);
 
 export default router;

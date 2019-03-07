@@ -184,7 +184,7 @@ describe('Message', () => {
 
   describe('getMessageById(1)', () => {
     it('should return a message ', () => {
-      const id  = 1;
+      const id = 1;
       const message = Message.getMessageById(id);
 
 
@@ -200,13 +200,12 @@ describe('Message', () => {
         expect(member).to.have.property('status').to.be.a('string');
         expect(member).to.have.property('id').to.be.a('number');
       });
-
     });
   });
   describe('getMessageById(\'\')', () => {
     it('should return Invalid number', () => {
       const id = '';
-      
+
       const message = Message.getMessageById(id);
       expect(message).to.have.property('error').to.be.a('string').equal('Invalid number');
     });
@@ -215,7 +214,6 @@ describe('Message', () => {
     it('should return The deleted message', () => {
       const id = 1;
       const message = Message.deleteMessage(id);
-      console.log(message);
       expect(message).to.have.property('message').to.be.a('string');
     });
   });

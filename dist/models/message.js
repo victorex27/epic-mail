@@ -225,7 +225,7 @@ function () {
     key: "deleteMessage",
     value: function deleteMessage(id) {
       var errorMessage = {
-        error: ''
+        error: 'Invalid operation'
       };
       var message = this.getMessageById(id);
 
@@ -238,7 +238,7 @@ function () {
         message: ''
       };
       result.message = message[0].message;
-      var index = this.messages.indexOf(message);
+      var index = this.messages.indexOf(message[0]);
 
       if (index > -1) {
         this.messages.splice(index, 1);
