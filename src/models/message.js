@@ -162,34 +162,37 @@ class Message {
     return message;
   }
 
-  getMessageById(data) {
+  getMessageById(id) {
     const errorMessage = { error: '' };
-    const message = this.messages.find(msg => msg.id === data.id);
+    const result = [];
+    const message = this.messages.find(msg => msg.id === Number(id));
+
 
     if (!message) {
       errorMessage.error = 'Invalid number';
       return errorMessage;
     }
-    return message;
+    result.push(message);
+    return result;
   }
 
-  deleteMessage(data) {
+  deleteMessage(id) {
     const errorMessage = { error: '' };
-    const message = this.getMessageById(data);
-    const result = { message: '' };
-
+    const message = this.getMessageById(id);
     if (message.error) {
       errorMessage.error = 'Invalid Message id';
       return errorMessage;
     }
 
+    const result = { message: '' };
+    result.message = message[0].message;
+
     const index = this.messages.indexOf(message);
     if (index > -1) {
       this.messages.splice(index, 1);
     }
-    result.message = message.message;
+
     return result;
-    // this.messages.
   }
 }
 

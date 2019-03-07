@@ -184,46 +184,45 @@ describe('Message', () => {
 
   describe('getMessageById(1)', () => {
     it('should return a message ', () => {
-      const data = {
-        id: 1,
-      };
-      const message = Message.getMessageById(data);
+      const id  = 1;
+      const message = Message.getMessageById(id);
 
-      expect(message).to.be.a('object');
-      expect(message).to.have.property('id').to.be.a('number');
-      expect(message).to.have.property('createdOn');
-      expect(message).to.have.property('subject').to.be.a('string');
-      expect(message).to.have.property('message').to.be.a('string');
-      expect(message).to.have.property('senderId').to.be.a('number');
-      expect(message).to.have.property('receiverId').to.be.a('number');
-      expect(message).to.have.property('parentMessageId').to.be.a('number');
-      expect(message).to.have.property('status').to.be.a('string');
+
+      expect(message).to.be.a('array');
+
+      message.forEach((member) => {
+        expect(member).to.have.property('createdOn');
+        expect(member).to.have.property('subject').to.be.a('string');
+        expect(member).to.have.property('message').to.be.a('string');
+        expect(member).to.have.property('senderId').to.be.a('number');
+        expect(member).to.have.property('receiverId').to.be.a('number');
+        expect(member).to.have.property('parentMessageId').to.be.a('number');
+        expect(member).to.have.property('status').to.be.a('string');
+        expect(member).to.have.property('id').to.be.a('number');
+      });
+
     });
   });
   describe('getMessageById(\'\')', () => {
     it('should return Invalid number', () => {
-      const data = {
-        id: '',
-      };
-      const message = Message.getMessageById(data);
+      const id = '';
+      
+      const message = Message.getMessageById(id);
       expect(message).to.have.property('error').to.be.a('string').equal('Invalid number');
     });
   });
   describe('deleteMessage(1)', () => {
     it('should return The deleted message', () => {
-      const data = {
-        id: 1,
-      };
-      const message = Message.deleteMessage(data);
+      const id = 1;
+      const message = Message.deleteMessage(id);
+      console.log(message);
       expect(message).to.have.property('message').to.be.a('string');
     });
   });
   describe('deleteMessage(\'\')', () => {
     it('should return Invalid Message id', () => {
-      const data = {
-        id: '',
-      };
-      const message = Message.deleteMessage(data);
+      const id = '';
+      const message = Message.deleteMessage(id);
       expect(message).to.have.property('error').to.be.a('string').equal('Invalid Message id');
     });
   });

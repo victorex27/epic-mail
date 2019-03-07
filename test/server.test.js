@@ -219,3 +219,37 @@ describe('GET /api/v1/messages/unread', () => {
     });
   });
 });
+
+describe('GET /api/v1/messages/:id', () => {
+  describe('When a user tries to retrieve retrieve a valid message id', () => {
+    it('should return an object with the status and data', (done) => {
+      const data = {
+        id: 1,
+      };
+
+      chai.request(server)
+        .get('/api/v1/messages/1')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').equal(200);
+          expect(res.body).to.have.property('data').to.be.a('array');
+          done();
+        });
+    });
+  });
+  describe('When a user tries to retrieve an invalid message', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        id: '',
+      };
+      chai.request(server)
+        .get('/api/v1/messages/90')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
+});

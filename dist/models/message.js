@@ -106,14 +106,9 @@ function () {
         status: 'sent',
         senderId: sender.id,
         receiverId: receiver.id
-      };
-      var newMessage = {};
-      newMessage.id = insertMessage.id;
-      newMessage.createdOn = insertMessage.createdOn;
-      newMessage.subject = insertMessage.subject;
-      newMessage.message = insertMessage.message;
-      newMessage.parentMessageId = insertMessage.parentMessageId;
-      newMessage.status = insertMessage.status;
+      }; // change this
+
+      var newMessage = [insertMessage];
       this.messages.push(insertMessage);
       return newMessage;
     }
@@ -133,7 +128,7 @@ function () {
 
 
       var message = this.messages.reduce(function (arr, msg) {
-        if (msg.senderId === sender.id) {
+        if (msg.senderId === sender.id && msg.status !== 'drafft') {
           arr.push(msg);
         }
 
@@ -163,7 +158,7 @@ function () {
 
 
       var message = this.messages.reduce(function (arr, msg) {
-        if (msg.receiverId === receiver.id) {
+        if (msg.receiverId === receiver.id && msg.status !== 'draft') {
           arr.push(msg);
         }
 
@@ -193,7 +188,7 @@ function () {
 
 
       var message = this.messages.reduce(function (arr, msg) {
-        if (msg.receiverId === receiver.id && msg.status !== 'read') {
+        if (msg.receiverId === receiver.id && msg.status !== 'read' && msg.status !== 'draft') {
           arr.push(msg);
         }
 
@@ -209,12 +204,13 @@ function () {
     }
   }, {
     key: "getMessageById",
-    value: function getMessageById(data) {
+    value: function getMessageById(id) {
       var errorMessage = {
         error: ''
       };
+      var result = [];
       var message = this.messages.find(function (msg) {
-        return msg.id === data.id;
+        return msg.id === Number(id);
       });
 
       if (!message) {
@@ -222,32 +218,33 @@ function () {
         return errorMessage;
       }
 
-      return message;
+      result.push(message);
+      return result;
     }
   }, {
     key: "deleteMessage",
-    value: function deleteMessage(data) {
+    value: function deleteMessage(id) {
       var errorMessage = {
         error: ''
       };
-      var message = this.getMessageById(data);
-      var result = {
-        message: ''
-      };
+      var message = this.getMessageById(id);
 
       if (message.error) {
         errorMessage.error = 'Invalid Message id';
         return errorMessage;
       }
 
+      var result = {
+        message: ''
+      };
+      result.message = message[0].message;
       var index = this.messages.indexOf(message);
 
       if (index > -1) {
         this.messages.splice(index, 1);
       }
 
-      result.message = message.message;
-      return result; // this.messages.
+      return result;
     }
   }]);
 
