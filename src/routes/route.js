@@ -9,5 +9,6 @@ router.post('/auth/login', User.login);
 router.post('/messages', Message.post);
 router.get('/messages', Message.getInbox);
 router.get('/messages/sent', Message.getAllSentMessages);
+router.get('/messages/unread', Message.getAllUnreadMessages);
 
 export default router;

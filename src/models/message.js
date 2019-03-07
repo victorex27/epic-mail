@@ -103,7 +103,7 @@ class Message {
     }
     // const message = this.messages.find(m => m.senderId === sender.id);
     const message = this.messages.reduce((arr, msg) => {
-      if (msg.senderId === sender.id) {
+      if (msg.senderId === sender.id && msg.status !== 'drafft') {
         arr.push(msg);
       }
       return arr;
@@ -126,7 +126,7 @@ class Message {
     }
     // const message = this.messages.find(m => m.senderId === sender.id);
     const message = this.messages.reduce((arr, msg) => {
-      if (msg.receiverId === receiver.id) {
+      if (msg.receiverId === receiver.id && msg.status !== 'draft') {
         arr.push(msg);
       }
       return arr;
@@ -149,7 +149,7 @@ class Message {
     }
     // const message = this.messages.find(m => m.senderId === sender.id);
     const message = this.messages.reduce((arr, msg) => {
-      if (msg.receiverId === receiver.id && msg.status !== 'read') {
+      if (msg.receiverId === receiver.id && msg.status !== 'read' && msg.status !== 'draft') {
         arr.push(msg);
       }
       return arr;
