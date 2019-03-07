@@ -91,13 +91,14 @@ describe('POST /api/v1/messages', () => {
         .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
+          console.log(res.body);
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data').to.be.a('array');
           done();
         });
     });
   });
-  describe('When a user tries to send a message with a valid account', () => {
+  describe('When a user tries to send a message with an invalid account', () => {
     it('should return an object with the status and error', (done) => {
       const data = {
         from: 'aobikobe@gmail.com',
@@ -108,6 +109,40 @@ describe('POST /api/v1/messages', () => {
 
       chai.request(server)
         .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
+
+describe('GET /api/v1/messages', () => {
+  describe('When a user tries to retrieve a message with a valid account', () => {
+    it('should return an object with the status and data', (done) => {
+      const data = {
+        email: 'aobikobe@gmail.com',
+      };
+
+      chai.request(server)
+        .get('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {          
+          expect(res.body).to.have.property('status').equal(200);
+          expect(res.body).to.have.property('data').to.be.a('array');
+          done();
+        });
+    });
+  });
+  describe('When a user tries to retrieve a message with an invalid account', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        email: '123@gmail.com',
+      };
+      chai.request(server)
+        .get('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
