@@ -25,7 +25,7 @@
     "start": "node --exec babel-node dist/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
-    "test": "mocha test/server.test.js --require @babel/register"
+    "test": "mocha test --require @babel/register"
   },
   "repository": {
     "type": "git",
