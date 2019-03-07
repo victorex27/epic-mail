@@ -85,23 +85,18 @@ class Message {
       senderId: sender.id,
       receiverId: receiver.id,
     };
-    const newMessage = {};
-    ({
-      id: newMessage.id,
-      createdOn: newMessage.createdOn,
-      subject: newMessage.subject,
-      message: newMessage.message,
-      parentMessageId: newMessage.parentMessageId,
-      status: newMessage.status,
-    } = insertMessage);
 
+    // change this
+    const newMessage = [
+      insertMessage,
+    ];
     this.messages.push(insertMessage);
     return newMessage;
   }
 
-  getAllSentMessages(email) {
+  getAllSentMessages(data) {
     const errorMessage = { error: '' };
-    const sender = User.findOne(email);
+    const sender = User.findOne(data.email);
     if (sender.error === 'User does not exists') {
       errorMessage.error = 'Unkwnown user';
       return errorMessage;
@@ -116,16 +111,17 @@ class Message {
 
     if (message.length === 0) {
       // errorMessage.error = 'User does not exists';
-      return {};
+      return [];
     }
     return message;
   }
 
-  getInbox(email) {
+  getInbox(data) {
     const errorMessage = { error: '' };
-    const receiver = User.findOne(email);
+    const receiver = User.findOne(data.email);
     if (receiver.error === 'User does not exists') {
       errorMessage.error = 'Unkwnown user';
+
       return errorMessage;
     }
     // const message = this.messages.find(m => m.senderId === sender.id);
@@ -138,14 +134,15 @@ class Message {
 
     if (message.length === 0) {
       // errorMessage.error = 'User does not exists';
-      return {};
+      return [];
     }
+
     return message;
   }
 
-  getUnreadInbox(email) {
+  getUnreadInbox(data) {
     const errorMessage = { error: '' };
-    const receiver = User.findOne(email);
+    const receiver = User.findOne(data.email);
     if (receiver.error) {
       errorMessage.error = 'Unkwnown user';
       return errorMessage;
@@ -160,14 +157,14 @@ class Message {
 
     if (message.length === 0) {
       // errorMessage.error = 'User does not exists';
-      return {};
+      return [];
     }
     return message;
   }
 
-  getMessageById(id) {
+  getMessageById(data) {
     const errorMessage = { error: '' };
-    const message = this.messages.find(msg => msg.id === id);
+    const message = this.messages.find(msg => msg.id === data.id);
 
     if (!message) {
       errorMessage.error = 'Invalid number';
@@ -176,9 +173,9 @@ class Message {
     return message;
   }
 
-  deleteMessage(id) {
+  deleteMessage(data) {
     const errorMessage = { error: '' };
-    const message = this.getMessageById(id);
+    const message = this.getMessageById(data);
     const result = { message: '' };
 
     if (message.error) {

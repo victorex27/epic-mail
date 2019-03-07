@@ -119,12 +119,12 @@ function () {
     }
   }, {
     key: "getAllSentMessages",
-    value: function getAllSentMessages(email) {
+    value: function getAllSentMessages(data) {
       var errorMessage = {
         error: ''
       };
 
-      var sender = _user.default.findOne(email);
+      var sender = _user.default.findOne(data.email);
 
       if (sender.error === 'User does not exists') {
         errorMessage.error = 'Unkwnown user';
@@ -142,19 +142,19 @@ function () {
 
       if (message.length === 0) {
         // errorMessage.error = 'User does not exists';
-        return {};
+        return [];
       }
 
       return message;
     }
   }, {
     key: "getInbox",
-    value: function getInbox(email) {
+    value: function getInbox(data) {
       var errorMessage = {
         error: ''
       };
 
-      var receiver = _user.default.findOne(email);
+      var receiver = _user.default.findOne(data.email);
 
       if (receiver.error === 'User does not exists') {
         errorMessage.error = 'Unkwnown user';
@@ -172,19 +172,19 @@ function () {
 
       if (message.length === 0) {
         // errorMessage.error = 'User does not exists';
-        return {};
+        return [];
       }
 
       return message;
     }
   }, {
     key: "getUnreadInbox",
-    value: function getUnreadInbox(email) {
+    value: function getUnreadInbox(data) {
       var errorMessage = {
         error: ''
       };
 
-      var receiver = _user.default.findOne(email);
+      var receiver = _user.default.findOne(data.email);
 
       if (receiver.error) {
         errorMessage.error = 'Unkwnown user';
@@ -202,19 +202,19 @@ function () {
 
       if (message.length === 0) {
         // errorMessage.error = 'User does not exists';
-        return {};
+        return [];
       }
 
       return message;
     }
   }, {
     key: "getMessageById",
-    value: function getMessageById(id) {
+    value: function getMessageById(data) {
       var errorMessage = {
         error: ''
       };
       var message = this.messages.find(function (msg) {
-        return msg.id === id;
+        return msg.id === data.id;
       });
 
       if (!message) {
@@ -226,11 +226,11 @@ function () {
     }
   }, {
     key: "deleteMessage",
-    value: function deleteMessage(id) {
+    value: function deleteMessage(data) {
       var errorMessage = {
         error: ''
       };
-      var message = this.getMessageById(id);
+      var message = this.getMessageById(data);
       var result = {
         message: ''
       };
