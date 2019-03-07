@@ -8,5 +8,6 @@ router.post('/auth/signup', User.create);
 router.post('/auth/login', User.login);
 router.post('/messages', Message.post);
 router.get('/messages', Message.getInbox);
+router.get('/messages/sent', Message.getAllSentMessages);
 
 export default router;
