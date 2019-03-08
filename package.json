@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "dependencies": {
     "@babel/core": "^7.3.4",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -18,8 +19,7 @@
     "eslint": "^5.15.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "mocha": "^6.0.2",
-    "nodemon": "^1.18.10"
+    "mocha": "^6.0.2"
   },
   "scripts": {
     "lint": "eslint",
