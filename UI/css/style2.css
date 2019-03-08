@@ -18,16 +18,20 @@ header {
   background-position: 300px, 800px;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
 
 header > div.logo {
-  flex: 1 0 80%;
+  flex:1 0 0;
+  margin-right: auto;
+
 }
 
 header > div.dp {
   margin-top: 80px;
-  flex: 1 0 auto;
+
+  flex:0 0 auto;
+  
 }
 
 .dp img{
@@ -47,9 +51,9 @@ main {
   
   border: 1px solid rgba(110, 208, 253, 0.3);
 
-  -webkit-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
-  -moz-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
-  box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
+  -webkit-box-shadow: 0 4px 2px -2px gray;
+  -moz-box-shadow: 0 4px 2px -2px gray;
+  box-shadow: 0 4px 2px -2px gray;
 }
 
 .flex-row-nowrap {
