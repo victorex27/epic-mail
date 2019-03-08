@@ -69,6 +69,7 @@ main > div.site_name {
 
 .site_name > span {
   font-size: 6em;
+  color:rgb(20, 10, 156);
 }
 
 /* Responsive design*/

@@ -14,7 +14,6 @@ header {
   background-color: rgb(255, 255, 255);
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 15px;
   background-position: 300px, 800px;
   display: flex;
   flex-flow: row nowrap;
@@ -43,7 +42,7 @@ aside {
 main {
   box-sizing: border-box;
   grid-area: main;
-  padding: 5px 25px 5px 6px;
+
   
   border: 1px solid rgba(110, 208, 253, 0.3);
 
@@ -80,9 +79,11 @@ main {
   margin-bottom: 10px;
 }
 
+/*
 .padding-25 {
   padding: 25px;
 }
+*/
 
 main > .listview > a > ul > li.img_list {
   flex: 0 0 20px;
@@ -98,7 +99,7 @@ main > .listview > a > ul > li.img_detail {
 main > .listview > a {
   display: block;
   height: 50px;
-  width: auto;
+  /* width: auto; */
   padding: 5px;
   text-decoration: none;
   border-bottom: 1px solid rgba(110, 208, 253, 0.3);
@@ -123,7 +124,7 @@ main > .listview > a > ul > li > span {
 .listview > a {
   display: block;
   height: 35px;
-  width: auto;
+  /* width: auto; */
   padding: 5px;
   text-decoration: none;
   border-bottom: 1px solid rgba(110, 208, 253, 0.3);
