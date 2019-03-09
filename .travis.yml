@@ -3,8 +3,8 @@ node_js:
   - "10"
 addons:
     code_climate:
-        repo_token: <supersecrettoken>
-script: 
+        repo_token: "FwY4rECvXT33MjaXEpKuozj5mqmhQIFEaFUMbn7kc1yu9+xTje20D0QdZZmhotTs43xrFQNih12S/fKw6qZeYREGpdywa2PVREPySdARwOklK1EgWAe1h+9caof2RfG+Kk+000VMgW9PaSJ4rz0j5/SoFlJBJ58QwA2nbngGeE7ug8S0be6gwfbEGsRYOGaik3jxOxhYqHWFi4TUVwGyZSKZWneiUs9Se0wkwR1c6cnm5XS5QnA3fCUFnRjnS8KpkuuZMxf/vVTQI8ji5tcad35xqQO5LlwAwlqLVAM4d7/YHBTkioHnK+wHn9AI0ldmqYBtGLwuiE7xdljBL9pHINcGAJ8FRsJ1fMOO3FYfPIJsB9WcrwDBeK7G/8QrQ+x26xWlrCjNaSU3ut1Ow2lDYVhyd2iYZw2NNYrq3JFiP7r/qn5aNmUlvhQ03CN1FyvFzWKLd/oIxd4uFf4jFv5kKQHBeU5MBf7gBuePDmBFniP00lKVELUJSlD++B+rSqekh9mL7Nt1CDmjvJYI4IpIx4OruAmBi8oVUzdI5feT2wG2rkDAfYmosk9wtU8lVTH9mGuLA508bK9Ptq46j6E6HJvfK3PTxSzwBqz2AgGB8GPo8czEhdngHw8ufXFqb00Iy/N45XVVbBpPCYkmMpgTtBOthTlRV5U12TwfrM9ffLY="
+script:
 - npm run test
 before_script:
 - npm install codeclimate-test-reporter istanbul -g
@@ -12,4 +12,3 @@ after_script:
 - codeclimate-test-reporter < ./coverage/lcov.info
 after_success:
 - npm run coveralls
-- codeclimate-test-reporter < coverage/lcov.info
