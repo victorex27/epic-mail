@@ -4,14 +4,15 @@
   "description": "A web app that helps people exchange messages/information over the internet",
   "main": "src/server.js",
   "dependencies": {
+    "express": "^4.16.4",
     "@babel/core": "^7.3.4",
-    "express": "^4.16.4"
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "nodemon": "^1.18.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.0.0",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
     "babel-plugin-istanbul": "^5.1.1",
     "chai": "^4.2.0",
@@ -39,15 +40,12 @@
   },
   "scripts": {
     "lint": "eslint",
-    "start": "node --exec babel-node dist/server.js",
+    "start": "nodemon --exec babel-node src/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
     "test": "mocha test --require @babel/register",
-    "cover": "istanbul cover _mocha",
-    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover _mocha test/server.test.js",
-    "test:coverage": "babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/.bin/_mocha",
-    "testa": "nyc --require @babel/register mocha test",
-    "coveralls": "npm run testa -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text ./node_modules/mocha/bin/_mocha test",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
