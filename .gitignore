@@ -1,4 +1,4 @@
 node_modules
 .coveralls.yml
-coverage
+coverage/
 .nyc_output
