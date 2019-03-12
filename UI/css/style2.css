@@ -14,7 +14,6 @@ header {
   background-color: rgb(255, 255, 255);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 300px, 800px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -247,11 +246,6 @@ div.mobile {
   border-radius: 50%;
   background-color: white;
   border: transparent;
-}
-
-.logo-small,
-.page-title {
-  visibility: hidden;
 }
 
 /* icons */
@@ -551,7 +545,7 @@ div.listview > div {
     border-top: 5px solid white;
     border-bottom: 5px solid white;
   }
-
+  /*
   section li.page-title {
     flex: 0 0 auto;
     margin-right: auto;
@@ -559,9 +553,15 @@ div.listview > div {
     font-size: 2em;
     padding: 5px;
   }
-
-  section button {
-    flex: 0 0 auto;
+*/
+  section > li {
+    flex: 1 0 auto;
+    margin-right: auto;
+    text-align: left;
+    font-size: 2em;
+    font-weight: 700;
+    padding: 5px;
+    color: white;
   }
 
   button#menu_button {
@@ -575,7 +575,7 @@ div.listview > div {
     top: 0px;
     left: 0px;
     z-index: 7;
-    width: 90%;
+    width: 80%;
 
     background-color: rgb(84, 0, 50);
   }
@@ -658,6 +658,17 @@ div.listview > div {
     background-size: cover;
   }
 
+  span.cancel::after {
+    content: "";
+    font-size: 2em;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.5em;
+    height: 1.5em;
+    background: url(../img/cancel.ico);
+    background-size: cover;
+  }
+
   main {
     flex: 1 0 100%;
   }
@@ -728,8 +739,11 @@ div.listview > div {
     z-index: 1;
   }
 
-  aside > .listview > div {
-    display: block;
+  div.listview > div.mobile {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: flex-end;
     height: 150px;
     width: 100%;
     background: url(../img/header.jpg);
@@ -738,18 +752,15 @@ div.listview > div {
     background-size: cover;
   }
 
-  .mobile {
-    display: inline-block;
-  }
-  div.mobile {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-end;
-  }
-
   div.mobile > div {
     flex: 0 0 auto;
-    margin-left: auto;
+    padding: 5px;
+  }
+
+  span.username {
+    color: rgb(10, 10, 10);
+    font-weight: 500;
+    font-size: 1.3em;
   }
 
   input[type="file"] {
@@ -768,27 +779,28 @@ div.listview > div {
     width: 80%;
   }
 
-  section li.page-title {
-    background-color: white;
-    border: 2px solid rgb(84, 0, 50);
-  }
-
-  section li {
-    color: white;
-    text-align: center;
-  }
-
   /*menu bar*/
-  .menu-bar {
+  .menu-bar,
+  .close-div {
     width: 70px;
     border: 3px solid white;
     border-radius: 2px;
-    padding-top: 10px;
   }
   .menu-bar > div {
     width: 50px;
     height: 5px;
     background-color: white;
-    margin: 6px 0;
+    margin: 6px auto;
+  }
+
+  .close-div {
+    display: none;
+  }
+
+  .close-div > button {
+    height: 39px;
+    margin-right: 5px;
+    width: 100%;
+    background:  transparent;
   }
 }
