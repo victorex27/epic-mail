@@ -20,7 +20,8 @@ app.get('*', function (req, res) {
     error: 'resource not found'
   });
 });
-var server = app.listen(3000);
-console.log('app running on port ', 3000);
+var portNumber = process.env.PORT || 3000;
+var server = app.listen(portNumber);
+console.log('app running on port ', portNumber);
 var _default = server;
 exports.default = _default;

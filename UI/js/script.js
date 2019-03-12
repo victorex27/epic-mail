@@ -15,7 +15,7 @@ class DivSelector {
     this.viewComposeForGroups = document.querySelectorAll(
       '#listview_group > a',
     );
-    this.viewInboxMessage = document.querySelectorAll('#inbox_list > a');
+    this.viewInboxMessage = document.querySelectorAll('#inbox_list > div > a');
 
 
     /** Initailizing tab for admin */
@@ -43,14 +43,14 @@ class DivSelector {
     }
 
     for (const group of this.viewMembersOfGrroupForAdmin) {
-      group.addEventListener('click', () => this.onViewMembersOfGrroupForAdminClicked(),);
+      group.addEventListener('click', () => this.onViewMembersOfGrroupForAdminClicked());
     }
 
     for (const group of this.viewInboxMessage) {
       group.addEventListener('click', () => this.onViewInboxMessageClicked());
     }
 
-    this.adminGroupTab.addEventListener('click', () => this.onAdminGroupClicked(),);
+    this.adminGroupTab.addEventListener('click', () => this.onAdminGroupClicked());
     document
       .querySelector('main')
       .addEventListener('click', () => this.onSideBarClicked());
@@ -91,7 +91,7 @@ class DivSelector {
 
     this.editDPTab.addEventListener('click', () => this.onEditDpClicked());
     this.logoutTab.addEventListener('click', () => this.onLogOutClicked());
-    this.changePasswordTab.addEventListener('click', () => this.onChangePassWordClicked(),);
+    this.changePasswordTab.addEventListener('click', () => this.onChangePassWordClicked());
 
 
     if (window.matchMedia('(max-width: 700px)').matches) {
@@ -263,4 +263,4 @@ class DivSelector {
   }
 }
 
-new DivSelector();
+const newLocal = new DivSelector();
