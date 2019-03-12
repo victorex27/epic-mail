@@ -67,12 +67,6 @@ li > a {
   text-decoration: none;
 }
 
-img.logo {
-  border: 2px solid white;
-  width: 100px;
-  height: auto;
-  border-radius: unset;
-}
 
 img.logo-small {
   border: 2px solid white;
