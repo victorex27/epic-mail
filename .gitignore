@@ -2,3 +2,5 @@ node_modules
 .coveralls.yml
 coverage/
 .nyc_output
+dist/
+-w

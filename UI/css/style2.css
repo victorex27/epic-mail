@@ -17,21 +17,22 @@ header {
   background-position: 300px, 800px;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
 
 header > div.logo {
-  flex: 1 0 80%;
+  flex: 1 0 0;
+  margin-right: auto;
 }
 
 header > div.dp {
   margin-top: 80px;
-  flex: 1 0 auto;
+
+  flex: 0 0 auto;
 }
 
-.dp img{
-
-  margin-right:10px;
+.dp img {
+  margin-right: 10px;
 }
 
 aside {
@@ -41,14 +42,61 @@ aside {
 
 main {
   box-sizing: border-box;
+  padding: 10px;
   grid-area: main;
-
-  
   border: 1px solid rgba(110, 208, 253, 0.3);
+  -webkit-box-shadow: 0 4px 2px -2px gray;
+  -moz-box-shadow: 0 4px 2px -2px gray;
+  box-shadow: 0 4px 2px -2px gray;
+}
 
-  -webkit-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
-  -moz-box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
-  box-shadow: 3px 3px 5px 6px rgba(110, 208, 253, 0.3);
+main > div.listview > div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+main > div.listview > div > a {
+  flex: 1 1 auto;
+  text-decoration: none;
+}
+
+main > div.listview > div > button {
+  flex: 0 0 50px;
+}
+
+main > div.listview > div > a > ul {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+main span {
+  color: rgb(10, 10, 10);
+}
+
+section {
+  display: none;
+}
+
+li.img_list {
+  flex: 0 0 50px;
+}
+
+li.mail-detail {
+  flex: 1 1 auto;
+}
+
+li.mail-detail > div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  margin: auto;
+}
+
+div.mail-text {
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .flex-row-nowrap {
@@ -85,36 +133,6 @@ main {
 }
 */
 
-main > .listview > a > ul > li.img_list {
-  flex: 0 0 20px;
-  margin-right: 5px;
-}
-main > .listview > a > ul > li.img_detail {
-  flex: 1 1 auto;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-}
-
-main > .listview > a {
-  display: block;
-  height: 50px;
-  /* width: auto; */
-  padding: 5px;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(110, 208, 253, 0.3);
-}
-
-main > .listview > a > ul {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-}
-
-main > .listview > a > ul > li > span {
-  color: rgb(10, 10, 10);
-}
-
 .listview > a > li {
   display: flex;
   flex-flow: row nowrap;
@@ -142,8 +160,8 @@ main > .listview > a > ul > li > span {
   flex: 0 0 100px;
 }
 
-span.username{
-    color: blueviolet;
+span.username {
+  color: blueviolet;
 }
 /* Compose message div */
 .compose-div input[type="text"],
@@ -206,7 +224,8 @@ span.username{
   margin: 4px 2px;
 }
 
-a.mobile,div.mobile{
+a.mobile,
+div.mobile {
   display: none;
 }
 
@@ -412,7 +431,7 @@ button#menu_button {
   font-family: arial;
   font-weight: 600;
   border-radius: 2px;
-  background: #585858;
+  background-color: #585858;
   color: #fff;
   content: attr(tooltip);
   font-size: 12px;
@@ -436,13 +455,17 @@ button#menu_button {
 
 aside > .listview > a {
   height: 100%;
-  color: rgba(84, 0, 50, 0.7);
-  border-bottom: 2px solid rgba(110, 208, 253, 0.3);
 }
 
+aside > .listview > a,
+div.listview > div {
+  color: rgba(84, 0, 50, 0.7);
+  border-bottom: 1px solid rgba(110, 208, 253, 0.3);
+}
 div.listview > a.active,
-div.listview > a:hover {
-  background-color: rgba(224, 193, 212, 0.6);
+div.listview > a:hover,
+a.mail-link:hover {
+  background-color: rgba(224, 193, 212, 0.4);
   color: white;
 }
 
@@ -458,7 +481,6 @@ aside > .listview > a > li {
 
   color: rgb(84, 0, 50);
 }
-
 
 aside > .listview > a > li > .notification {
   font-size: 0.73em;
@@ -477,6 +499,35 @@ img {
   height: 35px;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+/*Styling inbox list*/
+
+div.listview > div {
+  height: 60px;
+  font-size: 0.9em;
+  padding-bottom: 8px;
+}
+
+.mail-title,
+.mail-time,
+.mail-body {
+  color: rgb(10, 10, 10);
+}
+.mail-name {
+  font-weight: 700;
+}
+.mail-title {
+  font-weight: 300;
+}
+
+.mail-body {
+  opacity: 0.5;
+}
+
+.button-on-hover:hover {
+  margin: auto;
+  background-color: rgba(224, 193, 212, 0.4);
 }
 
 /* Responsive design*/
@@ -513,8 +564,6 @@ img {
     flex: 0 0 auto;
   }
 
-  
-  
   button#menu_button {
     display: block;
   }
@@ -527,7 +576,7 @@ img {
     left: 0px;
     z-index: 7;
     width: 90%;
-    
+
     background-color: rgb(84, 0, 50);
   }
 
@@ -577,54 +626,94 @@ img {
   }
 
   span.picture::after {
-  content: "";
-  font-size: 1.5em;
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1em;
-  background: url(../img/Picture.ico);
-  background-size: cover;
-}
+    content: "";
+    font-size: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    background: url(../img/Picture.ico);
+    background-size: cover;
+  }
 
-span.password::after {
-  content: "";
-  font-size: 1.5em;
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1em;
-  background: url(../img/Edit_File.ico);
-  background-size: cover;
-}
+  span.password::after {
+    content: "";
+    font-size: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    background: url(../img/Edit_File.ico);
+    background-size: cover;
+  }
 
-span.logout::after {
-  content: "";
-  font-size: 1.5em;
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1em;
-  background: url(../img/Logout_Rounded.ico);
-  background-size: cover;
-}
+  span.logout::after {
+    content: "";
+    font-size: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    background: url(../img/Logout_Rounded.ico);
+    background-size: cover;
+  }
+
   main {
-    flex: 8 0 100%;
+    flex: 1 0 100%;
   }
-
-  main > .listview > a {
-    display: block;
-    height: 120px;
-  }
-
-  main > .listview > a > ul > li.img_detail {
-    flex: 1 1 auto;
+  main > div.listview > div {
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(110, 208, 253, 0.3);
   }
-  main > .listview > a > ul > li.img_detail > span {
-    padding: 3px;
+  main > div.listview > div > button {
+    flex: 0 0 50px;
+    margin: auto 0 auto auto;
+  }
+
+  main > div.listview > div > a {
+    flex: 1 1 auto;
+  }
+
+  main > div.listview > div > a > ul {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    padding: 5px;
+  }
+
+  main > div.listview > div > a > ul > li.img_list {
+    flex: 0 0 50px;
+    margin-right: auto;
+  }
+  main > div.listview > div > a > ul > li.mail-detail {
+    flex: 1 1 auto;
+  }
+
+  li.mail-detail > div {
+    display: grid;
+    grid-template-areas:
+      "mail-name mail-time"
+      "mail-text mail-text";
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  div.mail-name {
+    grid-area: mail-name;
+  }
+
+  div.mail-text {
+    width: 80%;
+    grid-area: mail-text;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  div.mail-time {
+    grid-area: mail-time;
   }
 
   .logo-small,
@@ -638,60 +727,68 @@ span.logout::after {
     right: 30px;
     z-index: 1;
   }
-  
-  .listview > div{
-	  
-	  display:block;
-	  height:150px;
-	  width:100%;
-	  background: url(../img/header.jpg);
-  background-color: rgb(84, 0, 50);
-  background-repeat: no-repeat;
-  background-size: cover;
+
+  aside > .listview > div {
+    display: block;
+    height: 150px;
+    width: 100%;
+    background: url(../img/header.jpg);
+    background-color: rgb(84, 0, 50);
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
-  .mobile{
+  .mobile {
     display: inline-block;
   }
-  div.mobile{
+  div.mobile {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: flex-end;
   }
 
-  div.mobile > div{
-
-    flex:0 0 auto;
-    margin-left:auto;
-
+  div.mobile > div {
+    flex: 0 0 auto;
+    margin-left: auto;
   }
 
-  input[type=file]{
+  input[type="file"] {
     cursor: pointer;
     font-size: 1.5em;
     font-weight: 30;
-    width:80%;
-    background-color:rgb(84, 0, 50);
+    width: 80%;
+    background-color: rgb(84, 0, 50);
     color: white;
     display: inline-block;
-    
-  } 
-
-  
-  input[type=email],
-  input[type=text],
-  input[type=password] {
-    width:80%;
   }
 
-  section li.page-title{
+  input[type="email"],
+  input[type="text"],
+  input[type="password"] {
+    width: 80%;
+  }
+
+  section li.page-title {
     background-color: white;
-    border:2px solid rgb(84, 0, 50);
+    border: 2px solid rgb(84, 0, 50);
   }
 
-  section li{
-    color:white;
+  section li {
+    color: white;
     text-align: center;
   }
-  
+
+  /*menu bar*/
+  .menu-bar {
+    width: 70px;
+    border: 3px solid white;
+    border-radius: 2px;
+    padding-top: 10px;
+  }
+  .menu-bar > div {
+    width: 50px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+  }
 }
