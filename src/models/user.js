@@ -1,39 +1,34 @@
 class User {
   constructor() {
-    this.users = [];
-    const existingUser1 = {
+    this.users = [{
       id: 1,
       email: 'aobikobe@gmail.com',
       firstName: 'Amaobi',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    const existingUser2 = {
+    },
+    {
       id: 2,
       email: 'aob@gmail.com',
-      firstName: 'Amaobi',
+      firstName: 'Victor',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    const existingUser3 = {
+    },
+    {
       id: 3,
       email: 'arinze@gmail.com',
-      firstName: 'Amaobi',
+      firstName: 'Arinze',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    const existingUser4 = {
+    }, {
       id: 4,
       email: 'ao@gmail.com',
       firstName: 'Amaobi',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    this.users.push(existingUser1);
-    this.users.push(existingUser2);
-    this.users.push(existingUser3);
-    this.users.push(existingUser4);
-    this.lastInsertId = 5;
+    },
+    ];
+    this.lastInsertId = this.users.length;
   }
 
 
@@ -65,7 +60,7 @@ class User {
   findOne(email) {
     const errorMessage = { error: '' };
     if (!email) {
-      errorMessage.error = 'Invalid parameter';
+      errorMessage.error = 'One or more fields are empty';
       return errorMessage;
     }
     const user = this.users.find(u => u.email === email);
@@ -80,13 +75,13 @@ class User {
   login(data) {
     const errorMessage = { error: '' };
     if (!data.email || !data.password) {
-      errorMessage.error = 'Invalid parameter';
+      errorMessage.error = 'One or more fields are missing';
       return errorMessage;
     }
     const user = this.users.find(u => (u.email === data.email && u.password === data.password));
 
     if (!user) {
-      errorMessage.error = 'User does not exists';
+      errorMessage.error = 'Incorrect login credentials';
       return errorMessage;
     }
     return user;
