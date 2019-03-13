@@ -182,7 +182,7 @@ describe('Message', () => {
     });
   });
 
-  describe('getMessageById(1)', () => {
+  describe('getMessageById(3)', () => {
     it('should return a message ', () => {
       const id = 1;
       const message = Message.getMessageById(id);

@@ -228,7 +228,7 @@ describe('GET /api/v1/messages/:id', () => {
       };
 
       chai.request(server)
-        .get('/api/v1/messages/2')
+        .get('/api/v1/messages/4')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
@@ -262,11 +262,11 @@ describe('DELETE /api/v1/messages/:id', () => {
       };
 
       chai.request(server)
-        .delete('/api/v1/messages/2')
+        .delete('/api/v1/messages/3')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
-          expect(res.body).to.have.property('data').to.be.a('array');
+          expect(res.body).to.have.property('data').to.be.a('object');
           done();
         });
     });

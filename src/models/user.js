@@ -1,39 +1,34 @@
 class User {
   constructor() {
-    this.users = [];
-    const existingUser1 = {
+    this.users = [{
       id: 1,
       email: 'aobikobe@gmail.com',
       firstName: 'Amaobi',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    const existingUser2 = {
+    },
+    {
       id: 2,
       email: 'aob@gmail.com',
-      firstName: 'Amaobi',
+      firstName: 'Victor',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    const existingUser3 = {
+    },
+    {
       id: 3,
       email: 'arinze@gmail.com',
-      firstName: 'Amaobi',
+      firstName: 'Arinze',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    const existingUser4 = {
+    }, {
       id: 4,
       email: 'ao@gmail.com',
       firstName: 'Amaobi',
       lastName: 'Obikobe',
       password: 'password',
-    };
-    this.users.push(existingUser1);
-    this.users.push(existingUser2);
-    this.users.push(existingUser3);
-    this.users.push(existingUser4);
-    this.lastInsertId = 5;
+    },
+    ];
+    this.lastInsertId = this.users.length;
   }
 
 
