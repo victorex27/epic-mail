@@ -68,7 +68,7 @@ describe('User', () => {
   describe('findOne()', () => {
     it('should return Invalid parameter', (done) => {
       const user = User.findOne();
-      expect(user).to.have.property('error').to.be.a('string').equal('Invalid parameter');
+      expect(user).to.have.property('error').to.be.a('string').equal('One or more fields are empty');
       done();
     });
   });
