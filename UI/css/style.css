@@ -4,7 +4,7 @@ body {
   display: flex;
   flex-flow: row nowrap;
   background: url(../img/splash.jpg);
-  background-color: rgba(165, 42, 42, 0.4);
+  background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -36,7 +36,7 @@ button {
 
 .card {
   width: 80%;
-  margin: 200px auto 0px auto;
+  margin: 100px auto 0px auto;
 }
 
 .card > div {
@@ -46,6 +46,10 @@ button {
 nav > ul {
   display: flex;
   flex-flow: row nowrap;
+}
+
+ul > li > a {
+  color: rgb(6, 4, 33);
 }
 
 nav > ul > li {
@@ -67,8 +71,13 @@ main > div.site_name {
   display: none;
 }
 
+aside > div.site_name {
+  margin-top: 150px;
+}
+
 .site_name > span {
   font-size: 6em;
+  color: rgb(6, 4, 33);
 }
 
 /* Responsive design*/
@@ -94,6 +103,7 @@ main > div.site_name {
 
   main > div.site_name {
     display: block;
+    margin-top: 100px;
   }
 
   .site_name > span {

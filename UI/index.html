@@ -7,6 +7,7 @@
   <meta content="Epic Mail-A  web app that helps people exchange messages/information over the internet" name="description">
   <meta content="Obikobe Amaobi" name="author">
   <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
   <link rel="icon" href="img/logo.png">
   <title>Sign In</title>
 
@@ -15,7 +16,6 @@
 <body>
 
   <aside>
-    <img src="img/logo.png" class="logo">
 
     <div class="site_name">
       <span>Epic</span>
@@ -24,7 +24,7 @@
 
   </aside>
   <main>
-    <div><img src="img/logo.png" class="logo"></div>
+    <div></div>
     <div class="site_name">
       <span>Epic</span>
       <span>Mail</span>
@@ -53,16 +53,13 @@
   </main>
   <script type="text/javascript">
     /** For demo */
-
     let signinButton = document.getElementById('signin');
-    if(signinButton){
-      signinButton.addEventListener("click", () => { window.location = "../page.html"; });
-
+    if (signinButton) {
+      signinButton.addEventListener("click", () => {
+        window.location = "../page.html";
+      });
     }
-
-    
     /**end demo */
-    
   </script>
 </body>
 
