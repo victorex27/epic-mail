@@ -145,11 +145,6 @@ class Message {
         message = this.messages.reduce((arr, msg) => { if (msg.status !== 'draft') { arr.push(msg); } return arr; }, []);
         break;
     }
-
-    if (message.length === 0) {
-      return [];
-    }
-
     return message;
   }
 }
