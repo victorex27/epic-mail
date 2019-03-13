@@ -75,6 +75,22 @@ describe('POST /api/v1/auth/login', () => {
         });
     });
   });
+  describe('When user tries to login with an  empty fields', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: '', password: 'paswword',
+      };
+
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
 });
 
 describe('POST /api/v1/messages', () => {
@@ -121,31 +137,12 @@ describe('POST /api/v1/messages', () => {
 describe('GET /api/v1/messages', () => {
   describe('When a user tries to retrieve a message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
-      const data = {
-        email: 'aobikobe@gmail.com',
-      };
-
       chai.request(server)
         .get('/api/v1/messages')
-        .send(data)
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
           expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to retrieve a message with an invalid account', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        email: '123@gmail.com',
-      };
-      chai.request(server)
-        .get('/api/v1/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
           done();
         });
     });
@@ -155,31 +152,12 @@ describe('GET /api/v1/messages', () => {
 describe('GET /api/v1/messages/sent', () => {
   describe('When a user tries to retrieve a sent message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
-      const data = {
-        email: 'aobikobe@gmail.com',
-      };
-
       chai.request(server)
         .get('/api/v1/messages/sent')
-        .send(data)
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
           expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to retrieve a sent message with an invalid account', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        email: '123@gmail.com',
-      };
-      chai.request(server)
-        .get('/api/v1/messages/sent')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
           done();
         });
     });
@@ -189,31 +167,12 @@ describe('GET /api/v1/messages/sent', () => {
 describe('GET /api/v1/messages/unread', () => {
   describe('When a user tries to retrieve an unread message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
-      const data = {
-        email: 'aobikobe@gmail.com',
-      };
-
       chai.request(server)
         .get('/api/v1/messages/unread')
-        .send(data)
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
           expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to retrieve an unread message with an invalid account', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        email: '123@gmail.com',
-      };
-      chai.request(server)
-        .get('/api/v1/messages/unread')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
           done();
         });
     });
@@ -223,28 +182,21 @@ describe('GET /api/v1/messages/unread', () => {
 describe('GET /api/v1/messages/:id', () => {
   describe('When a user tries to retrieve a valid message id', () => {
     it('should return an object with the status and data', (done) => {
-      const data = {
-        id: 1,
-      };
-
       chai.request(server)
-        .get('/api/v1/messages/4')
-        .send(data)
+        .get('/api/v1/messages/2')
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
-          expect(res.body).to.have.property('data').to.be.a('array');
+          expect(res.body).to.have.property('data').to.be.a('object');
           done();
         });
     });
   });
   describe('When a user tries to retrieve an invalid message', () => {
     it('should return an object with the status and error', (done) => {
-      const data = {
-        id: '',
-      };
       chai.request(server)
         .get('/api/v1/messages/90')
-        .send(data)
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('error').to.be.a('string');
@@ -257,13 +209,9 @@ describe('GET /api/v1/messages/:id', () => {
 describe('DELETE /api/v1/messages/:id', () => {
   describe('When a user tries to delete a valid message id', () => {
     it('should return an object with the status and data', (done) => {
-      const data = {
-        id: 1,
-      };
-
       chai.request(server)
-        .delete('/api/v1/messages/3')
-        .send(data)
+        .delete('/api/v1/messages/1')
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
           expect(res.body).to.have.property('data').to.be.a('object');
@@ -273,12 +221,9 @@ describe('DELETE /api/v1/messages/:id', () => {
   });
   describe('When a user tries to delete an invalid message', () => {
     it('should return an object with the status and error', (done) => {
-      const data = {
-        id: '',
-      };
       chai.request(server)
         .delete('/api/v1/messages/90')
-        .send(data)
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('error').to.be.a('string');
@@ -289,15 +234,12 @@ describe('DELETE /api/v1/messages/:id', () => {
 });
 
 
-describe('GET /api/v1/home', () => {
+describe('GET /api/v1/victor', () => {
   describe('When a user tries to access an unspecified resource', () => {
     it('should return an object with the status and error', (done) => {
-      const data = {
-        id: '',
-      };
       chai.request(server)
         .get('/api/v1/victor')
-        .send(data)
+        .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(404);
           expect(res.body).to.have.property('error').to.be.a('string').equal('resource not found');

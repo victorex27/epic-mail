@@ -50,12 +50,14 @@ class Message {
     const sender = User.findOne(data.from);
     const receiver = User.findOne(data.to);
     /** change invalid parameter to some fields missing */
-    if (sender.error === 'Invalid parameter' || sender.error === 'User does not exists') {
-      errorMessage.error = 'Incorrect sender Id';
+
+    if (sender.error) {
+      errorMessage.error = sender.error;
       return errorMessage;
     }
-    if (receiver.error === 'Invalid parameter' || receiver.error === 'User does not exists') {
-      errorMessage.error = 'Incorrect receiver Id';
+
+    if (receiver.error) {
+      errorMessage.error = receiver.error;
       return errorMessage;
     }
 
@@ -83,105 +85,71 @@ class Message {
     return [insertMessage];
   }
 
-  getAllSentMessages(data) {
-    const errorMessage = { error: '' };
-    const sender = User.findOne(data.email);
-    if (sender.error === 'User does not exists') {
-      errorMessage.error = 'Unkwnown user';
-      return errorMessage;
-    }
-    const message = this.getMessage(true, sender, false);
+  getAllSentMessages() {
+    const message = this.getMessage('sent');
 
     return message;
   }
 
-  getInbox(data) {
-    const errorMessage = { error: '' };
-    const receiver = User.findOne(data.email);
-    if (receiver.error === 'User does not exists') {
-      errorMessage.error = 'Unkwnown user';
-
-      return errorMessage;
-    }
-
-    const message = this.getMessage(false, receiver, false);
-
+  getInbox() {
+    const message = this.getMessage('received');
     return message;
   }
 
-  getUnreadInbox(data) {
-    const errorMessage = { error: '' };
-    const receiver = User.findOne(data.email);
-    if (receiver.error) {
-      errorMessage.error = 'Unkwnown user';
-      return errorMessage;
-    }
-    const message = this.getMessage(false, receiver, true);
+  getUnreadInbox() {
+    const message = this.getMessage('unread');
     return message;
   }
 
   getMessageById(id) {
     const errorMessage = { error: '' };
-    const result = [];
     const message = this.messages.find(msg => msg.id === Number(id));
 
-
-    if (!message) {
-      errorMessage.error = 'Invalid number';
-      return errorMessage;
+    if (message instanceof Object) {
+      return message;
     }
-
-    result.push(message);
-    return result;
+    errorMessage.error = 'Invalid message id';
+    return errorMessage;
   }
 
   deleteMessage(id) {
     const errorMessage = { error: 'Invalid operation' };
     const message = this.getMessageById(id);
     if (message.error) {
-      errorMessage.error = 'Invalid Message id';
+      errorMessage.error = message.error;
       return errorMessage;
     }
 
-    const result = { message: '' };
-    result.message = message[0].message;
+    const result = { message: `message id ${id} has been deleted` };
 
-    const index = this.messages.indexOf(message[0]);
-    if (index > -1) {
-      this.messages.splice(index, 1);
-    } else {
-      errorMessage.error = 'Invalid Message id';
-      return errorMessage;
-    }
+    const index = this.messages.indexOf(message);
+
+    this.messages.splice(index, 1);
     return result;
   }
 
   /* Returns a message */
-  getMessage(isSenderId, user, isUnRead) {
-    let searchField;
-    const message = this.messages.reduce((arr, msg) => {
-      if (isSenderId) {
-        searchField = msg.senderId;
-      } else {
-        searchField = msg.receiverId;
-      }
+  getMessage(status) {
+    let message;
 
-      if (isUnRead) {
-        if (searchField === user.id && msg.status !== 'read' && msg.status !== 'draft') {
-          arr.push(msg);
-        }
-      } else if (searchField === user.id && msg.status !== 'draft') {
-        arr.push(msg);
-      }
+    /** Default is recieved */
 
-
-      return arr;
-    }, []);
+    switch (status) {
+      case 'sent':
+        message = this.messages.reduce((arr, msg) => { if (msg.status === 'sent') { arr.push(msg); } return arr; }, []);
+        break;
+      case 'unread':
+        message = this.messages.reduce((arr, msg) => { if (msg.status === 'sent') { arr.push(msg); } return arr; }, []);
+        break;
+      default:
+        message = this.messages.reduce((arr, msg) => { if (msg.status !== 'draft') { arr.push(msg); } return arr; }, []);
+        break;
+    }
 
     if (message.length === 0) {
-      // errorMessage.error = 'User does not exists';
       return [];
     }
+
     return message;
   }
 }

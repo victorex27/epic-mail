@@ -60,7 +60,7 @@ class User {
   findOne(email) {
     const errorMessage = { error: '' };
     if (!email) {
-      errorMessage.error = 'Invalid parameter';
+      errorMessage.error = 'One or more fields are empty';
       return errorMessage;
     }
     const user = this.users.find(u => u.email === email);
@@ -75,13 +75,13 @@ class User {
   login(data) {
     const errorMessage = { error: '' };
     if (!data.email || !data.password) {
-      errorMessage.error = 'Invalid parameter';
+      errorMessage.error = 'One or more fields are missing';
       return errorMessage;
     }
     const user = this.users.find(u => (u.email === data.email && u.password === data.password));
 
     if (!user) {
-      errorMessage.error = 'User does not exists';
+      errorMessage.error = 'Incorrect login credentials';
       return errorMessage;
     }
     return user;

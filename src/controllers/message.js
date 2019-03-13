@@ -12,25 +12,16 @@ class Message {
 
   static getInbox(req, res) {
     const result = Message.controller(req, res, 'getinbox');
-    if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.data });
-    }
     return res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static getAllSentMessages(req, res) {
     const result = Message.controller(req, res, 'getsent');
-    if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.data });
-    }
     return res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static getUnreadInbox(req, res) {
-    const result = Message.controller(req, res, 'unread');
-    if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.data });
-    }
+    const result = Message.controller(req, res, 'getunread');
     return res.status(result.status).json({ status: result.status, data: result.data });
   }
 
@@ -59,9 +50,6 @@ class Message {
         newMessage = MessageModel.post(req.body);
         error = 400;
         success = 201;
-        break;
-      case 'getinbox':
-        newMessage = MessageModel.getInbox(req.body);
         break;
       case 'getsent':
         newMessage = MessageModel.getAllSentMessages(req.body);
