@@ -233,6 +233,20 @@ describe('DELETE /api/v1/messages/:id', () => {
   });
 });
 
+describe('GET /api-docs', () => {
+  describe('When a user tries to access an unspecified resource', () => {
+    it('should return an object with the status and error', (done) => {
+      chai.request(server)
+        .get('/api-docs')
+        .send()
+        .end((err, res) => {
+          expect(res).to.have.property('status').equal(200);
+          done();
+        });
+    });
+  });
+});
+
 
 describe('GET /api/v1/victor', () => {
   describe('When a user tries to access an unspecified resource', () => {
