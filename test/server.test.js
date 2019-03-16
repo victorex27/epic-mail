@@ -17,7 +17,6 @@ describe('POST /api/v1/auth/signup', () => {
         .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
-          console.log(res.body.error);
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data').to.be.a('object');
           done();

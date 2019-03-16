@@ -1,5 +1,6 @@
 import express from 'express';
 import checkAPIs from 'express-validator/check';
+import { sanitizeParam } from 'express-validator/filter';
 import User from '../controllers/user';
 import Message from '../controllers/message';
 
@@ -25,6 +26,8 @@ const lastNameCheck = checkLengthGreaterThanOne('lastName');
 const subjectCheck = checkLengthGreaterThanOne('subject');
 const messageCheck = checkLengthGreaterThanOne('message');
 
+const idSanitizer = sanitizeParam('id').toInt();
+
 router.post('/auth/signup', [emailCheck, passwordCheck, firstNameCheck, lastNameCheck], User.create);
 
 router.post('/auth/login', [emailCheck, passwordCheck], User.login);
@@ -33,7 +36,7 @@ router.post('/messages', [fromCheck, toCheck, subjectCheck, messageCheck], Messa
 router.get('/messages', Message.getInbox);
 router.get('/messages/sent', Message.getAllSentMessages);
 router.get('/messages/unread', Message.getUnreadInbox);
-router.get('/messages/:id', Message.getMessageById);
-router.delete('/messages/:id', Message.deleteMessage);
+router.get('/messages/:id', [idSanitizer], Message.getMessageById);
+router.delete('/messages/:id', [idSanitizer], Message.deleteMessage);
 
 export default router;

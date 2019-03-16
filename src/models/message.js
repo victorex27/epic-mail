@@ -102,17 +102,18 @@ class Message {
   }
 
   getMessageById(id) {
-    
+    if (Number.isNaN(id)) {
+      return { error: 'Invalid Message id' };
+    }
     const message = this.messages.find(msg => msg.id === Number(id));
 
     if (message instanceof Object) {
       return message;
     }
-    const errorMessage = { error: `message id ${id} does not exist` };
-    return errorMessage;
+    return { error: `message id ${id} does not exist` };
   }
 
-  deleteMessage(id) {  
+  deleteMessage(id) {
     const message = this.getMessageById(id);
     if (message.error) {
       return message;
