@@ -24,17 +24,6 @@ describe('User', () => {
       done();
     });
   });
-  describe('create()', () => {
-    it('should return One or more fields are empty', (done) => {
-      const data = {
-        email: '', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
-      };
-      const user = User.create(data);
-
-      expect(user).to.have.property('error').to.be.a('string').equal('One or more fields are empty');
-      done();
-    });
-  });
   describe('', () => {
     it('should return User already exists', (done) => {
       const data = {
@@ -61,14 +50,7 @@ describe('User', () => {
     it('should return User already exists', (done) => {
       const email = 'amanda@gmail.com';
       const user = User.findOne(email);
-      expect(user).to.have.property('error').to.be.a('string').equal('User does not exists');
-      done();
-    });
-  });
-  describe('findOne()', () => {
-    it('should return Invalid parameter', (done) => {
-      const user = User.findOne();
-      expect(user).to.have.property('error').to.be.a('string').equal('One or more fields are empty');
+      expect(user).to.have.property('error').to.be.a('string');
       done();
     });
   });

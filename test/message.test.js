@@ -141,12 +141,12 @@ describe('Message', () => {
       expect(message).to.have.property('id').to.be.a('number');
     });
   });
-  describe('getMessageById(\'\')', () => {
+  describe('getMessageById(\'p\')', () => {
     it('should return Invalid message id', () => {
-      const id = '';
+      const id = 'p';
 
       const message = Message.getMessageById(id);
-      expect(message).to.have.property('error').to.be.a('string').equal('Invalid message id');
+      expect(message).to.have.property('error').to.be.a('string');
     });
   });
   describe('deleteMessage(4)', () => {
@@ -156,11 +156,11 @@ describe('Message', () => {
       expect(message).to.have.property('message').to.be.a('string');
     });
   });
-  describe('deleteMessage(\'\')', () => {
+  describe('deleteMessage(\'p\')', () => {
     it('should return Invalid message id', () => {
       const id = '';
       const message = Message.deleteMessage(id);
-      expect(message).to.have.property('error').to.be.a('string').equal('Invalid message id');
+      expect(message).to.have.property('error').to.be.a('string');
     });
   });
 });

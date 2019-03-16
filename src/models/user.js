@@ -33,14 +33,10 @@ class User {
 
 
   create(data) {
-    const errorMessage = { error: '' };
+    
     const doesUserExists = this.users.find(user => user.email === data.email);
-    if (!data.email || !data.firstName || !data.lastName || !data.password) {
-      errorMessage.error = 'One or more fields are empty';
-      return errorMessage;
-    }
     if (doesUserExists) {
-      errorMessage.error = 'User already exists';
+      const errorMessage = { error: 'User already exists' };
       return errorMessage;
     }
     const newId = this.lastInsertId + 1;
@@ -58,30 +54,20 @@ class User {
 
 
   findOne(email) {
-    const errorMessage = { error: '' };
-    if (!email) {
-      errorMessage.error = 'One or more fields are empty';
-      return errorMessage;
-    }
     const user = this.users.find(u => u.email === email);
 
     if (!user) {
-      errorMessage.error = 'User does not exists';
+      const errorMessage = { error: 'User does not exists' };
       return errorMessage;
     }
     return user;
   }
 
   login(data) {
-    const errorMessage = { error: '' };
-    if (!data.email || !data.password) {
-      errorMessage.error = 'One or more fields are missing';
-      return errorMessage;
-    }
     const user = this.users.find(u => (u.email === data.email && u.password === data.password));
 
     if (!user) {
-      errorMessage.error = 'Incorrect login credentials';
+      const errorMessage = { error: 'Incorrect login credentials' };
       return errorMessage;
     }
     return user;
