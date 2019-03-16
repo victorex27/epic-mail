@@ -8,7 +8,7 @@
       "name": "ISC"
     }
   },
-  "host": "localhost:3000",
+  "host": "https://glacial-beach-95391.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -20,37 +20,42 @@
     "https"
   ],
   "consumes": [
-    "application/json"
+    "application/x-www-form-urlencoded"
   ],
   "produces": [
     "application/json"
   ],
   "paths": {
     "/auth/signup": {
+      
       "parameters": [
         {
           "name": "email",
-          "in": "body",
+          "in": "formData",
           "description": "Email Address of user that we want to create",
-          "type" : "string"
+          "type" : "string",
+          "required": true
         },
         {
           "name": "password",
-          "in": "body",
+          "in": "formData",
           "description": "Password of user that we want to create",
-          "type" : "string"
+          "type" : "string",
+          "required": true
         },
         {
           "name": "firstName",
-          "in": "body",
+          "in": "formData",
           "description": "First name of user that we want to create",
-          "type" : "string"
+          "type" : "string",
+          "required": true
         },
         {
           "name": "lastName",
-          "in": "body",
+          "in": "formData",
           "description": "Last name of user that we want to create",
-          "type" : "string"
+          "type" : "string",
+          "required": true
         }
       ],
       "post": {
@@ -82,16 +87,18 @@
         "description": "User tries to log in",
         "parameters": [
           {
-            "name": "Email",
-            "in": "body",
+            "name": "email",
+            "in": "formData",
             "description": "Email of the user",
-            "type" : "string"
+            "type" : "string",
+            "required": true
           },
           {
             "name": "password",
-            "in": "body",
+            "in": "formData",
             "description": "Password of user",
-            "type" : "string"
+            "type" : "string",
+            "required": true
           }
         ],
         "responses": {
@@ -307,10 +314,7 @@
           "type": "integer"
         },
         "data": {
-          "type": "array",
-          "items":{
-            "type": "object"
-          }
+          "type": "object"
         }
       }
       
@@ -322,10 +326,7 @@
           "type": "integer"
         },
         "data": {
-          "type": "array",
-          "items":{
-            "type": "object"
-          }
+          "type": "object"
         }
       }
       
