@@ -1,8 +1,13 @@
+import customValidator from './custom-validator';
 import MessageModel from '../models/message';
 
 class Message {
   static post(req, res) {
-    const result = Message.controller(req, res, 'post');
+    let result = customValidator(req);
+    if (result.error) {
+      return res.status(result.status).json({ status: result.status, error: result.error });
+    }
+    result = Message.controller(req, res, 'post');
 
     if (result.error) {
       return res.status(result.status).json({ status: result.status, error: result.data });

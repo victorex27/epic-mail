@@ -146,7 +146,7 @@ describe('Message', () => {
       const id = '';
 
       const message = Message.getMessageById(id);
-      expect(message).to.have.property('error').to.be.a('string').equal('Invalid message id');
+      expect(message).to.have.property('error').to.be.a('string');
     });
   });
   describe('deleteMessage(4)', () => {
@@ -160,7 +160,7 @@ describe('Message', () => {
     it('should return Invalid message id', () => {
       const id = '';
       const message = Message.deleteMessage(id);
-      expect(message).to.have.property('error').to.be.a('string').equal('Invalid message id');
+      expect(message).to.have.property('error').to.be.a('string');
     });
   });
 });

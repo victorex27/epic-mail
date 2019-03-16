@@ -7,26 +7,27 @@ use(chaiHttp);
 
 
 describe('POST /api/v1/auth/signup', () => {
-  describe('When a new User Signs Up with an aceeptable detail', () => {
+  describe('When a new User Signs Up with an acceptable detail', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
-        email: 'victorex27@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
+        email: 'emenike@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
       };
 
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
+          console.log(res.body.error);
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('data').to.be.a('array');
+          expect(res.body).to.have.property('data').to.be.a('object');
           done();
         });
     });
   });
-  describe('When a new User Signs Up with a detail missing', () => {
+  describe('When a new User Signs Up with an Email account that already exists', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
-        email: '', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
       };
 
       chai.request(server)
@@ -34,7 +35,7 @@ describe('POST /api/v1/auth/signup', () => {
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('User already exists');
           done();
         });
     });
@@ -50,7 +51,73 @@ describe('POST /api/v1/auth/signup', () => {
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
+          done();
+        });
+    });
+  });
+
+  describe('When a new User Signs Up with a password less than 6 char', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'pasww',
+      };
+
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be greater than or equal to 6 characters');
+          done();
+        });
+    });
+  });
+
+  describe('When a new User Signs Up with no password ', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: '',
+      };
+
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be greater than or equal to 6 characters');
+          done();
+        });
+    });
+  });
+  describe('When a new User Signs Up with no firstname ', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: '', lastName: 'Obikobe', password: 'password',
+      };
+
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('firstName is required');
+          done();
+        });
+    });
+  });
+  describe('When a new User Signs Up with no lastname ', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: '', password: 'password',
+      };
+
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('lastName is required');
           done();
         });
     });
@@ -70,7 +137,7 @@ describe('POST /api/v1/auth/login', () => {
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('data').to.be.a('array');
+          expect(res.body).to.have.property('data').to.be.a('object');
           done();
         });
     });
@@ -111,6 +178,22 @@ describe('POST /api/v1/auth/login', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
         email: 'amaobi', password: 'paswword',
+      };
+
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
+  describe('When user tries to login with an invalid password', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'amaobi', password: 'pasw',
       };
 
       chai.request(server)
@@ -164,6 +247,25 @@ describe('POST /api/v1/messages', () => {
         });
     });
   });
+  describe('When a user tries to send a message to an account that does not exist', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        from: 'aobikobe@gmail.com',
+        to: 'aobikotybe@gmail.com',
+        subject: 'How do you do',
+        message: 'this is going to be a sweet test',
+      };
+
+      chai.request(server)
+        .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
   describe('When a user tries to send a message from an invalid account', () => {
     it('should return an object with the status and error', (done) => {
       const data = {
@@ -202,7 +304,65 @@ describe('POST /api/v1/messages', () => {
         });
     });
   });
+  describe('When a user tries to send a message with no subject', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        from: 'aobikobe@gmail.com',
+        to: 'aob@gmail.com',
+        subject: '',
+        message: 'How do you do',
+      };
+
+      chai.request(server)
+        .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('subject is required');
+          done();
+        });
+    });
+  });
+  describe('When a user tries to send a message with no content', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        from: 'aobikobe@gmail.com',
+        to: 'aob@gmail.com',
+        subject: 'How do you do',
+        message: '',
+      };
+
+      chai.request(server)
+        .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('message is required');
+          done();
+        });
+    });
+  });
+  describe('When a user tries to send a message to self', () => {
+    it('should return an object with the status and error', (done) => {
+      const data = {
+        from: 'aob@gmail.com',
+        to: 'aob@gmail.com',
+        subject: 'How do you do',
+        message: 'jkhhkhkh',
+      };
+
+      chai.request(server)
+        .post('/api/v1/messages')
+        .send(data)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string');
+          done();
+        });
+    });
+  });
 });
+
 
 describe('GET /api/v1/messages', () => {
   describe('When a user tries to retrieve a message with a valid account', () => {

@@ -102,22 +102,20 @@ class Message {
   }
 
   getMessageById(id) {
-    const errorMessage = { error: '' };
+    
     const message = this.messages.find(msg => msg.id === Number(id));
 
     if (message instanceof Object) {
       return message;
     }
-    errorMessage.error = 'Invalid message id';
+    const errorMessage = { error: `message id ${id} does not exist` };
     return errorMessage;
   }
 
-  deleteMessage(id) {
-    const errorMessage = { error: 'Invalid operation' };
+  deleteMessage(id) {  
     const message = this.getMessageById(id);
     if (message.error) {
-      errorMessage.error = message.error;
-      return errorMessage;
+      return message;
     }
 
     const result = { message: `message id ${id} has been deleted` };
