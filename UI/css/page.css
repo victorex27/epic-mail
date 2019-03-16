@@ -1,4 +1,5 @@
 @import url("general.css");
+
 body {
   display: grid;
   grid-template-areas:
@@ -41,7 +42,7 @@ aside {
 
 main {
   box-sizing: border-box;
-  padding: 10px;
+  padding: 10px 30px;
   grid-area: main;
   border: 1px solid rgba(110, 208, 253, 0.3);
   -webkit-box-shadow: 0 4px 2px -2px gray;
@@ -418,7 +419,23 @@ span.plus-alt::after {
 button#menu_button {
   display: none;
 }
+/* Button hover style*/
+button:hover {
+  position: relative;
+}
 
+button[aria-label]:hover:after {
+   content: attr(aria-label);
+   padding: 4px 8px;
+   position: absolute;
+   left: 0;
+   top: 100%;
+   white-space: nowrap;
+   z-index: 7;
+   background:rgba(84, 0, 50, 0.6);
+   border-radius: 2px;
+   color: rgba(255,255,255,0.7);
+}
 /*tool tip*/
 [tooltip]:before {
   bottom: 0px;
@@ -505,17 +522,20 @@ div.listview > div {
 
 .mail-title,
 .mail-time,
-.mail-body {
+.mail-body,
+.name-span,
+.email-span
+ {
   color: rgb(10, 10, 10);
 }
-.mail-name {
+.mail-name ,.name-span{
   font-weight: 700;
 }
 .mail-title {
   font-weight: 300;
 }
 
-.mail-body {
+.mail-body, .email-span {
   opacity: 0.5;
 }
 
@@ -523,6 +543,11 @@ div.listview > div {
   margin: auto;
   background-color: rgba(224, 193, 212, 0.4);
 }
+
+div#list_of_users span{
+  display: inline-block;
+  margin: 8px;
+} 
 
 /* Responsive design*/
 @media screen and (max-width: 778px) {
@@ -595,7 +620,7 @@ div.listview > div {
   }
 
   span.inbox::after {
-    background: url(../img/_Message_Filled_1.ico);
+    background: url(../img/message.ico);
     background-size: cover;
   }
 
@@ -671,6 +696,8 @@ div.listview > div {
 
   main {
     flex: 1 0 100%;
+    
+    
   }
   main > div.listview > div {
     display: flex;
