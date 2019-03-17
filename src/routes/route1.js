@@ -1,8 +1,8 @@
 import express from 'express';
 import checkAPIs from 'express-validator/check';
 import { sanitizeParam } from 'express-validator/filter';
-import User from '../controllers/user';
-import Message from '../controllers/message';
+import User from '../controllers/v1/user';
+import Message from '../controllers/v1/message';
 
 
 const router = express();

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Message from '../src/models/message';
+import Message from '../src/models/v1/message';
 
 describe('Message', () => {
   describe('post(data)', () => {
