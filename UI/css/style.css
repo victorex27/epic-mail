@@ -1,0 +1,117 @@
+@import url("general.css");
+
+body {
+  display: flex;
+  flex-flow: row nowrap;
+  background: url(../img/splash.jpg);
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+aside {
+  flex: 1 0 auto;
+  padding: 10px;
+}
+
+main {
+  flex-wrap: row nowrap;
+  flex: 0 0 40%;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+}
+
+label {
+  color: rgb(84, 0, 50);
+  margin: 4px 2px;
+}
+button {
+  background-color: rgb(84, 0, 50);
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+}
+
+label#msg{
+
+  display:none;
+}
+
+.card {
+  width: 80%;
+  margin: 100px auto 0px auto;
+}
+
+.card > div {
+  flex: 0, 0, auto;
+}
+
+nav > ul {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+ul > li > a {
+  color: rgb(6, 4, 33);
+}
+
+nav > ul > li {
+  flex: 0 0 50%;
+}
+/*Login form starts*/
+.login div {
+  margin: 20px;
+  width: 100%;
+}
+
+/*Login form ends*/
+
+main > div > img.logo {
+  display: none;
+}
+
+main > div.site_name {
+  display: none;
+}
+
+aside > div.site_name {
+  margin-top: 150px;
+}
+
+.site_name > span {
+  font-size: 6em;
+  color: rgb(6, 4, 33);
+}
+
+/* Responsive design*/
+@media screen and (max-width: 558px) {
+  aside {
+    display: none;
+  }
+
+  main {
+    flex: 0 0 100%;
+  }
+
+  .card {
+    width: 80%;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  main > div > img.logo {
+    display: block;
+  }
+
+  main > div.site_name {
+    display: block;
+    margin-top: 100px;
+  }
+
+  .site_name > span {
+    font-size: 4.5em;
+  }
+}
