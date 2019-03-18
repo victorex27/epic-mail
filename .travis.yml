@@ -9,17 +9,17 @@ script:
 services:
 - postgresql
 before_script:
-- psql -c "CREATE DATABASE epic_mail_test_db;" -U admin
-- psql -c "create type role as enum('admin','user');" -U admin
-- psql -c "create type message_t as ENUM('0','1');" -U admin
-- psql -c "create type message_status as ENUM('draft','sent','read');" -U admin
-- psql -c "create type role_t as ENUM('admin','user');" -U admin
-- psql -c "CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile int(14));" -U admin
-- psql -c "CREATE TABLE IF NOT EXISTS messages( id serial PRIMARY KEY,subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL,parent_message_id BIGINT CHECK (parent_message_id = id or parent_message_id= 0), type message_t , status message_status, date TIMESTAMP);" -U admin
-- psql -c "CREATE TABLE IF NOT EXISTS user_messages( id serial PRIMARY KEY,sender_id int, receiver_id int, message_id BIGINT, FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE,FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U admin
-- psql -c "CREATE TABLE IF NOT EXISTS groups (id serial PRIMARY KEY, name VARCHAR(40) NOT NULL, role VARCHAR(40) NOT NULL, owner_id BIGINT , FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U admin
-- psql -c "CREATE TABLE IF NOT EXISTS group_members(id serial PRIMARY KEY , group_id BIGINT, user_id BIGINT,FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT ON UPDATE CASCADE,FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U admin
-- psql -c "CREATE TABLE IF NOT EXISTS group_messages( id serial PRIMARY KEY , group_id BIGINT, message_id BIGINT,FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT ON UPDATE CASCADE ,FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U admin
+- psql -c "CREATE DATABASE epic_mail_test_db;" -U postgres
+- psql -c "CREATE TYPE role as ENUM('admin','user');" -U postgres
+- psql -c "CREATE TYPE message_t as ENUM('0','1');" -U postgres
+- psql -c "CREATE TYPE message_status as ENUM('draft','sent','read');" -U postgres
+- psql -c "CREATE TYPE role_t as ENUM('admin','user');" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile int(14));" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS messages( id serial PRIMARY KEY,subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL,parent_message_id BIGINT CHECK (parent_message_id = id or parent_message_id= 0), type message_t , status message_status, date TIMESTAMP);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS user_messages( id serial PRIMARY KEY,sender_id int, receiver_id int, message_id BIGINT, FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE,FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS groups (id serial PRIMARY KEY, name VARCHAR(40) NOT NULL, role VARCHAR(40) NOT NULL, owner_id BIGINT , FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS group_members(id serial PRIMARY KEY , group_id BIGINT, user_id BIGINT,FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT ON UPDATE CASCADE,FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS group_messages( id serial PRIMARY KEY , group_id BIGINT, message_id BIGINT,FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT ON UPDATE CASCADE ,FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
 - npm install codeclimate-test-reporter istanbul -g
 after_script:
 - codeclimate-test-reporter < ./coverage/lcov.info
