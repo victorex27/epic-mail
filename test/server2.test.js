@@ -7,9 +7,9 @@ import db from '../src/db';
 use(chaiHttp);
 
 
-async function runScript(name, owner) {
-  const text = 'DELETE from groups WHERE name=$1 and owner_id=$2';
-  const values = [name, owner];
+async function deleteTable(table) {
+  const text = `TRUNCATE TABLE ${table}`;
+  const values = [];
 
   try {
     return await db.query(text, values);
@@ -18,11 +18,30 @@ async function runScript(name, owner) {
   }
 }
 
+async function createUser(email) {
+  const text = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5);';
+  const values = [email, 'password', 'amaobi', 'obikobe', '0803297'];
 
+  try {
+    return await db.query(text, values);
+  } catch (error) {
+    return error;
+  }
+}
+
+before(async () => {
+  createUser('mikenit50@gmail.com');
+  createUser('aobikobe@gmail.com');
+});
+
+after(async () => {
+  deleteTable('users');
+  deleteTable('groups');  
+});
 describe('POST /api/v2/groups', () => {
   describe('Create and own a group with valid details', () => {
     const group = {
-      name: 'epic group', role: 'admin', ownerId: 1,
+      name: 'epic group', role: 'admin', ownerId: 3,
     };
     it('should return a object', (done) => {
       chai.request(server)
@@ -35,12 +54,7 @@ describe('POST /api/v2/groups', () => {
         });
     });
 
-    after(async () => {
-      runScript(group.name, group.ownerId);
-    });
-    before(async () => {
-      runScript(group.name, group.ownerId);
-    });
+    
   });
 
 
