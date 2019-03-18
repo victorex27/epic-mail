@@ -54,7 +54,7 @@
     "start": "nodemon --exec babel-node src/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
-    "test": "mocha test/server2.test.js --require @babel/register",
+    "test": "mocha test --require @babel/register",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text ./node_modules/mocha/bin/_mocha test",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },

@@ -4,7 +4,6 @@ import server from '../src/server';
 import db from '../src/db';
 
 
-
 use(chaiHttp);
 
 
@@ -37,14 +36,10 @@ describe('POST /api/v2/groups', () => {
     });
 
     after(async () => {
-      const res = runScript(group.name, group.ownerId);
-
-      
+      runScript(group.name, group.ownerId);
     });
     before(async () => {
-      const res = runScript(group.name, group.ownerId);
-
-      
+      runScript(group.name, group.ownerId);
     });
   });
 
