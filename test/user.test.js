@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import User from '../src/models/user';
+import User from '../src/models/v1/user';
 
 
 describe('User', () => {

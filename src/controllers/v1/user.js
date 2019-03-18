@@ -1,5 +1,5 @@
-import customValidator from './custom-validator';
-import UserModel from '../models/user';
+import customValidator from '../custom-validator';
+import UserModel from '../../models/v1/user';
 
 
 class User {

@@ -1,5 +1,5 @@
-import customValidator from './custom-validator';
-import MessageModel from '../models/message';
+import customValidator from '../custom-validator';
+import MessageModel from '../../models/v1/message';
 
 class Message {
   static post(req, res) {
