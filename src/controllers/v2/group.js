@@ -20,7 +20,7 @@ class Group {
   }
 
   static getAll(req, res) {
-    const text = 'SELECT * FROM group';
+    const text = 'SELECT * FROM groups';
 
     const values = [];
   
