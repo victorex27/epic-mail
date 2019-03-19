@@ -3,7 +3,7 @@ import customValidator from '../custom-validator';
 import db from '../../db';
 
 class Group {
-  static async create(req, res) {
+  static create(req, res) {
     const data = req.body;
     const result = customValidator(req);
     if (result.error) {
@@ -19,11 +19,11 @@ class Group {
     return res;
   }
 
-  static async getAll(req, res) {
+  static getAll(req, res) {
     const text = 'SELECT * FROM groups';
 
     const values = [];
-
+    console.log(text);
     Group.runQuery(text, values, res);
     return res;
   }
