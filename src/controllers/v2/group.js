@@ -20,10 +20,10 @@ class Group {
   }
 
   static getAll(req, res) {
-    const text = 'SELECT * FROM groups';
+    const text = 'SELECT * FROM group';
 
     const values = [];
-    console.log(text);
+  
     Group.runQuery(text, values, res);
     return res;
   }
@@ -31,9 +31,11 @@ class Group {
   static async runQuery(text, values, res) {
     try {
       const { rows } = await db.query(text, values);
+      
       res.status(200).json({ status: 200, data: rows });
       return;
     } catch (error) {
+      console.log(error);
       res.status(404).json({ status: 404, error: error.detail });
     }
   }
