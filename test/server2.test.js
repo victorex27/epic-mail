@@ -40,7 +40,7 @@ describe('POST /api/v2/groups', () => {
     newUser = rows.id + 3;
     wrongUser = rows.id + 10;
     newGroupName = rows.name;
-    //console.log(newUser);
+    // console.log(newUser);
     const group = {
       name: 'epic group', role: 'admin', ownerId: newUser,
     };
@@ -153,9 +153,26 @@ describe('POST /api/v2/groups', () => {
           done();
         });
     });
-    after(async () => {
-      await deleteTable('users');
-      await deleteTable('groups');
+  });
+});
+
+describe('GET /api/v2/groups', () => {
+  describe('When a user tries to retrieve all groups', () => {
+    it('it should return an object of status and data array', (done) => {
+      chai.request(server)
+        .get('/api/v2/groups')
+        .send()
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('data').to.be.a('array');
+          done();
+        });
     });
   });
+});
+
+
+after(async () => {
+  await deleteTable('users');
+  await deleteTable('groups');
 });

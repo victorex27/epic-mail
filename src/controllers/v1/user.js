@@ -31,7 +31,7 @@ class User {
       return res.status(401).json({ status: 401, error: newUser.error });
     }
 
-    return res.status(201).json({ status: 201, data: { token: '45erkjherht45495783' } });
+    return res.status(200).json({ status: 200, data: { token: '45erkjherht45495783' } });
   }
 
 }

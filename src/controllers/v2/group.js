@@ -6,7 +6,6 @@ class Group {
   static async create(req, res) {
     const data = req.body;
     const result = customValidator(req);
-
     if (result.error) {
       return res.status(result.status).json({ status: result.status, error: result.error });
     }
@@ -16,27 +15,28 @@ class Group {
         returning *`;
 
     const values = Object.values(data);
-    try {
-      const { rows } = await db.query(text, values);
-      // console.log(rows[0] );
-      return res.status(200).json({ status: 200, data: rows[0] });
-    } catch (error) {
-      let detail;
-      if (error.detail) {
-        detail = error.detail;
-      } else {
-        detail = 'Unknown error';
-      }
-      return res.status(404).json({ status: 404, error: detail });
-    }
+    Group.runQuery(text, values, res);
+    return res;
   }
 
-  /*
-      if (result.error) {
-        return res.status(result.status).json({ status: result.status, error: result.data });
-      }
-      return res.status(result.status).json({ status: result.status, data: result.data });
-      */
+  static async getAll(req, res) {
+    const text = 'SELECT * FROM groups';
+
+    const values = [];
+
+    Group.runQuery(text, values, res);
+    return res;
+  }
+
+  static async runQuery(text, values, res) {
+    try {
+      const { rows } = await db.query(text, values);
+      res.status(200).json({ status: 200, data: rows });
+      return;
+    } catch (error) {
+      res.status(404).json({ status: 404, error: error.detail });
+    }
+  }
 }
 
 export default Group;

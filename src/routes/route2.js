@@ -28,5 +28,6 @@ const messageCheck = checkLengthGreaterThanOne('message');
 const idSanitizer = sanitizeParam('id').toInt();
 */
 router.post('/groups', [nameCheck, roleCheck, idCheck], Group.create);
+router.get('/groups', Group.getAll);
 
 export default router;
