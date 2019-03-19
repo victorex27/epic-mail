@@ -3,10 +3,6 @@ import customValidator from '../custom-validator';
 import db from '../../db';
 
 class Group {
-
-  
-
-  
   static async create(req, res) {
     const data = req.body;
     const result = customValidator(req);
@@ -22,7 +18,7 @@ class Group {
     const values = Object.values(data);
     try {
       const { rows } = await db.query(text, values);
-
+      // console.log(rows[0] );
       return res.status(200).json({ status: 200, data: rows[0] });
     } catch (error) {
       let detail;
