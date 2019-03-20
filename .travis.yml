@@ -11,15 +11,13 @@ services:
 before_script:
 - psql -c "CREATE DATABASE epic_mail_test_db;" -U postgres
 - psql -c "CREATE TYPE message_t as ENUM('0','1');" -U postgres
-- psql -c "CREATE TYPE message_status as ENUM('draft','sent','read');" -U postgres
+- psql -c "CREATE TYPE message_ss as ENUM('draft','sent','unread');" -U postgres
 - psql -c "CREATE TYPE role_t as ENUM('admin','user');" -U postgres
-- psql -c "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile INT);" -U postgres
-- psql -c "CREATE TABLE IF NOT EXISTS messages( id serial PRIMARY KEY,subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL,parent_message_id BIGINT CHECK (parent_message_id = id or parent_message_id= 0), type message_t , status message_status, date TIMESTAMP);" -U postgres
-- psql -c "CREATE TABLE IF NOT EXISTS user_messages( id serial PRIMARY KEY,sender_id INT, receiver_id INT, message_id BIGINT, FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE,FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
-- psql -c "CREATE TABLE IF NOT EXISTS groups (id serial PRIMARY KEY, name VARCHAR(40) NOT NULL, role role_t  , owner_id BIGINT , FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
-- psql -c "CREATE TABLE IF NOT EXISTS group_members(id serial PRIMARY KEY , group_id BIGINT, user_id BIGINT,FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT ON UPDATE CASCADE,FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
-- psql -c "CREATE TABLE IF NOT EXISTS group_messages( id serial PRIMARY KEY , group_id BIGINT, message_id BIGINT,FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT ON UPDATE CASCADE ,FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE);" -U postgres
-- psql -c "--INSERT INTO users (id,email,password,first_name,last_name,mobile) VALUES (DEFAULT,'mikenit90@gmail.com','password','kenneth','obikobe','98987');" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile INT);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS messages( id serial PRIMARY KEY, sender_id BIGINT NOT NULL,receiver_id BIGINT, subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL , status message_ss, created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP, group_id BIGINT DEFAULT 0,CONSTRAINT ms_sender  FOREIGN KEY (sender_id) REFERENCES users(id),CONSTRAINT ms_receiver FOREIGN KEY (receiver_id) REFERENCES users(id) );" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS groups ( id serial PRIMARY KEY, name VARCHAR(40) UNIQUE);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS group_members ( id serial PRIMARY KEY,group_id BIGINT ,member_id VARCHAR(40) NOT NULL, role role_t DEFAULT 'user', CONSTRAINT gm_group_id FOREIGN KEY (group_id) REFERENCES groups(id));" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS replies ( id serial PRIMARY KEY, parent_message_id BIGINT, message VARCHAR(40),CONSTRAINT re_parent_message FOREIGN KEY (parent_message_id) REFERENCES messages(id) );" -U postgres
 - npm install codeclimate-test-reporter istanbul -g
 after_script:
 - codeclimate-test-reporter < ./coverage/lcov.info

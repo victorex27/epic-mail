@@ -4,10 +4,7 @@ import UserModel from '../../models/v1/user';
 
 class User {
   static create(req, res) {
-    const result = customValidator(req);
-    if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.error });
-    }
+    customValidator(req, res);
 
 
     const newUser = UserModel.create(req.body);
@@ -21,10 +18,7 @@ class User {
   }
 
   static login(req, res) {
-    const result = customValidator(req);
-    if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.error });
-    }
+    customValidator(req, res);
 
     const newUser = UserModel.login(req.body);
     if (newUser.error) {
@@ -33,7 +27,6 @@ class User {
 
     return res.status(201).json({ status: 201, data: { token: '45erkjherht45495783' } });
   }
-
 }
 
 export default User;

@@ -3,11 +3,12 @@ import MessageModel from '../../models/v1/message';
 
 class Message {
   static post(req, res) {
-    let result = customValidator(req);
-    if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.error });
+    customValidator(req, res);
+/*    if (res.status === 400) {
+      return res;
     }
-    result = Message.controller(req, res, 'post');
+    */
+    const result = Message.controller(req, res, 'post');
 
     if (result.error) {
       return res.status(result.status).json({ status: result.status, error: result.data });

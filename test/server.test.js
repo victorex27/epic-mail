@@ -67,7 +67,7 @@ describe('POST /api/v1/auth/signup', () => {
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be greater than or equal to 6 characters');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be between 6 characters to 40 characters');
           done();
         });
     });
@@ -84,7 +84,7 @@ describe('POST /api/v1/auth/signup', () => {
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be greater than or equal to 6 characters');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be between 6 characters to 40 characters');
           done();
         });
     });

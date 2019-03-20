@@ -8,6 +8,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
     "babel-polyfill": "^6.26.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
@@ -55,7 +56,7 @@
     "start": "nodemon --exec babel-node src/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
-    "test": "mocha test/*.test.js --require @babel/register",
+    "test": "mocha test --require @babel/register --timeout 50000",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text ./node_modules/mocha/bin/_mocha test",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },

@@ -8,47 +8,56 @@ use(chaiHttp);
 
 
 async function deleteTable(table) {
-  const text = `TRUNCATE TABLE ${table}`;
+  const text = `DELETE FROM ${table}`;
   const values = [];
+  await db.query(text, values);
+}
 
-  try {
-    return await db.query(text, values);
-  } catch (error) {
-    return error;
-  }
+async function resetAutoIncrement(table) {
+  const text = `ALTER SEQUENCE  ${table}_id_seq RESTART WITH 1`;
+  const values = [];
+  await db.query(text, values);
 }
 
 async function createUser(email) {
   const text = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
   const values = [email, 'password', 'amaobi', 'obikobe', '0803297'];
-
-  try {
-    const { rows } = await db.query(text, values);
-    return rows[0];
-  } catch (error) {
-    return error;
-  }
+  await db.query(text, values);
 }
-let newUser;
-let wrongUser;
-let newGroupName;
 
+describe('POST /api/v2/auth/signup', () => {
+  before(() => {
+    try {
+      createUser('aobikobe@gmail.com');
+      createUser('mikenit90@gmail.com');
+      createUser('fifty1pilots@gmail.com');
+      createUser('reachy@gmail.com');
+      createUser('awarawa@gmail.com');
+      createUser('ihiagwa@gmail.com');
+      createUser('nkereuwem@gmail.com');
+      createUser('mustapha@gmail.com');
+      createUser('segun@gmail.com');
+    } catch (error) {
+      // console.log(error);
+    }
+  });
+  after(() => {
+    try {
+      deleteTable('users');
+      resetAutoIncrement('users');
+    } catch (error) {
+      // console.log(error);
+    }
+  });
+  describe('When a new User Signs Up with an acceptable detail', async () => {
+    it('should return an object with the status and data', (done) => {
+      const user = {
+        email: 'emenike@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
+      };
 
-describe('POST /api/v2/groups', () => {
-  describe('Create and own a group with valid details', async () => {
-    const rows = await createUser('aobikobe@gmail.com');
-    newUser = rows.id + 3;
-    wrongUser = rows.id + 10;
-    newGroupName = rows.name;
-    //console.log(newUser);
-    const group = {
-      name: 'epic group', role: 'admin', ownerId: newUser,
-    };
-
-    it('should return a object', (done) => {
       chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
+        .post('/api/v2/auth/signup')
+        .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data').to.be.a('object');
@@ -57,105 +66,102 @@ describe('POST /api/v2/groups', () => {
     });
   });
 
-
-  describe('Create and own a group with  a user id of wrong data type', () => {
-    it('should return Invalid User id', (done) => {
-      const group = {
-        name: 'epic group', role: 'admin', ownerId: 'p',
+  describe('When a new User Signs Up with an Email account that already exists', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
       };
+
       chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
+        .post('/api/v2/auth/signup')
+        .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid User id');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('User account already exists');
+          done();
+        });
+    });
+  });
+  describe('When a new User Signs Up with an invalid email type', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'amaobi', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
+      };
+
+      chai.request(server)
+        .post('/api/v2/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
           done();
         });
     });
   });
 
-  describe('Create and own a group with  a user id that does not exists', () => {
-    it('should return an error message', (done) => {
-      const group = {
-        name: 'epic group', role: 'admin', ownerId: wrongUser,
+  describe('When a new User Signs Up with a password less than 6 char', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'pasww',
       };
+
       chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
+        .post('/api/v2/auth/signup')
+        .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be between 6 characters to 40 characters');
           done();
         });
     });
   });
 
-
-  describe('Create and own a group with  an empty role', () => {
-    it('should return Role can not be empty', (done) => {
-      const group = {
-        name: 'epic group', role: '', ownerId: newUser + 1,
+  describe('When a new User Signs Up with no password ', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: '',
       };
+
       chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
+        .post('/api/v2/auth/signup')
+        .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Role can not be empty');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('Password must be between 6 characters to 40 characters');
           done();
         });
     });
   });
-
-  describe('Create and own a group with  an invalid role', () => {
-    it('should return an error message', (done) => {
-      const group = {
-        name: 'epic group', role: 'adminoppp', ownerId: newUser + 1,
+  describe('When a new User Signs Up with no firstname ', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: '', lastName: 'Obikobe', password: 'password',
       };
+
       chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
+        .post('/api/v2/auth/signup')
+        .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('firstName is required');
           done();
         });
     });
   });
-
-  describe('Create and own a group with  an empty name', () => {
-    it('should return Group name can not be empty', (done) => {
-      const group = {
-        name: '', role: 'admin', ownerId: newUser + 1,
+  describe('When a new User Signs Up with no lastname ', () => {
+    it('should return an object with the status and error', (done) => {
+      const user = {
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: '', password: 'password',
       };
+
       chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
+        .post('/api/v2/auth/signup')
+        .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Group name can not be empty');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('lastName is required');
           done();
         });
-    });
-  });
-
-  describe('Create and own a group with  a name the User has been created previously', () => {
-    it('should return an error message', (done) => {
-      const group = {
-        name: newGroupName, role: 'admin', ownerId: newUser + 1,
-      };
-      chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-    after(async () => {
-      await deleteTable('users');
-      await deleteTable('groups');
     });
   });
 });
