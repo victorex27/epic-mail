@@ -59,7 +59,7 @@ AND role='admin' returning *`;
     // have not done this
     customValidator(req);
 
-        const text = `WITH query1 AS (
+    const text = `WITH query1 AS (
           SELECT groups.id from groups,group_members WHERE groups.id=$1 and group_members.member_id =$4 AND role='admin' 
           )
           INSERT INTO group_members(group_id,member_id,role)
@@ -86,16 +86,23 @@ AND role='admin' returning *`;
 
   static async sendMailToGroup(req, res) {
     // AND group_members.id = current user
-    const text = 'SELECT member_id from group_members WHERE group_members.group_id = group.id and group_members.group_id = $1';
+    const text1 = 'SELECT member_id from group_members,groups WHERE group_members.group_id = groups.id and group_members.group_id = $1 AND member_id NOT IN ($2)';
 
-    const data = [req.params.groupId];
+    const data1 = [req.params.groupId, req.user.id];
+
+    const rows = await db.runQuery(text1, data1);
     
-    const rows = await db.runQuery(text, data);
-    console.log(rows);
-    const text2 = `INSERT INTO messages (sender_id,receiver_id,message,subject,status,group_id) VALUES
-      ($1,$2,$3,$4,$5,$6) WHERE receiver_id != $2
+    rows.forEach(async (row) => {
+      const text2 = `INSERT INTO messages (sender_id,receiver_id,message,subject,status,group_id) VALUES
+      ($1,$2,$3,$4,$5,$6) 
     `;
-    
+
+      const data2 = [req.user.id, row.member_id, req.body.message, req.body.subject, 'sent', req.params.groupId];
+
+      await db.runQuery(text2, data2);
+    });
+
+
     res.status(200).json({ status: 200, data: rows[0] });
   }
 }

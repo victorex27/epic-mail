@@ -15,9 +15,9 @@ router.post('/auth/login', [emailCheck, passwordCheck], User.login);
 
 // router for messages features
 router.post('/messages', [fromCheck, toCheck, subjectCheck, messageCheck,checkToken], Message.post);
-router.get('/messages', Message.getInbox);
-router.get('/messages/sent', Message.getAllSentMessages);
-router.get('/messages/unread', Message.getUnreadInbox);
+router.get('/messages', [checkToken],Message.getInbox);
+router.get('/messages/sent',[checkToken], Message.getAllSentMessages);
+router.get('/messages/unread', [checkToken],Message.getUnreadInbox);
 router.get('/messages/:id', [idSanitizer], Message.getMessageById);
 router.delete('/messages/:id', [idSanitizer], Message.deleteMessage);
 
