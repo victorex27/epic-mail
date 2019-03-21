@@ -1,76 +1,20 @@
 import chai, { expect, use } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/server';
-import db from '../src/db';
 
 
 use(chaiHttp);
 
 
-async function deleteTable(table) {
-  const text = `DELETE FROM ${table}`;
-  const values = [];
-  await db.query(text, values);
-}
-
-async function resetAutoIncrement(table) {
-  const text = `ALTER SEQUENCE  ${table}_id_seq RESTART WITH 1`;
-  const values = [];
-  await db.query(text, values);
-}
-
-async function createUser(email) {
-  const text = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
-  const values = [email, 'password', 'amaobi', 'obikobe', '0803297'];
-  await db.query(text, values);
-}
-async function createMessages(sender,receiver,status) {
-  const text = 'INSERT INTO messages (sender_id, receiver_id, subject, message, status) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
-  const values = [sender, receiver, 'subject', 'obikobe', status];
-  await db.query(text, values);
-}
-
-describe('POST /api/v2/auth/signup', () => {
-  before((done) => {
-    try {
-      createUser('aobikobe@gmail.com');
-      createUser('mikenit90@gmail.com');
-      createUser('fifty1pilots@gmail.com');
-      createUser('reachy@gmail.com');
-      createUser('awarawa@gmail.com');
-      createUser('ihiagwa@gmail.com');
-      createUser('nkereuwem@gmail.com');
-      createUser('mustapha@gmail.com');
-      createUser('segun@gmail.com');
-      
-    } catch (error) {
-      // console.log(error);
-    }
-    done();
-  });
-  after(() => {
-    try {
-      deleteTable('group_members');
-      deleteTable('groups');
-      deleteTable('messages');
-      deleteTable('users');
-      
-      
-
-      resetAutoIncrement('messages');
-     resetAutoIncrement('users');
-    } catch (error) {
-      // console.log(error);
-    }
-  });
-  describe('When a new User Signs Up with an acceptable detail', async () => {
+describe('POST /api/v1/auth/signup', () => {
+  describe('When a new User Signs Up with an acceptable detail', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
         email: 'emenike@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -79,7 +23,6 @@ describe('POST /api/v2/auth/signup', () => {
         });
     });
   });
-
   describe('When a new User Signs Up with an Email account that already exists', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
@@ -87,11 +30,11 @@ describe('POST /api/v2/auth/signup', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('User account already exists');
+          expect(res.body).to.have.property('error').to.be.a('string').equals('User already exists');
           done();
         });
     });
@@ -103,7 +46,7 @@ describe('POST /api/v2/auth/signup', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -120,7 +63,7 @@ describe('POST /api/v2/auth/signup', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -137,7 +80,7 @@ describe('POST /api/v2/auth/signup', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -153,7 +96,7 @@ describe('POST /api/v2/auth/signup', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -169,7 +112,7 @@ describe('POST /api/v2/auth/signup', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -181,10 +124,7 @@ describe('POST /api/v2/auth/signup', () => {
 });
 
 
-
-// login
-/* 
-describe('POST /api/v2/auth/login', () => {
+describe('POST /api/v1/auth/login', () => {
   describe('When a user tries to login with an existing account', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
@@ -192,7 +132,7 @@ describe('POST /api/v2/auth/login', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -208,7 +148,7 @@ describe('POST /api/v2/auth/login', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -224,7 +164,7 @@ describe('POST /api/v2/auth/login', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -240,7 +180,7 @@ describe('POST /api/v2/auth/login', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/auth/login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -252,66 +192,33 @@ describe('POST /api/v2/auth/login', () => {
   describe('When user tries to login with an invalid password', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
-        email: 'amaobi@gmail.com', password: 'pasw',
+        email: 'amaobi', password: 'pasw',
       };
 
       chai.request(server)
-        .post('/api/v2/auth/login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-  describe('When user tries to login with an invalid password', () => {
-    it('should return an object with the status and error', (done) => {
-      const user = {
-        email: 'amaobiiii@gmail.com', password: 'password',
-      };
-
-      chai.request(server)
-        .post('/api/v2/auth/login')
-        .send(user)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Unauthorized access');
-          done();
-        });
-    });
-  });
-  describe('When user tries to login with an Wrong password', () => {
-    it('should return an object with the status and error', (done) => {
-      const user = {
-        email: 'aobikobe@gmail.com', password: 'jhgkhkhgkjh',
-      };
-
-      chai.request(server)
-        .post('/api/v2/auth/login')
-        .send(user)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Wrong password');
           done();
         });
     });
   });
 });
 
-// post message
-describe('POST /api/v2/messages', () => {
+describe('POST /api/v1/messages', () => {
   describe('When a user tries to send a message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
       const data = {
         from: 'aobikobe@gmail.com',
-        to: 'emenike@gmail.com',
+        to: 'aob@gmail.com',
         subject: 'How do you do',
         message: 'this is going to be a sweet test',
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -330,7 +237,7 @@ describe('POST /api/v2/messages', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -349,7 +256,7 @@ describe('POST /api/v2/messages', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -368,7 +275,7 @@ describe('POST /api/v2/messages', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -387,7 +294,7 @@ describe('POST /api/v2/messages', () => {
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -400,13 +307,13 @@ describe('POST /api/v2/messages', () => {
     it('should return an object with the status and error', (done) => {
       const data = {
         from: 'aobikobe@gmail.com',
-        to: 'emenike@gmail.com',
+        to: 'aob@gmail.com',
         subject: '',
         message: 'How do you do',
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -419,13 +326,13 @@ describe('POST /api/v2/messages', () => {
     it('should return an object with the status and error', (done) => {
       const data = {
         from: 'aobikobe@gmail.com',
-        to: 'emenike@gmail.com',
+        to: 'aob@gmail.com',
         subject: 'How do you do',
         message: '',
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -437,14 +344,14 @@ describe('POST /api/v2/messages', () => {
   describe('When a user tries to send a message to self', () => {
     it('should return an object with the status and error', (done) => {
       const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'aobikobe@gmail.com',
+        from: 'aob@gmail.com',
+        to: 'aob@gmail.com',
         subject: 'How do you do',
         message: 'jkhhkhkh',
       };
 
       chai.request(server)
-        .post('/api/v2/messages')
+        .post('/api/v1/messages')
         .send(data)
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -456,11 +363,11 @@ describe('POST /api/v2/messages', () => {
 });
 
 
-describe('GET /api/v2/messages', () => {
+describe('GET /api/v1/messages', () => {
   describe('When a user tries to retrieve a message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
       chai.request(server)
-        .get('/api/v2/messages')
+        .get('/api/v1/messages')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
@@ -471,7 +378,7 @@ describe('GET /api/v2/messages', () => {
   });
 });
 
-describe('GET /api/v2/messages/sent', () => {
+describe('GET /api/v1/messages/sent', () => {
   describe('When a user tries to retrieve a sent message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
       chai.request(server)
@@ -486,11 +393,11 @@ describe('GET /api/v2/messages/sent', () => {
   });
 });
 
-describe('GET /api/v2/messages/unread', () => {
+describe('GET /api/v1/messages/unread', () => {
   describe('When a user tries to retrieve an unread message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
       chai.request(server)
-        .get('/api/v2/messages/unread')
+        .get('/api/v1/messages/unread')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
@@ -501,11 +408,11 @@ describe('GET /api/v2/messages/unread', () => {
   });
 });
 
-describe('GET /api/v2/messages/:id', () => {
+describe('GET /api/v1/messages/:id', () => {
   describe('When a user tries to retrieve a valid message id', () => {
     it('should return an object with the status and data', (done) => {
       chai.request(server)
-        .get('/api/v2/messages/2')
+        .get('/api/v1/messages/2')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
@@ -517,7 +424,7 @@ describe('GET /api/v2/messages/:id', () => {
   describe('When a user tries to retrieve a message that does not exists', () => {
     it('should return an object with the status and error', (done) => {
       chai.request(server)
-        .get('/api/v2/messages/90')
+        .get('/api/v1/messages/90')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -529,7 +436,7 @@ describe('GET /api/v2/messages/:id', () => {
   describe('When a user tries to retrieve a message that has an invalid id', () => {
     it('should return an object with the status and error', (done) => {
       chai.request(server)
-        .get('/api/v2/messages/amaobi')
+        .get('/api/v1/messages/amaobi')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -540,11 +447,11 @@ describe('GET /api/v2/messages/:id', () => {
   });
 });
 
-describe('DELETE /api/v2/messages/:id', () => {
+describe('DELETE /api/v1/messages/:id', () => {
   describe('When a user tries to delete a valid message id', () => {
     it('should return an object with the status and data', (done) => {
       chai.request(server)
-        .delete('/api/v2/messages/1')
+        .delete('/api/v1/messages/1')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status').equal(200);
@@ -556,7 +463,7 @@ describe('DELETE /api/v2/messages/:id', () => {
   describe('When a user tries to delete a message that does not exist', () => {
     it('should return an object with the status and error', (done) => {
       chai.request(server)
-        .delete('/api/v2/messages/90')
+        .delete('/api/v1/messages/90')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -568,7 +475,7 @@ describe('DELETE /api/v2/messages/:id', () => {
   describe('When a user tries to delete an invalid message', () => {
     it('should return an object with the status and error', (done) => {
       chai.request(server)
-        .delete('/api/v2/messages/amaobi')
+        .delete('/api/v1/messages/amaobi')
         .send()
         .end((err, res) => {
           expect(res.body).to.have.property('status');
@@ -594,7 +501,7 @@ describe('GET /api-docs', () => {
 });
 
 
-describe('GET /api/v2/victor', () => {
+describe('GET /api/v1/victor', () => {
   describe('When a user tries to access an unspecified resource', () => {
     it('should return an object with the status and error', (done) => {
       chai.request(server)
@@ -608,125 +515,3 @@ describe('GET /api/v2/victor', () => {
     });
   });
 });
-
-
-describe('POST /api/v2/groups', () => {
-  describe('Create and own a group with valid details', async () => {
-    
-    const group = {
-      name: 'epic group',
-    };
-
-    it('should return a object', (done) => {
-      chai.request(server)
-        .post('/api/v2/groups')
-        .send(group)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('data').to.be.a('object');
-          done();
-        });
-    });
-  });
-
-});
-
-
-describe('GET /api/v2/groups', () => {
-  describe('When a user tries to retrieve all groups user belongs to', () => {
-
-    it('It should return an object of status and the array of data', (done) => {
-      chai.request(server)
-        .get('/api/v2/groups')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
-          done();
-        });
-
-    });
-  });
-});
-
-
-
-describe('PATCH /api/v2/groups/:groupId/name', () => {
-  describe('When a user tries to edit the name of a specific group', () => {
-    it('should return an oject that contains information about the group', (done) => {
-      const group = {
-        name: 'New Name',
-      };
-      chai.request(server)
-        .post('/api/v2/groups/1/name')
-        .send(group)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('data').to.be.a('object');
-          done();
-        });
-    });
-  });
-});
-
-describe('DELETE /api/v2/groups/:groupId', () => {
-  describe('When a user tries to delete a specific group', () => {
-    it('', (done) => {
-      chai.request(server)
-        .post('/api/v2/groups/2')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
-          done();
-        });
-    });
-  });
-});
-
-describe('POST /api/v2/groups/:groupId/users', () => {
-  describe('When a user tries to add a user to a group', () => {
-    it('', (done) => {
-      chai.request(server)
-        .post('/api/v2/groups/1/users')
-        .send(user)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
-          done();
-        });
-    });
-  });
-});
-
-describe('DELETE /api/v2/groups/:groupId/users/:userId', () => {
-  describe('When a user tries to delete a specific user from the group', () => {
-    it('', (done) => {
-      chai.request(server)
-        .post('/api/v2/groups/1/users/3')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
-          done();
-        });
-    });
-  });
-});
-
-describe('POST /api/v2/groups/:groupId/messages', () => {
-  describe('When a user tries to send a message to a group', () => {
-    it('', (done) => {
-      chai.request(server)
-        .post('/api/v2/groups/1/messages')
-        .send(user)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Invalid Email Format');
-          done();
-        });
-    });
-  });
-});
-*/
-

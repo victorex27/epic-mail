@@ -60,7 +60,7 @@ class Message {
 
   static async getDataSet(text, data, res, exPectsMoreThanOne) {
     const dataSet = await db.runQuery(text, data);
-    // console.log(dataSet);
+    console.log(dataSet);
     if (exPectsMoreThanOne) {
       res.status(201).json({ status: 201, data: dataSet });
     }

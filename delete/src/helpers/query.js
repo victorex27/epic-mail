@@ -6,12 +6,15 @@ class Query {
       const { rows } = await db.query(text, values);
       return rows;
     } catch (error) {
+
+      
       // @return 1 signifies Duplicate entry
 
       if (error.routine === '_bt_check_unique') {
         return 1;
       }
-      return error.routine; 
+      console.log(error);
+      return 2; // other types of errors
     }
   }
 }

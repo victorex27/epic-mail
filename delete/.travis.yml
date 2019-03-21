@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "10"
+addons:
+    code_climate:
+        repo_token: "FwY4rECvXT33MjaXEpKuozj5mqmhQIFEaFUMbn7kc1yu9+xTje20D0QdZZmhotTs43xrFQNih12S/fKw6qZeYREGpdywa2PVREPySdARwOklK1EgWAe1h+9caof2RfG+Kk+000VMgW9PaSJ4rz0j5/SoFlJBJ58QwA2nbngGeE7ug8S0be6gwfbEGsRYOGaik3jxOxhYqHWFi4TUVwGyZSKZWneiUs9Se0wkwR1c6cnm5XS5QnA3fCUFnRjnS8KpkuuZMxf/vVTQI8ji5tcad35xqQO5LlwAwlqLVAM4d7/YHBTkioHnK+wHn9AI0ldmqYBtGLwuiE7xdljBL9pHINcGAJ8FRsJ1fMOO3FYfPIJsB9WcrwDBeK7G/8QrQ+x26xWlrCjNaSU3ut1Ow2lDYVhyd2iYZw2NNYrq3JFiP7r/qn5aNmUlvhQ03CN1FyvFzWKLd/oIxd4uFf4jFv5kKQHBeU5MBf7gBuePDmBFniP00lKVELUJSlD++B+rSqekh9mL7Nt1CDmjvJYI4IpIx4OruAmBi8oVUzdI5feT2wG2rkDAfYmosk9wtU8lVTH9mGuLA508bK9Ptq46j6E6HJvfK3PTxSzwBqz2AgGB8GPo8czEhdngHw8ufXFqb00Iy/N45XVVbBpPCYkmMpgTtBOthTlRV5U12TwfrM9ffLY="
+script:
+- npm run test
+postgres:
+  adapter: postgresql
+  database: myapp_test
+  username: postgres
+before_script:
+- psql -c "CREATE DATABASE myapp_test;" -U postgres
+- psql -c "CREATE TYPE message_t as ENUM('0','1');" -U postgres
+- psql -c "CREATE TYPE message_ss as ENUM('draft','sent','unread');" -U postgres
+- psql -c "CREATE TYPE role_t as ENUM('admin','user');" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile Numeric);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS messages( id serial PRIMARY KEY, sender_id BIGINT NOT NULL,receiver_id BIGINT, subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL , status message_ss, created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP, group_id BIGINT DEFAULT 0,CONSTRAINT ms_sender  FOREIGN KEY (sender_id) REFERENCES users(id),CONSTRAINT ms_receiver FOREIGN KEY (receiver_id) REFERENCES users(id) );" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS groups ( id serial PRIMARY KEY, name VARCHAR(40) UNIQUE);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS group_members ( id serial PRIMARY KEY,group_id BIGINT ,member_id VARCHAR(40) NOT NULL, role role_t DEFAULT 'user', CONSTRAINT gm_group_id FOREIGN KEY (group_id) REFERENCES groups(id));" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS replies ( id serial PRIMARY KEY, parent_message_id BIGINT, message VARCHAR(40),CONSTRAINT re_parent_message FOREIGN KEY (parent_message_id) REFERENCES messages(id) );" -U postgres
+- npm install codeclimate-test-reporter istanbul -g
+after_script:
+- codeclimate-test-reporter < ./coverage/lcov.info
+after_success:
+- npm run coveralls
