@@ -13,7 +13,7 @@ before_script:
 - psql -c "CREATE TYPE message_t as ENUM('0','1');" -U postgres
 - psql -c "CREATE TYPE message_ss as ENUM('draft','sent','unread');" -U postgres
 - psql -c "CREATE TYPE role_t as ENUM('admin','user');" -U postgres
-- psql -c "TABLE IF NOT EXISTS users (id serial PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile Numeric);" -U postgres
+- psql -c "CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY,email VARCHAR(40) UNIQUE, password VARCHAR(40), first_name VARCHAR(40), last_name VARCHAR(40), mobile Numeric);" -U postgres
 - psql -c "CREATE TABLE IF NOT EXISTS messages( id serial PRIMARY KEY, sender_id BIGINT NOT NULL,receiver_id BIGINT, subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL , status message_ss, created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP, group_id BIGINT DEFAULT 0,CONSTRAINT ms_sender  FOREIGN KEY (sender_id) REFERENCES users(id),CONSTRAINT ms_receiver FOREIGN KEY (receiver_id) REFERENCES users(id) );" -U postgres
 - psql -c "CREATE TABLE IF NOT EXISTS groups ( id serial PRIMARY KEY, name VARCHAR(40) UNIQUE);" -U postgres
 - psql -c "CREATE TABLE IF NOT EXISTS group_members ( id serial PRIMARY KEY,group_id BIGINT ,member_id VARCHAR(40) NOT NULL, role role_t DEFAULT 'user', CONSTRAINT gm_group_id FOREIGN KEY (group_id) REFERENCES groups(id));" -U postgres
