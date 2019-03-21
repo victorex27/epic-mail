@@ -58,7 +58,7 @@
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
     "test": "cross-env NODE_ENV=test mocha test/server2.test.js  --require @babel/register --timeout 50000",
-    "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text ./node_modules/mocha/bin/_mocha test",
+    "cover": "nyc --reporter=lcov --reporter=text ./node_modules/mocha/bin/_mocha test",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
