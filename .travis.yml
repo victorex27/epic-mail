@@ -12,7 +12,6 @@ postgres:
   username: postgres
 before_script:
 - psql -c "CREATE DATABASE myapp_test;" -U postgres
-- "rake db:migrate"
 - psql -c "CREATE TYPE message_t as ENUM('0','1');" -U postgres
 - psql -c "CREATE TYPE message_ss as ENUM('draft','sent','unread');" -U postgres
 - psql -c "CREATE TYPE role_t as ENUM('admin','user');" -U postgres
