@@ -1,24 +1,25 @@
 import chai, { expect, use } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/server';
-import db from '../src/db';
+import db from '../src/helpers/query';
 
 
 use(chaiHttp);
 
 
-async function deleteTable(table) {
+function deleteTable(table) {
   const text = `DELETE FROM ${table}`;
   const values = [];
-  await db.query(text, values);
+  db.query(text, values);
 }
 
-async function resetAutoIncrement(table) {
+ function resetAutoIncrement(table) {
   const text = `ALTER SEQUENCE  ${table}_id_seq RESTART WITH 1`;
   const values = [];
-  await db.query(text, values);
+   db.query(text, values);
 }
 
+/*
 async function createUser(email) {
   const text = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
   const values = [email, 'password', 'amaobi', 'obikobe', '0803297'];
@@ -29,11 +30,12 @@ async function createMessages(sender, receiver, status) {
   const values = [sender, receiver, 'subject', 'obikobe', status];
   await db.query(text, values);
 }
-
+*/
 describe('POST /api/v2/auth/signup', () => {
-  before((done) => {
+  before(async () => {
     try {
-      createUser('aobikobe@gmail.com');
+      /*
+      createUser();
       createUser('mikenit90@gmail.com');
       createUser('fifty1pilots@gmail.com');
       createUser('reachy@gmail.com');
@@ -42,21 +44,25 @@ describe('POST /api/v2/auth/signup', () => {
       createUser('nkereuwem@gmail.com');
       createUser('mustapha@gmail.com');
       createUser('segun@gmail.com');
+      */
+      const text1 = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5);';
+      const values1 = ['aobikobe@gmail.com', 'password', 'amaobi', 'obikobe', '0803297'];
+      await db.runQuery(text1, values1);
+
+      const text2 = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5);';
+      const values2 = ['aob@gmail.com', 'password', 'amaobi', 'obikobe', '0803297'];
+      await db.runQuery(text2, values2);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
-    done();
+  
   });
+
   after(() => {
     try {
-      deleteTable('group_members');
-      deleteTable('groups');
-      deleteTable('messages');
-      deleteTable('users');
-
-
-      resetAutoIncrement('messages');
-      resetAutoIncrement('users');
+      const text = 'DELETE FROM users;';
+      const values = [];
+      db.runQuery(text, values);
     } catch (error) {
       // console.log(error);
     }
@@ -71,6 +77,7 @@ describe('POST /api/v2/auth/signup', () => {
         .post('/api/v2/auth/signup')
         .send(user)
         .end((err, res) => {
+          console.log(res.body);
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data').to.be.a('object');
           done();
