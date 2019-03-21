@@ -37,6 +37,6 @@ export const checkToken = (req, res, next) => {
     next();
   } else {
     // If header is undefined
-    res.status(403).json({ status: 403, error: 'Forbidden' });
+    return res.status(403).json({ status: 403, error: 'Forbidden' });
   }
 };

@@ -9,40 +9,38 @@ class Group {
       INSERT INTO groups(name) VALUES ($1) RETURNING id)
       INSERT INTO group_members(group_id,member_id,role)
         VALUES (
-          (SELECT id from query1),
-          $2,$3) returning *
-      ;`;
+          (SELECT id from query1),$2,$3) returning *;`;
     const data = [req.body.name, req.user.id, 'admin'];
 
     const rows = await db.runQuery(text, data);
 
-    res.status(201).json({ status: 201, data: rows[0] });
+    return res.status(201).json({ status: 201, data: rows[0] });
   }
 
   static async getAllGroups(req, res) {
     const text = `SELECT groups.id,groups.name,group_members.role 
-FROM groups,group_members  
-WHERE groups.id = group_members.group_id 
-AND group_members.role= 'admin' AND group_members.member_id = $1;`;
+              FROM groups,group_members  
+              WHERE groups.id = group_members.group_id 
+              AND group_members.role= 'admin' AND group_members.member_id = $1;`;
 
     const data = [req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(201).json({ status: 201, data: rows });
+    return res.status(201).json({ status: 201, data: rows });
   }
 
   static async updateGroupName(req, res) {
     const text = `
-    UPDATE groups SET name = $1 
-FROM group_members
-WHERE groups.id = $2
-AND 
-groups.id = group_members.group_id 
-AND group_members.member_id = $3
-AND role='admin' returning *`;
+                UPDATE groups SET name = $1 
+                FROM group_members
+                WHERE groups.id = $2
+                AND 
+                groups.id = group_members.group_id 
+                AND group_members.member_id = $3
+                AND role='admin' returning *`;
     const data = [req.body.name, req.params.groupId, req.user.id];
 
     const rows = await db.runQuery(text, data);
-    res.status(201).json({ status: 201, data: rows[0] });
+    return res.status(201).json({ status: 201, data: rows[0] });
   }
 
   static async deleteGroup(req, res) {
@@ -51,7 +49,7 @@ AND role='admin' returning *`;
     const text = 'DELETE groups WHERE groups.id = $1 AND id IN (SELECT group_id FROM group_members WHERE member_id = $2 AND role=\'admin\' )';
     const data = [req.params.id, req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(200).json({ status: 200, data: rows[0] });
+    return res.status(200).json({ status: 200, data: rows[0] });
   }
 
 
@@ -69,7 +67,7 @@ AND role='admin' returning *`;
           ;`;
     const data = [req.params.groupId, req.body.email, 'user', req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(201).json({ status: 201, data: rows[0] });
+    return res.status(201).json({ status: 201, data: rows[0] });
   }
 
   static async deleteMemberFromGroup(req, res) {
@@ -80,7 +78,7 @@ AND role='admin' returning *`;
     (SELECT group_id FROM group_members WHERE member_id = $3 AND role='admin' )`;
     const data = [req.params.userId, req.params.groupId, req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(200).json({ status: 200, data: rows[0] });
+    return res.status(200).json({ status: 200, data: rows[0] });
   }
 
 
@@ -103,7 +101,7 @@ AND role='admin' returning *`;
     });
 
 
-    res.status(200).json({ status: 200, data: rows[0] });
+    return res.status(200).json({ status: 200, data: rows[0] });
   }
 }
 

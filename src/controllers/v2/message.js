@@ -7,7 +7,7 @@ class Message {
     // Check if the item is of the preferred recommendation
     customValidator(req, res);
     if (req.body.to === req.body.from) {
-      res.status(403).json({ status: 403, error: 'Cannot be the same' });
+      return res.status(403).json({ status: 403, error: 'Cannot be the same' });
     }
     const data = [req.body.subject, req.body.message, 'sent', req.user.id, req.body.to];
 
@@ -51,7 +51,7 @@ class Message {
 
   static deleteMessage(req, res) {
     if (Number.isNaN(req.params.id)) {
-      res.status(404).json({ status: 404, error: 'Invalid Message id' });
+      return res.status(404).json({ status: 404, error: 'Invalid Message id' });
     }
     const text = 'DELETE FROM messages WHERE id = $1 ';
     const data = [req.params.id, req.user.id];
@@ -62,9 +62,9 @@ class Message {
     const dataSet = await db.runQuery(text, data);
 
     if (exPectsMoreThanOne) {
-      res.status(201).json({ status: 201, data: dataSet });
+      return res.status(201).json({ status: 201, data: dataSet });
     } else {
-      res.status(201).json({ status: 201, data: dataSet[0] });
+      return res.status(201).json({ status: 201, data: dataSet[0] });
     }
   }
 }
