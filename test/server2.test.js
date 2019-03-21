@@ -77,7 +77,7 @@ describe('POST /api/v2/auth/signup', () => {
         .post('/api/v2/auth/signup')
         .send(user)
         .end((err, res) => {
-          console.log(res.body);
+          
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data').to.be.a('object');
           done();

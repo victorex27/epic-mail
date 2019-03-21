@@ -16,8 +16,8 @@ class User {
 
       const values = [req.body.email, req.body.firstName, req.body.lastName, hash];
       const text = `INSERT INTO
-        users(email, first_name, last_name, password)
-        VALUES($1, $2, $3, $4)
+        users (email, first_name, last_name, password)
+        VALUES ($1, $2, $3, $4)
         returning *`;
       const rows = await db.runQuery(text, values);
 
