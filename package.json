@@ -53,10 +53,11 @@
   },
   "scripts": {
     "lint": "eslint",
-    "start": "nodemon --exec babel-node src/server.js",
+    "start": "cross-env NODE_ENV=production babel-node src/server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon --watch babel-node src/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
-    "test": "node db createTables && mocha test/server2.test.js  --require @babel/register --timeout 50000",
+    "test": "cross-env NODE_ENV=test mocha test/server2.test.js  --require @babel/register --timeout 50000",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text ./node_modules/mocha/bin/_mocha test",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },

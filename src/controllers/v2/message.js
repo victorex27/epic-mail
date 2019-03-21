@@ -44,7 +44,7 @@ class Message {
   }
 
   static getMessageById(req, res) {
-    const text = 'SELECT * FROM messages WHERE id=$1 ';
+    const text = 'SELECT * FROM messages WHERE id=$1  ';
     const data = [req.params.id];
     Message.getDataSet(text, data, res, false);
   }
