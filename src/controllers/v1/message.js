@@ -4,47 +4,44 @@ import MessageModel from '../../models/v1/message';
 class Message {
   static post(req, res) {
     customValidator(req, res);
-/*    if (res.status === 400) {
-      return res;
-    }
-    */
+
     const result = Message.controller(req, res, 'post');
 
     if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.data });
+      res.status(result.status).json({ status: result.status, error: result.data });
     }
-    return res.status(result.status).json({ status: result.status, data: result.data });
+    res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static getInbox(req, res) {
     const result = Message.controller(req, res, 'getinbox');
-    return res.status(result.status).json({ status: result.status, data: result.data });
+    res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static getAllSentMessages(req, res) {
     const result = Message.controller(req, res, 'getsent');
-    return res.status(result.status).json({ status: result.status, data: result.data });
+    res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static getUnreadInbox(req, res) {
     const result = Message.controller(req, res, 'getunread');
-    return res.status(result.status).json({ status: result.status, data: result.data });
+    res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static getMessageById(req, res) {
     const result = Message.controller(req, res, 'getmessagebyid');
     if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.data });
+      res.status(result.status).json({ status: result.status, error: result.data });
     }
-    return res.status(result.status).json({ status: result.status, data: result.data });
+    res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static deleteMessage(req, res) {
     const result = Message.controller(req, res, 'delete');
     if (result.error) {
-      return res.status(result.status).json({ status: result.status, error: result.data });
+      res.status(result.status).json({ status: result.status, error: result.data });
     }
-    return res.status(result.status).json({ status: result.status, data: result.data });
+    res.status(result.status).json({ status: result.status, data: result.data });
   }
 
   static controller(req, res, action) {

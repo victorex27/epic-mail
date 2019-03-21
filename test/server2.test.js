@@ -24,9 +24,14 @@ async function createUser(email) {
   const values = [email, 'password', 'amaobi', 'obikobe', '0803297'];
   await db.query(text, values);
 }
+async function createMessages(sender, receiver, status) {
+  const text = 'INSERT INTO messages (sender_id, receiver_id, subject, message, status) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
+  const values = [sender, receiver, 'subject', 'obikobe', status];
+  await db.query(text, values);
+}
 
 describe('POST /api/v2/auth/signup', () => {
-  before(() => {
+  before((done) => {
     try {
       createUser('aobikobe@gmail.com');
       createUser('mikenit90@gmail.com');
@@ -40,10 +45,17 @@ describe('POST /api/v2/auth/signup', () => {
     } catch (error) {
       // console.log(error);
     }
+    done();
   });
   after(() => {
     try {
+      deleteTable('group_members');
+      deleteTable('groups');
+      deleteTable('messages');
       deleteTable('users');
+
+
+      resetAutoIncrement('messages');
       resetAutoIncrement('users');
     } catch (error) {
       // console.log(error);

@@ -50,7 +50,7 @@ class Message {
     const sender = User.findOne(data.from);
     const receiver = User.findOne(data.to);
     /** change invalid parameter to some fields missing */
-
+    
     if (sender.error) {
       errorMessage.error = sender.error;
       return errorMessage;

@@ -8,7 +8,7 @@
       "name": "ISC"
     }
   },
-  "host": "glacial-beach-95391.herokuapp.com",
+  "host": "https://glacial-beach-95391.herokuapp.com/api/v1",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -126,24 +126,24 @@
         "parameters": [
           {
             "name": "from",
-            "in": "body",
+            "in": "formData",
             "description": "Email of sender"
           },
           {
             "name": "to",
-            "in": "body",
+            "in": "formData",
             "description": "Email of receiver"
           }
           ,
           {
             "name": "subject",
-            "in": "body",
+            "in": "formData",
             "description": "Title of the message"
           }
           ,
           {
             "name": "message",
-            "in": "body",
+            "in": "formData",
             "description": "Content of the message"
           }
         ],
