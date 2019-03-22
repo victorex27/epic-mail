@@ -4,7 +4,7 @@ import Message from '../controllers/v2/message';
 import Group from '../controllers/v2/group';
 import {
   emailCheck, passwordCheck, firstNameCheck, lastNameCheck,
-   toCheck, subjectCheck, messageCheck, checkToken, idSanitizer,
+  toCheck, subjectCheck, messageCheck, checkToken, idSanitizer,
 } from '../helpers/check';
 
 

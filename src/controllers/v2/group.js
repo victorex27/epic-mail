@@ -14,7 +14,7 @@ class Group {
 
     const rows = await db.runQuery(text, data);
 
-    res.status(201).json({ status: 201, data: rows[0] });
+    return res.status(201).json({ status: 201, data: rows[0] });
   }
 
   static async getAllGroups(req, res) {
@@ -25,7 +25,7 @@ class Group {
 
     const data = [req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(201).json({ status: 201, data: rows });
+    return res.status(201).json({ status: 201, data: rows });
   }
 
   static async updateGroupName(req, res) {
@@ -40,7 +40,7 @@ class Group {
     const data = [req.body.name, req.params.groupId, req.user.id];
 
     const rows = await db.runQuery(text, data);
-    res.status(201).json({ status: 201, data: rows[0] });
+    return res.status(201).json({ status: 201, data: rows[0] });
   }
 
   static async deleteGroup(req, res) {
@@ -49,7 +49,7 @@ class Group {
     const text = 'DELETE groups WHERE groups.id = $1 AND id IN (SELECT group_id FROM group_members WHERE member_id = $2 AND role=\'admin\' )';
     const data = [req.params.id, req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(200).json({ status: 200, data: rows[0] });
+    return res.status(200).json({ status: 200, data: rows[0] });
   }
 
 
@@ -67,7 +67,7 @@ class Group {
           ;`;
     const data = [req.params.groupId, req.body.email, 'user', req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(201).json({ status: 201, data: rows[0] });
+    return res.status(201).json({ status: 201, data: rows[0] });
   }
 
   static async deleteMemberFromGroup(req, res) {
@@ -78,7 +78,7 @@ class Group {
     (SELECT group_id FROM group_members WHERE member_id = $3 AND role='admin' )`;
     const data = [req.params.userId, req.params.groupId, req.user.id];
     const rows = await db.runQuery(text, data);
-    res.status(200).json({ status: 200, data: rows[0] });
+    return res.status(200).json({ status: 200, data: rows[0] });
   }
 
 
@@ -101,7 +101,7 @@ class Group {
     });
 
 
-    res.status(200).json({ status: 200, data: rows[0] });
+    return res.status(200).json({ status: 200, data: rows[0] });
   }
 }
 
