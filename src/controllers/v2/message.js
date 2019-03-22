@@ -9,9 +9,10 @@ class Message {
     if (req.user.email === req.body.to) {
       return res.status(403).json({ status: 403, error: 'user id and receiver id are the same' });
     }
-
+    
     const data = [req.body.subject, req.body.message, 'sent', req.user.id, req.body.to];
 
+    console.log(req.body.to);
     const text = `INSERT INTO messages 
                     (subject, message,status,sender_id,receiver_id) 
                     VALUES 
@@ -56,7 +57,7 @@ class Message {
       res.status(404).json({ status: 404, error: 'Invalid Message id' });
     }
     const text = 'DELETE FROM messages WHERE id = $1 ';
-    const data = [req.params.id, req.user.id];
+    const data = [req.params.id];
     return Message.getDataSet(text, data, res, false);
   }
 
