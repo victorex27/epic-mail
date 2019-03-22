@@ -21,35 +21,42 @@ class User {
         returning *`;
       const rows = await db.runQuery(text, values);
 
-      if (rows === 1) {
-        return res.status(404).json({ status: 404, error: 'User account already exists' });
+      if (rows.error) {
+        if (rows.error === '_bt_check_unique') {
+          return res.status(404).json({ status: 404, error: 'User account already exists' });
+        }
+        return res.status(404).json({ status: 404, error: 'Unknown error' });
       }
-      if (rows === 2) {
-        res.status(404).json({ status: 404, error: 'Unknown error' });
-      }
-      const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
-      res.status(201).json({ status: 201, data: { token } });
-    } catch (error) {
 
+      const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
+      return res.status(201).json({ status: 201, data: { token } });
+    } catch (error) {
+      return res.status(404).json({ status: 404, error: 'Unknown error' });
     }
   }
 
   static async login(req, res) {
-    customValidator(req, res);
-    const values = [req.body.email];
-    const text = `SELECT id,email,password FROM
-        users WHERE email = $1
-        `;
+    try {
+      customValidator(req, res);
+      const values = [req.body.email];
+      const text = `SELECT id,email,password FROM
+          users WHERE email = $1
+          `;
 
-    const rows = await db.runQuery(text, values);
+      const rows = await db.runQuery(text, values);
 
-    if (rows.length === 1) {
-      const result = bcryptjs.compareSync(req.body.password, rows[0].password);
-      if (!result) res.status(401).json({ status: 401, error: 'Wrong password' });
-      const token = jwt.sign({ id: rows.id, email: rows.email }, process.env.YOUR_SECRET_KEY, { expiresIn: '1h' });
-      res.status(201).json({ status: 201, data: { token } });
+      if (rows.length === 1) {
+        const result = bcryptjs.compareSync(req.body.password, rows[0].password);
+        if (!result) res.status(401).json({ status: 401, error: 'Wrong password' });
+        const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY, { expiresIn: '1h' });
+        return res.status(201).json({ status: 201, data: { token } });
+      }
+    } catch (error) {
+
     }
-    res.status(404).json({ status: 401, error: 'Unauthorized access' });
+
+
+    return res.status(404).json({ status: 401, error: 'Unauthorized access' });
   }
 }
 

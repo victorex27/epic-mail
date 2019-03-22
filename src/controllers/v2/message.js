@@ -6,8 +6,9 @@ class Message {
   static post(req, res) {
     // Check if the item is of the preferred recommendation
     customValidator(req, res);
-    if (req.body.to === req.body.from) {
-      return res.status(403).json({ status: 403, error: 'Cannot be the same' });
+    
+    if (req.user.email === req.body.to) {
+      return res.status(403).json({ status: 403, error: 'user id and receiver id are the same' });
     }
     const data = [req.body.subject, req.body.message, 'sent', req.user.id, req.body.to];
 
@@ -17,6 +18,7 @@ class Message {
                     ($1, $2, $3, $4,
                                 (Select id from users where email=$5)) returning *`;
     Message.getDataSet(text, data, res, false);
+    return res;
   }
 
   static getInbox(req, res) {
@@ -55,12 +57,23 @@ class Message {
     }
     const text = 'DELETE FROM messages WHERE id = $1 ';
     const data = [req.params.id, req.user.id];
-    Message.getDataSet(text, data, res, false);
+    return Message.getDataSet(text, data, res, false);
   }
 
   static async getDataSet(text, data, res, exPectsMoreThanOne) {
     const dataSet = await db.runQuery(text, data);
-
+    if (dataSet.error) {
+      switch (dataSet.error) {
+        case 'ExecConstraints':
+          {
+            res.status(403).json({ status: 403, error: 'Exec Constraints' });
+          }
+          break;
+        default:
+          res.status(403).json({ status: 403, error: 'Exec Constraints' });
+          break;
+      }
+    }
     if (exPectsMoreThanOne) {
       res.status(201).json({ status: 201, data: dataSet });
     } else {

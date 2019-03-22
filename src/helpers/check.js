@@ -9,7 +9,7 @@ const checkLengthGreaterThanOne = (name => check(name).exists().isLength({ min: 
 export const mailCheck = (name => check(name).exists().isEmail().withMessage('Invalid Email Format')
   .trim());
 export const emailCheck = mailCheck('email');
-export const fromCheck = mailCheck('from');
+
 export const toCheck = mailCheck('to');
 
 export const passwordCheck = check('password').exists()
