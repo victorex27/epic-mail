@@ -51,7 +51,7 @@ class Message {
 
   static deleteMessage(req, res) {
     if (Number.isNaN(req.params.id)) {
-      return res.status(404).json({ status: 404, error: 'Invalid Message id' });
+      res.status(404).json({ status: 404, error: 'Invalid Message id' });
     }
     const text = 'DELETE FROM messages WHERE id = $1 ';
     const data = [req.params.id, req.user.id];
@@ -62,9 +62,9 @@ class Message {
     const dataSet = await db.runQuery(text, data);
 
     if (exPectsMoreThanOne) {
-      return res.status(201).json({ status: 201, data: dataSet });
+      res.status(201).json({ status: 201, data: dataSet });
     } else {
-      return res.status(201).json({ status: 201, data: dataSet[0] });
+      res.status(201).json({ status: 201, data: dataSet[0] });
     }
   }
 }
