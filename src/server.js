@@ -6,6 +6,7 @@ import router1 from './routes/route1';
 import router2 from './routes/route2';
 
 dotenv.config();
+console.log('DATABASE_URL', process.env.DATABASE_URL);
 console.log('SECRET', process.env.YOUR_SECRET_KEY);
 
 const app = express();
