@@ -11,7 +11,7 @@ class Query {
       if (error.routine === '_bt_check_unique') {
         return 1;
       }
-      return error.routine; 
+      return 2; 
     }
   }
 }
