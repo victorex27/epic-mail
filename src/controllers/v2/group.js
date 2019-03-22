@@ -89,7 +89,7 @@ class Group {
     const data1 = [req.params.groupId, req.user.id];
 
     const rows = await db.runQuery(text1, data1);
-    
+
     rows.forEach(async (row) => {
       const text2 = `INSERT INTO messages (sender_id,receiver_id,message,subject,status,group_id) VALUES
       ($1,$2,$3,$4,$5,$6) 

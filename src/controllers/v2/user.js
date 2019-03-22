@@ -30,7 +30,7 @@ class User {
       const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
       return res.status(201).json({ status: 201, data: { token } });
     } catch (error) {
-      console.log(error);
+      
     }
   }
 
@@ -47,7 +47,7 @@ class User {
       const result = bcryptjs.compareSync(req.body.password, rows[0].password);
       if (!result) res.status(401).json({ status: 401, error: 'Wrong password' });
       const token = jwt.sign({ id: rows.id, email: rows.email }, process.env.YOUR_SECRET_KEY, { expiresIn: '1h' });
-        return res.status(201).json({ status: 201, data: { token } });
+      return res.status(201).json({ status: 201, data: { token } });
     }
     return res.status(404).json({ status: 401, error: 'Unauthorized access' });
   }
