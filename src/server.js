@@ -6,7 +6,7 @@ import router1 from './routes/route1';
 import router2 from './routes/route2';
 
 dotenv.config();
-console.log('SECRET',process.env.YOUR_SECRET_KEY);
+console.log('SECRET', process.env.YOUR_SECRET_KEY);
 
 const app = express();
 const portNumber = process.env.PORT || 3000;
