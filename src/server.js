@@ -7,7 +7,7 @@ import router2 from './routes/route2';
 
 dotenv.config();
 console.log('DATABASE_URL', process.env.DATABASE_URL);
-console.log('SECRET change', process.env.YOUR_SECRET_KEY);
+console.log('SECRET chan', process.env.YOUR_SECRET_KEY);
 
 const app = express();
 const portNumber = process.env.PORT || 3000;
