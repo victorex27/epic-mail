@@ -9,9 +9,9 @@ class Query {
       // @return 1 signifies Duplicate entry
 
       if (error.routine === '_bt_check_unique') {
-        return error;
+        return 1;
       }
-      return error; 
+      return 2; 
     }
   }
 }

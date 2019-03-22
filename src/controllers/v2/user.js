@@ -21,7 +21,6 @@ class User {
         returning *`;
       const rows = await db.runQuery(text, values);
 
-      /*
       if (rows === 1) {
         return res.status(404).json({ status: 404, error: 'User account already exists' });
       }
@@ -29,8 +28,7 @@ class User {
         return res.status(404).json({ status: 404, error: 'Unknown error' });
       }
       const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
-      */
-      return res.status(201).json({ status: 201, data: { rows } });
+      return res.status(201).json({ status: 201, data: { token } });
     } catch (error) {
       console.log(error);
     }
