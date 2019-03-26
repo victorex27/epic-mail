@@ -32,7 +32,7 @@ class User {
         throw new Error('Unknown Error');
       }
 
-      const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
+      const token = jwt.sign({ id: rows[0].id, email: rows[0].email, expiresIn: '1hr' }, process.env.YOUR_SECRET_KEY);
       return res.status(201).json({ status: 201, data: { token } });
     } catch (e) {
       return res.status(404).json({ status: 404, error: e.message });
