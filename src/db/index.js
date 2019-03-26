@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
   connectionUrl = process.env.DATABASE_URL_DEV;
 }
 
-
+console.log('connection string',connectionUrl);
 const pool = new Pool({
   connectionString: connectionUrl,
 });

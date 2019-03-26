@@ -1,11 +1,12 @@
 import { validationResult } from 'express-validator/check';
 /** Custom validator wrapper */
-const customValidator = (req, res) => {
+const customValidator = (req) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = errors.array();
-    res.status(400).json({ status: 400, error: error[0].msg });
+    return { error: error[0].msg };
   }
+  return { };
 };
 
 export default customValidator;

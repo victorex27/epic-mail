@@ -6,7 +6,11 @@ import db from '../../helpers/query';
 
 class User {
   static async create(req, res) {
-    customValidator(req, res);
+    const validator = customValidator(req);
+
+    if (validator.error) {
+      return res.status(404).json({ status: 404, error: validator.error });
+    }
     // encrypt password before storing
 
     try {
@@ -24,7 +28,6 @@ class User {
       if (rows.error) {
         if (rows.error === '_bt_check_unique') {
           throw new Error('User account already exists');
-          
         }
         throw new Error('Unknown Error');
       }

@@ -16,6 +16,7 @@ describe('POST /api/v2/auth/signup', () => {
   before(() => {
     try {
       query(userTable);
+      console.log('user instantiated');
     } catch (error) {
       console.log(error);
     }
