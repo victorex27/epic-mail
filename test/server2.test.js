@@ -2,63 +2,28 @@ import chai, { expect, use } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/server';
 import db from '../src/db';
+import { userTable } from '../seed/seed';
 
 
 use(chaiHttp);
 
-
-async function deleteTable(table) {
-  const text = `DELETE FROM ${table}`;
+async function query(text) {
   const values = [];
-  await db.query(text, values);
-}
-
-async function resetAutoIncrement(table) {
-  const text = `ALTER SEQUENCE  ${table}_id_seq RESTART WITH 1`;
-  const values = [];
-  await db.query(text, values);
-}
-
-async function createUser(email) {
-  const text = 'INSERT INTO users (email,password,first_name,last_name,mobile) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
-  const values = [email, 'password', 'amaobi', 'obikobe', '0803297'];
-  await db.query(text, values);
-}
-async function createMessages(sender,receiver,status) {
-  const text = 'INSERT INTO messages (sender_id, receiver_id, subject, message, status) VALUES ($1,$2,$3,$4,$5) RETURNING *;';
-  const values = [sender, receiver, 'subject', 'obikobe', status];
   await db.query(text, values);
 }
 
 describe('POST /api/v2/auth/signup', () => {
-  before((done) => {
+  before(() => {
     try {
-      createUser('aobikobe@gmail.com');
-      createUser('mikenit90@gmail.com');
-      createUser('fifty1pilots@gmail.com');
-      createUser('reachy@gmail.com');
-      createUser('awarawa@gmail.com');
-      createUser('ihiagwa@gmail.com');
-      createUser('nkereuwem@gmail.com');
-      createUser('mustapha@gmail.com');
-      createUser('segun@gmail.com');
-      
+      query(userTable);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
-    done();
+  
   });
   after(() => {
     try {
-      deleteTable('group_members');
-      deleteTable('groups');
-      deleteTable('messages');
-      deleteTable('users');
-      
-      
-
-      resetAutoIncrement('messages');
-     resetAutoIncrement('users');
+      query('DELETE FROM users;');
     } catch (error) {
       // console.log(error);
     }

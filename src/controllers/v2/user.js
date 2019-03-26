@@ -23,15 +23,16 @@ class User {
 
       if (rows.error) {
         if (rows.error === '_bt_check_unique') {
-          return res.status(404).json({ status: 404, error: 'User account already exists' });
+          throw new Error('User account already exists');
+          
         }
-        return res.status(404).json({ status: 404, error: 'Unknown error' });
+        throw new Error('Unknown Error');
       }
 
       const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
       return res.status(201).json({ status: 201, data: { token } });
-    } catch (error) {
-      return res.status(404).json({ status: 404, error: 'Unknown error' });
+    } catch (e) {
+      return res.status(404).json({ status: 404, error: e.message });
     }
   }
 
