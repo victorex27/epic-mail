@@ -37,6 +37,7 @@ class User {
       const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
       return res.status(201).json({ status: 201, data: { token } });
     } catch (e) {
+      console.log('Unknown Error'+e.message);
       return res.status(404).json({ status: 404, error: e.message });
     }
   }
