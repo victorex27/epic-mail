@@ -54,6 +54,7 @@
   "scripts": {
     "lint": "eslint",
     "start": "cross-env NODE_ENV=production babel-node src/server.js",
+    "start:test": "cross-env NODE_ENV=development  mocha test/server2.test.js  --require @babel/register --timeout 50000",
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js",
