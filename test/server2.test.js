@@ -29,7 +29,7 @@ describe('POST /api/v2/auth/signup', () => {
       // console.log(error);
     }
   });
-  describe('When a new User Signs Up with an acceptable detail', async () => {
+  describe('When a new User Signs Up with an acceptable detail', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
         email: 'emenike78@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
