@@ -4,8 +4,17 @@ import 'idempotent-babel-polyfill'; // for babel not to be called twice
 
 dotenv.config();
 
+let connectionUrl = process.env.DATABASE_URL;
+
+if (process.env.NODE_ENV === 'production') {
+  connectionUrl = process.env.DATABASE_URL_PROD;
+} else if (process.env.NODE_ENV === 'development') {
+  connectionUrl = process.env.DATABASE_URL_DEV;
+}
+
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: connectionUrl,
 });
 
 export default {
