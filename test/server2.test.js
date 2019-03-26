@@ -14,13 +14,7 @@ async function query(text) {
 
 describe('POST /api/v2/auth/signup', () => {
   before(() => {
-    try {
-      query(userTable);
-      console.log('user instantiated');
-    } catch (error) {
-      console.log(error);
-    }
-  
+    query(userTable);
   });
   after(() => {
     try {
@@ -147,9 +141,8 @@ describe('POST /api/v2/auth/signup', () => {
 });
 
 
-
 // login
-/* 
+/*
 describe('POST /api/v2/auth/login', () => {
   describe('When a user tries to login with an existing account', () => {
     it('should return an object with the status and data', (done) => {
@@ -578,7 +571,7 @@ describe('GET /api/v2/victor', () => {
 
 describe('POST /api/v2/groups', () => {
   describe('Create and own a group with valid details', async () => {
-    
+
     const group = {
       name: 'epic group',
     };
@@ -614,7 +607,6 @@ describe('GET /api/v2/groups', () => {
     });
   });
 });
-
 
 
 describe('PATCH /api/v2/groups/:groupId/name', () => {
@@ -695,4 +687,3 @@ describe('POST /api/v2/groups/:groupId/messages', () => {
   });
 });
 */
-

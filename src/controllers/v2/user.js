@@ -9,7 +9,6 @@ class User {
     const validator = customValidator(req);
 
     if (validator.error) {
-      console.log('validator Unknown Error'+validator.error);
       return res.status(404).json({ status: 404, error: validator.error });
     }
     // encrypt password before storing
@@ -30,39 +29,31 @@ class User {
         if (rows.error === '_bt_check_unique') {
           throw new Error('User account already exists');
         }
-        console.log('Unknown Error'+rows.error);
         throw new Error('Unknown Error');
       }
 
       const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
       return res.status(201).json({ status: 201, data: { token } });
     } catch (e) {
-      console.log('Unknown Error'+e.message);
       return res.status(404).json({ status: 404, error: e.message });
     }
   }
 
   static async login(req, res) {
-    try {
-      customValidator(req, res);
-      const values = [req.body.email];
-      const text = `SELECT id,email,password FROM
+    customValidator(req, res);
+    const values = [req.body.email];
+    const text = `SELECT id,email,password FROM
           users WHERE email = $1
           `;
 
-      const rows = await db.runQuery(text, values);
+    const rows = await db.runQuery(text, values);
 
-      if (rows.length === 1) {
-        const result = bcryptjs.compareSync(req.body.password, rows[0].password);
-        if (!result) res.status(401).json({ status: 401, error: 'Wrong password' });
-        const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY, { expiresIn: '1h' });
-        return res.status(201).json({ status: 201, data: { token } });
-      }
-    } catch (error) {
-
+    if (rows.length === 1) {
+      const result = bcryptjs.compareSync(req.body.password, rows[0].password);
+      if (!result) res.status(401).json({ status: 401, error: 'Wrong password' });
+      const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY, { expiresIn: '1h' });
+      return res.status(201).json({ status: 201, data: { token } });
     }
-
-
     return res.status(404).json({ status: 401, error: 'Unauthorized access' });
   }
 }
