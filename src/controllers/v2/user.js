@@ -9,6 +9,7 @@ class User {
     const validator = customValidator(req);
 
     if (validator.error) {
+      console.log('validator Unknown Error'+validator.error);
       return res.status(404).json({ status: 404, error: validator.error });
     }
     // encrypt password before storing
