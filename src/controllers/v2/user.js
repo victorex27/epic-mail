@@ -29,7 +29,8 @@ class User {
         if (rows.error === '_bt_check_unique') {
           throw new Error('User account already exists');
         }
-        throw new Error('Unknown Error'+rows.error);
+        console.log('Unknown Error'+rows.error);
+        throw new Error('Unknown Error');
       }
 
       const token = jwt.sign({ id: rows[0].id, email: rows[0].email }, process.env.YOUR_SECRET_KEY);
