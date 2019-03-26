@@ -2,7 +2,7 @@ import chai, { expect, use } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/server';
 import db from '../src/db';
-import { userTable } from '../src/db/seed';
+import { userTable } from '../src/db/seed/seed';
 
 
 use(chaiHttp);
