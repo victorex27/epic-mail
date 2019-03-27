@@ -7,7 +7,7 @@ export const userTable = `CREATE TABLE IF NOT EXISTS  users
     last_name VARCHAR(40),
      mobile int ); 
      INSERT INTO users (email,password,first_name,last_name,mobile) VALUES 
-     ('aobikobe@gmail.com','password','amaobi','obikobe','08766');
+     ('aobikobe@gmail.com','$2a$10$st4YuszAhOFt55vHMZN5vu.ZLm62XnJ3lc9SeB2293OEfUZDSVeAe','amaobi','obikobe','08766');
     `;
 export const messageTable = `CREATE TABLE IF NOT EXISTS  messages
 ( id serial PRIMARY KEY,subject VARCHAR(40) NOT NULL, message VARCHAR(40) NOT NULL, FOREIGN KEY (parent_message_id ) REFERENCES messages(id) ON DELETE RESTRICT ON UPDATE CASCADE, type ENUM('0','1') , status ENUM('draft','sent','read'), date TIMESTAMP);`;

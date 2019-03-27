@@ -15,14 +15,7 @@ async function query(text) {
 describe('POST /api/v2/auth/signup', () => {
   before(() => {
     query(userTable);
-  });
-  after(() => {
-    try {
-      query('DELETE FROM users;');
-    } catch (error) {
-      // console.log(error);
-    }
-  });
+  });  
   describe('When a new User Signs Up with an acceptable detail', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
@@ -43,7 +36,7 @@ describe('POST /api/v2/auth/signup', () => {
   describe('When a new User Signs Up with an Email account that already exists', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
-        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'paswword',
+        email: 'aobikobe@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
       };
 
       chai.request(server)
@@ -142,8 +135,9 @@ describe('POST /api/v2/auth/signup', () => {
 
 
 // login
-/*
+
 describe('POST /api/v2/auth/login', () => {
+  
   describe('When a user tries to login with an existing account', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
@@ -224,22 +218,7 @@ describe('POST /api/v2/auth/login', () => {
         });
     });
   });
-  describe('When user tries to login with an invalid password', () => {
-    it('should return an object with the status and error', (done) => {
-      const user = {
-        email: 'amaobiiii@gmail.com', password: 'password',
-      };
-
-      chai.request(server)
-        .post('/api/v2/auth/login')
-        .send(user)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('Unauthorized access');
-          done();
-        });
-    });
-  });
+  
   describe('When user tries to login with an Wrong password', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
@@ -259,6 +238,7 @@ describe('POST /api/v2/auth/login', () => {
 });
 
 // post message
+/*
 describe('POST /api/v2/messages', () => {
   describe('When a user tries to send a message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
@@ -687,3 +667,10 @@ describe('POST /api/v2/groups/:groupId/messages', () => {
   });
 });
 */
+after(() => {
+  try {
+    query('DELETE FROM users;');
+  } catch (error) {
+    // console.log(error);
+  }
+});
