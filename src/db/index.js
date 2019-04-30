@@ -6,7 +6,7 @@ import 'idempotent-babel-polyfill'; // for babel not to be called twice
 
 dotenv.config();
 
-let connectionUrl = process.env.DATABASE_URL_DEV;
+let connectionUrl = process.env.DATABASE_URL;
 let initializerQuery = userTable + messageTable + userSeed;
 
 if (process.env.NODE_ENV === 'production') {
