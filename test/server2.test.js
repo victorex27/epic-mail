@@ -1,25 +1,14 @@
 import chai, { expect, use } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/server';
-import db from '../src/db';
-import { userTable } from '../src/db/seed/seed';
-
 
 use(chaiHttp);
 
-async function query(text) {
-  const values = [];
-  await db.query(text, values);
-}
-
 describe('POST /api/v2/auth/signup', () => {
-  before(() => {
-    query(userTable);
-  });  
   describe('When a new User Signs Up with an acceptable detail', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
-        email: 'emenike78@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
+        email: 'emenike@gmail.com', firstName: 'Amaobi', lastName: 'Obikobe', password: 'password',
       };
 
       chai.request(server)
@@ -137,7 +126,6 @@ describe('POST /api/v2/auth/signup', () => {
 // login
 
 describe('POST /api/v2/auth/login', () => {
-  
   describe('When a user tries to login with an existing account', () => {
     it('should return an object with the status and data', (done) => {
       const user = {
@@ -148,7 +136,7 @@ describe('POST /api/v2/auth/login', () => {
         .post('/api/v2/auth/login')
         .send(user)
         .end((err, res) => {
-          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('status').equals(200);
           expect(res.body).to.have.property('data').to.be.a('object');
           done();
         });
@@ -218,7 +206,7 @@ describe('POST /api/v2/auth/login', () => {
         });
     });
   });
-  
+
   describe('When user tries to login with an Wrong password', () => {
     it('should return an object with the status and error', (done) => {
       const user = {
@@ -237,164 +225,8 @@ describe('POST /api/v2/auth/login', () => {
   });
 });
 
-// post message
+
 /*
-describe('POST /api/v2/messages', () => {
-  describe('When a user tries to send a message with a valid account', () => {
-    it('should return an object with the status and data', (done) => {
-      const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'emenike@gmail.com',
-        subject: 'How do you do',
-        message: 'this is going to be a sweet test',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message with an account that does not exist', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'aobikobtye@gmail.com',
-        to: 'aobikobe@gmail.com',
-        subject: 'How do you do',
-        message: 'this is going to be a sweet test',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message to an account that does not exist', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'aobikotybe@gmail.com',
-        subject: 'How do you do',
-        message: 'this is going to be a sweet test',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message from an invalid account', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'amaobi',
-        to: 'aobikobe@gmail.com',
-        subject: 'How do you do',
-        message: 'this is going to be a sweet test',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message to an invalid account', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'xyz1@gmai',
-        subject: 'How do you do',
-        message: 'this is going to be a sweet test',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message with no subject', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'emenike@gmail.com',
-        subject: '',
-        message: 'How do you do',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('subject is required');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message with no content', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'emenike@gmail.com',
-        subject: 'How do you do',
-        message: '',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string').equals('message is required');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to send a message to self', () => {
-    it('should return an object with the status and error', (done) => {
-      const data = {
-        from: 'aobikobe@gmail.com',
-        to: 'aobikobe@gmail.com',
-        subject: 'How do you do',
-        message: 'jkhhkhkh',
-      };
-
-      chai.request(server)
-        .post('/api/v2/messages')
-        .send(data)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-});
-
-
 describe('GET /api/v2/messages', () => {
   describe('When a user tries to retrieve a message with a valid account', () => {
     it('should return an object with the status and data', (done) => {
@@ -667,10 +499,3 @@ describe('POST /api/v2/groups/:groupId/messages', () => {
   });
 });
 */
-after(() => {
-  try {
-    query('DELETE FROM users;');
-  } catch (error) {
-    // console.log(error);
-  }
-});

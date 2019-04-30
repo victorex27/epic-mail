@@ -2,22 +2,29 @@ import customValidator from '../custom-validator';
 import db from '../../helpers/query';
 
 class Message {
-  static post(req, res) {
+  static async post(req, res) {
     // Check if the item is of the preferred recommendation
-    customValidator(req, res);
+    const validator = customValidator(req, res);
+
+    if (validator.error) {
+      return res.status(403).json({ status: 403, error: validator.error });
+    }
 
     if (req.user.email === req.body.to) {
       return res.status(403).json({ status: 403, error: 'user id and receiver id are the same' });
     }
-    
-    const data = [req.body.subject, req.body.message, 'sent', req.user.id, req.body.to];
 
-    console.log(req.body.to);
+    const receiver = await db.runQuery('Select id from users where email=$1', [req.body.to]);
+    if (!receiver[0]) {
+      return res.status(403).json({ status: 403, error: 'This user account does not exists.' });
+    }
+    const data = [req.body.subject, req.body.message, 'sent', req.user.id, receiver[0].id];
+
     const text = `INSERT INTO messages 
                     (subject, message,status,sender_id,receiver_id) 
                     VALUES 
                     ($1, $2, $3, $4,
-                                (Select id from users where email=$5)) returning *`;
+                                $5) returning *`;
     Message.getDataSet(text, data, res, false);
     return res;
   }

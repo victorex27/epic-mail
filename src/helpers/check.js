@@ -30,10 +30,14 @@ export const checkToken = (req, res, next) => {
   if (typeof header !== 'undefined') {
     const bearer = header.split(' ');
     const token = bearer[1];
-
     req.token = token;
-    const result = jwt.verify(token, process.env.YOUR_SECRET_KEY);
-    req.user = result;
+    try {
+      const result = jwt.verify(token, process.env.YOUR_SECRET_KEY);
+      req.user = result;
+    } catch (e) {
+      return res.status(403).json({ status: 403, error: 'Forbidden' });
+    }
+
     next();
   } else {
     // If header is undefined

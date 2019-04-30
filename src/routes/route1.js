@@ -6,7 +6,7 @@ import {
   toCheck, subjectCheck, messageCheck, idSanitizer,
 } from '../helpers/check';
 
-const router = express();
+const router = express.Router();
 
 router.post('/auth/signup', [emailCheck, passwordCheck, firstNameCheck, lastNameCheck], User.create);
 
