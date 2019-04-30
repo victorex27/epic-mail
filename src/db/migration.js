@@ -7,6 +7,7 @@ export const userTable = `CREATE TABLE IF NOT EXISTS  users
     last_name VARCHAR(40),
      mobile int ); `;
 export const messageTable = `
+CREATE TYPE message_status as ENUM('draft','sent','read');
 CREATE TABLE IF NOT EXISTS messages
 ( id serial PRIMARY KEY, 
     sender_id BIGINT NOT NULL,
