@@ -7,14 +7,16 @@ import {
   toCheck, subjectCheck, messageCheck, checkToken, idSanitizer,
 } from '../helpers/check';
 
-
-const router = express();
+const router = express.Router();
 // router for User features
 router.post('/auth/signup', [emailCheck, passwordCheck, firstNameCheck, lastNameCheck], User.create);
 router.post('/auth/login', [emailCheck, passwordCheck], User.login);
 
 // router for messages features
-router.post('/messages', [toCheck, subjectCheck, messageCheck, checkToken], Message.post);
+router.post('/messages', [ subjectCheck,
+  messageCheck,
+  checkToken,
+], Message.post);
 router.get('/messages', [checkToken], Message.getInbox);
 router.get('/messages/sent', [checkToken], Message.getAllSentMessages);
 router.get('/messages/unread', [checkToken], Message.getUnreadInbox);
