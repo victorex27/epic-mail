@@ -7,14 +7,13 @@ export const userTable = `CREATE TABLE IF NOT EXISTS  users
     last_name VARCHAR(40),
      mobile int ); `;
 export const messageTable = `
-CREATE TYPE message_status as ENUM('draft','sent','read');
 CREATE TABLE IF NOT EXISTS messages
 ( id serial PRIMARY KEY, 
     sender_id BIGINT NOT NULL,
     receiver_id BIGINT, 
     subject VARCHAR(40) NOT NULL, 
     message VARCHAR(40) NOT NULL , 
-    status message_status, 
+    status TEXT CHECK ( status IN ('draft','sent','read') ), 
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     group_id BIGINT DEFAULT 0,

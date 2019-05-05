@@ -20,11 +20,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.use('*', (req, res) => {
-  return res.status(404).json({ status: 404, error: 'resource not found'});
+  return res.status(404).json({ status: 404, error: 'resource not found' });
   
 });
-
-
 
 const server = app.listen(portNumber);
 

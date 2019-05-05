@@ -71,6 +71,8 @@ class Message {
   static async getDataSet(text, data, res, exPectsMoreThanOne) {
     const dataSet = await db.runQuery(text, data);
     if (dataSet.error) {
+
+      console.log(dataSet.error);
       switch (dataSet.error) {
         case 'ExecConstraints':
           {
