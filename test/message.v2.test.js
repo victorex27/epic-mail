@@ -171,3 +171,17 @@ describe('POST /api/v2/messages', () => {
     });
   });
 });
+describe('GET /api/v2/messages', () => {
+  describe('When a user tries to retrieve a message with a valid account', () => {
+    it('should return an object with the status and data', (done) => {
+      chai.request(server)
+        .get('/api/v2/messages').set('Authorization', token)
+        .send()
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').equal(201);
+          expect(res.body).to.have.property('data').to.be.a('array');
+          done();
+        });
+    });
+  });
+});
