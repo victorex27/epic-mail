@@ -26,37 +26,43 @@ class Message {
                     ($1, $2, $3, $4,
                                 $5) returning *`;
     Message.getDataSet(text, data, res, false);
-    return res;
+    // return res;
   }
 
   static getInbox(req, res) {
     const text = 'SELECT * FROM messages WHERE receiver_id = $1';
     const data = [req.user.id];
     Message.getDataSet(text, data, res, true);
+    // return res;
   }
 
   static getAllSentMessages(req, res) {
     const text = 'SELECT * FROM messages WHERE status=\'sent\' AND sender_id = $1';
     const data = [req.user.id];
     Message.getDataSet(text, data, res, true);
+    // return res;
   }
 
   static getUnreadInbox(req, res) {
-    const text = 'SELECT * FROM messages WHERE status=\'unread\' AND receiver_id = $1';
+    const text = 'SELECT * FROM messages WHERE status=\'sent\' AND receiver_id = $1';
     const data = [req.user.id];
     Message.getDataSet(text, data, res, true);
+    // return res;
   }
 
   static getDraft(req, res) {
     const text = 'SELECT * FROM messages WHERE status=\'draft\' AND sender_id = $1';
+    console.log('getdreft method '+req.user.id);
     const data = [req.user.id];
     Message.getDataSet(text, data, res, true);
+    // return res;
   }
 
   static getMessageById(req, res) {
     const text = 'SELECT * FROM messages WHERE id=$1  ';
     const data = [req.params.id];
     Message.getDataSet(text, data, res, false);
+    // return res;
   }
 
   static deleteMessage(req, res) {
@@ -65,30 +71,20 @@ class Message {
     }
     const text = 'DELETE FROM messages WHERE id = $1 ';
     const data = [req.params.id];
-    return Message.getDataSet(text, data, res, false);
+    Message.getDataSet(text, data, res, false);
+    // return res;
   }
 
   static async getDataSet(text, data, res, exPectsMoreThanOne) {
     const dataSet = await db.runQuery(text, data);
     if (dataSet.error) {
-
-      console.log(dataSet.error);
-      switch (dataSet.error) {
-        case 'ExecConstraints':
-          {
-            res.status(403).json({ status: 403, error: 'Exec Constraints' });
-          }
-          break;
-        default:
-          res.status(403).json({ status: 403, error: 'Un identified error' });
-          break;
-      }
+      // console.log(dataSet);
+      return res.status(403).json({ status: 403, error: 'Exec Constraints' });
     }
     if (exPectsMoreThanOne) {
-      res.status(201).json({ status: 201, data: dataSet });
-    } else {
-      res.status(201).json({ status: 201, data: dataSet[0] });
+      return res.status(201).json({ status: 201, data: dataSet });
     }
+    return res.status(201).json({ status: 201, data: dataSet[0] });
   }
 }
 export default Message;
