@@ -10,4 +10,3 @@ export const messageSeed = `
     ( (SELECT id from users WHERE email = 'aobikobe@gmail.com'), (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'),'Urgent Reply Immediately','testing if it works', 'sent' ),
     ( (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'), (SELECT id from users WHERE email = 'aobikobe@gmail.com'),'(Reply): Urgent Reply Immediately','Already sent it. Thanks for the reminder', 'sent' );
    `;
-
