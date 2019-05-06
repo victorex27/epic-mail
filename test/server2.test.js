@@ -227,50 +227,7 @@ describe('POST /api/v2/auth/login', () => {
 
 
 /*
-describe('GET /api/v2/messages', () => {
-  describe('When a user tries to retrieve a message with a valid account', () => {
-    it('should return an object with the status and data', (done) => {
-      chai.request(server)
-        .get('/api/v2/messages')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status').equal(200);
-          expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-});
 
-describe('GET /api/v2/messages/sent', () => {
-  describe('When a user tries to retrieve a sent message with a valid account', () => {
-    it('should return an object with the status and data', (done) => {
-      chai.request(server)
-        .get('/api/v1/messages/sent')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status').equal(200);
-          expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-});
-
-describe('GET /api/v2/messages/unread', () => {
-  describe('When a user tries to retrieve an unread message with a valid account', () => {
-    it('should return an object with the status and data', (done) => {
-      chai.request(server)
-        .get('/api/v2/messages/unread')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status').equal(200);
-          expect(res.body).to.have.property('data').to.be.a('array');
-          done();
-        });
-    });
-  });
-});
 
 describe('GET /api/v2/messages/:id', () => {
   describe('When a user tries to retrieve a valid message id', () => {

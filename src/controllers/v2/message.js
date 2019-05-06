@@ -52,7 +52,6 @@ class Message {
 
   static getDraft(req, res) {
     const text = 'SELECT * FROM messages WHERE status=\'draft\' AND sender_id = $1';
-    console.log('getdreft method '+req.user.id);
     const data = [req.user.id];
     Message.getDataSet(text, data, res, true);
     // return res;

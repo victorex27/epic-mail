@@ -13,7 +13,7 @@ router.post('/auth/signup', [emailCheck, passwordCheck, firstNameCheck, lastName
 router.post('/auth/login', [emailCheck, passwordCheck], User.login);
 
 // router for messages features
-router.post('/messages', [ subjectCheck,
+router.post('/messages', [subjectCheck,
   messageCheck,
   checkToken,
 ], Message.post);
