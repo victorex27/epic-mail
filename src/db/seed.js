@@ -8,5 +8,9 @@ export const userSeed = `
 export const messageSeed = `
     INSERT INTO messages (sender_id,receiver_id,subject,message,status) VALUES 
     ( (SELECT id from users WHERE email = 'aobikobe@gmail.com'), (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'),'Urgent Reply Immediately','testing if it works', 'sent' ),
-    ( (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'), (SELECT id from users WHERE email = 'aobikobe@gmail.com'),'(Reply): Urgent Reply Immediately','Already sent it. Thanks for the reminder', 'sent' );
+    ( (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'), (SELECT id from users WHERE email = 'aobikobe@gmail.com'),'(Reply): Urgent Reply Immediately','Already sent it. Thanks for the reminder', 'read' ),
+    ( (SELECT id from users WHERE email = 'aobikobe@gmail.com'), (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'),'Urgent Reply Immediately','testing if it works', 'read' ),
+    ( (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'), (SELECT id from users WHERE email = 'aobikobe@gmail.com'),'(Reply): Urgent Reply Immediately','Already sent it. Thanks for the reminder', 'sent' ),
+    ( (SELECT id from users WHERE email = 'aobikobe@gmail.com'), (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'),'Urgent Reply Immediately','testing if it works', 'draft' ),
+    ( (SELECT id from users WHERE email = 'amandaaduchie@gmail.com'), (SELECT id from users WHERE email = 'aobikobe@gmail.com'),'(Reply): Urgent Reply Immediately','Already sent it. Thanks for the reminder', 'draft' );
    `;
