@@ -228,46 +228,6 @@ describe('POST /api/v2/auth/login', () => {
 
 /*
 
-
-describe('GET /api/v2/messages/:id', () => {
-  describe('When a user tries to retrieve a valid message id', () => {
-    it('should return an object with the status and data', (done) => {
-      chai.request(server)
-        .get('/api/v2/messages/2')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status').equal(200);
-          expect(res.body).to.have.property('data').to.be.a('object');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to retrieve a message that does not exists', () => {
-    it('should return an object with the status and error', (done) => {
-      chai.request(server)
-        .get('/api/v2/messages/90')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-  describe('When a user tries to retrieve a message that has an invalid id', () => {
-    it('should return an object with the status and error', (done) => {
-      chai.request(server)
-        .get('/api/v2/messages/amaobi')
-        .send()
-        .end((err, res) => {
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('error').to.be.a('string');
-          done();
-        });
-    });
-  });
-});
-
 describe('DELETE /api/v2/messages/:id', () => {
   describe('When a user tries to delete a valid message id', () => {
     it('should return an object with the status and data', (done) => {
