@@ -20,6 +20,7 @@ router.post('/messages', [ subjectCheck,
 router.get('/messages', [checkToken], Message.getInbox);
 router.get('/messages/sent', [checkToken], Message.getAllSentMessages);
 router.get('/messages/unread', [checkToken], Message.getUnreadInbox);
+router.get('/messages/draft', [checkToken], Message.getDraft);
 router.get('/messages/:id', [idSanitizer, checkToken], Message.getMessageById);
 router.delete('/messages/:id', [idSanitizer, checkToken], Message.deleteMessage);
 
